@@ -4,21 +4,19 @@
     <head>
         
         <meta charset="utf-8" />
-        <title>Log in | Chatvia - Responsive Bootstrap 4 Chat App</title>
+        <title>Đăng nhập | Pinet </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="Responsive Bootstrap 4 Chat App" name="description" />
-        <meta content="Themesbrand" name="author" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
+        <link rel="shortcut icon" href="/assets/images/favicon.ico">
 
         <!-- Bootstrap Css -->
-        <link href="assets/css/bootstrap-dark.min.css" id="bootstrap-dark-style" rel="stylesheet" type="text/css" />
-        <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <link href="/assets/css/bootstrap-dark.min.css" id="bootstrap-dark-style" rel="stylesheet" type="text/css" />
+        <link href="/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
         <!-- Icons Css -->
-        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         <!-- App Css-->
-        <link href="assets/css/app-dark.min.css" id="app-dark-style" rel="stylesheet" type="text/css" />
-        <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+        <link href="/assets/css/app-dark.min.css" id="app-dark-style" rel="stylesheet" type="text/css" />
+        <link href="/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
     </head>
 
@@ -29,13 +27,14 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6 col-xl-5">
                         <div class="text-center mb-4">
-                            <a href="index.html" class="auth-logo mb-5 d-block">
+                            <a href="/" class="auth-logo mb-5 d-block">
+                                <!-- <img src="/assets/images/logo.svg" alt="" height="30" class="logo logo-dark"> -->
                                 <img src="assets/images/logo-dark.png" alt="" height="30" class="logo logo-dark">
                                 <img src="assets/images/logo-light.png" alt="" height="30" class="logo logo-light">
                             </a>
 
-                            <h4>Sign in</h4>
-                            <p class="text-muted mb-4">Sign in to continue to Chatvia.</p>
+                            <h4>Đăng nhập</h4>
+                            <p class="text-muted mb-4">Hãy đăng nhập để chat cùng pinet</p>
                             
                         </div>
 
@@ -45,41 +44,41 @@
                                     <form action="index.html">
     
                                         <div class="form-group">
-                                            <label>Username</label>
+                                            <label>Tài khoản</label>
                                             <div class="input-group mb-3 bg-soft-light input-group-lg rounded-lg">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text border-light text-muted">
                                                         <i class="ri-user-2-line"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" class="form-control bg-soft-light border-light" placeholder="Enter Username">
+                                                <input type="text" class="form-control bg-soft-light border-light" placeholder="Nhập vào tên tài khoản">
                                                 
                                             </div>
                                         </div>
 
                                         <div class="form-group mb-4">
                                             <div class="float-right">
-                                                <a href="auth-recoverpw.html" class="text-muted font-size-13">Forgot password?</a>
+                                                <a href="/recover" class="text-muted font-size-13">Quên mật khẩu?</a>
                                             </div>
-                                            <label>Password</label>
+                                            <label>Mật khẩu</label>
                                             <div class="input-group mb-3 bg-soft-light input-group-lg rounded-lg">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text border-light text-muted">
                                                         <i class="ri-lock-2-line"></i>
                                                     </span>
                                                 </div>
-                                                <input type="password" class="form-control bg-soft-light border-light" placeholder="Enter Password">
+                                                <input type="password" class="form-control bg-soft-light border-light" placeholder="Nhập vào mật khẩu">
                                                 
                                             </div>
                                         </div>
 
                                         <div class="custom-control custom-checkbox mb-4">
                                             <input type="checkbox" class="custom-control-input" id="remember-check">
-                                            <label class="custom-control-label" for="remember-check">Remember me</label>
+                                            <label class="custom-control-label" for="remember-check">Ghi nhớ</label>
                                         </div>
 
                                         <div>
-                                            <button class="btn btn-primary btn-block waves-effect waves-light" type="submit">Sign in</button>
+                                            <button class="btn btn-primary btn-block waves-effect waves-light" type="submit">Đăng nhập</button>
                                         </div>
 
                                     </form>
@@ -88,8 +87,7 @@
                         </div>
 
                         <div class="mt-5 text-center">
-                            <p>Don't have an account ? <a href="auth-register.html" class="font-weight-medium text-primary"> Signup now </a> </p>
-                            <p>© 2020 Chatvia. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                            <p>Bạn chưa có tài khoản ? <a href="/register" class="font-weight-medium text-primary"> Đăng ký </a> </p>
                         </div>
                     </div>
                 </div>
@@ -99,12 +97,12 @@
 
 
         <!-- JAVASCRIPT -->
-        <script src="assets/libs/jquery/jquery.min.js"></script>
-        <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/libs/simplebar/simplebar.min.js"></script>
-        <script src="assets/libs/node-waves/waves.min.js"></script>
+        <script src="/assets/libs/jquery/jquery.min.js"></script>
+        <script src="/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="/assets/libs/node-waves/waves.min.js"></script>
 
-        <script src="assets/js/app.js"></script>
+        <script src="/assets/js/app.js"></script>
 
     </body>
 </html>
