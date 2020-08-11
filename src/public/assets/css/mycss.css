@@ -1,0 +1,41 @@
+#pills-user .title-top {
+  width: 100%;
+  height: auto;
+  padding-top: 20px;
+}
+
+#pills-user .title-top ul {
+  margin: 0;
+  width: 100%;
+  height: auto;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+#pills-user .title-top ul li {
+  list-style: none;
+  height: 35px;
+  line-height: 35px;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+#pills-user .title-top ul li i {
+  font-size: 18px;
+}
+
+#pills-user .title-top ul li:hover {
+  color: #7269ef;
+}
+
+#icon-view-messages {
+  color: red;
+}
+/*# sourceMappingURL=mycss.css.map */

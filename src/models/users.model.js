@@ -29,10 +29,14 @@ let user_schema = new Schema({
     deleted_at: {type: Number, default: null}
   });
 
+user_schema.statics = {
+    find_by_name(name){
+        return this.find({
+            username: name
+        })
+    }
+}
 
-let users_model = mongoose.model('users', user_schema);
 
-users_model.create({
-    username: 'duong hoang dung'
-})
+module.exports = mongoose.model('users', user_schema);
 

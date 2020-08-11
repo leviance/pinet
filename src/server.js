@@ -1,22 +1,19 @@
 const express = require('express')
 const connectDB = require('./config/connectDB')
-let test = require('./models/users.model')
+const config_view_engine = require('./config/config_view_engine')
 
 const app = express()
 
 // connect mongoDB
 connectDB();
 
-const host = 'localhost'
-const port = 3001
+// config view engine
+config_view_engine(app)
 
-app.get('/', (req, res) =>{
-  // test create and insert data in data base
-  test
-  
-  res.send("hello world")
+app.get('/', async (req, res) =>{
+  res.render('./home_page/index')
 })
 
-app.listen(port, host, () => {
-  console.log(`Run success at http://${host}:${port}`)
+app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
+  console.log(`Run success at http://${process.env.APP_HOST}:${process.env.APP_PORT}`)
 })
