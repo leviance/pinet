@@ -1,0 +1,39 @@
+<div class="tab-pane" id="pills-groups" role="tabpanel" aria-labelledby="pills-groups-tab">
+  <!-- Start Groups content -->
+  <div>
+      <div class="p-4">
+          <div class="user-chat-nav float-right">
+              <div  data-toggle="tooltip" data-placement="bottom" title="Create group">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-link text-decoration-none text-muted font-size-18 py-0" data-toggle="modal" data-target="#addgroup-exampleModal">
+                      <i class="ri-group-line mr-1"></i>
+                  </button>
+              </div>
+
+          </div>
+          <h4 class="mb-4">Nhóm</h4>
+
+          <!-- Start add group Modal -->
+          <%- include('create_group_modal/create_group_modal.ejs') %> 
+          <!-- End add group Modal -->
+
+          <!-- Start search-box -->
+          <div class="search-box chat-search-box">
+              <div class="input-group bg-light  input-group-lg rounded-lg">
+                  <div class="input-group-prepend">
+                      <button class="btn btn-link text-decoration-none text-muted pr-1" type="button">
+                          <i class="ri-search-line search-icon font-size-18"></i>
+                      </button>
+                  </div>
+                  <input type="text" class="form-control bg-light" placeholder="Search groups...">
+              </div>
+          </div>
+          <!-- End search-box -->
+      </div>
+
+      <!-- Start chat-group-list -->
+      <%- include('chat_group_list/chat_group_list.ejs') %> 
+      <!-- End chat-group-list -->
+  </div>
+  <!-- End Groups content -->
+</div>
