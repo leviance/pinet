@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let user_schema = new Schema({
-    username: String,
-    gender: String,
+    username: {type: String, default:"Aanonymous"},
+    gender: {type: String, default:"male"},
     phone_number: {type: String, default: null},
     address: {type: String, default: null},
     avatar: {type: String, default: "avatar-defult.jpg"},
     role: {type: String, default: "user"},
     local: {
+        name_account: String,
         email: {type: String, trim: true},
         password: String,
         is_active: {type: Boolean, default: false},
@@ -30,11 +31,25 @@ let user_schema = new Schema({
   });
 
 user_schema.statics = {
-    find_by_name(name){
-        return this.find({
-            username: name
+    create_new(email, name_account, password, token){
+        return this.create({
+            "local":{
+                "name_account": name_account,
+                "email": email,
+                "password": password,
+                "verify_token": token
+            }
         })
+    },
+
+    find_user_by_email(email){
+        return this.find({"local.email": email}).exec();
+    },
+
+    find_user_by_account(name_account){
+        return this.find({"local.name_account": name_account}).exec();
     }
+
 }
 
 
