@@ -1,16 +1,16 @@
 const express = require('express')
 const {home_controller, auth_controller} = require('../controllers/index')
+const {auth_valid} = require('../validation/index')
 
 let router = express.Router()
 
 function init_routes(app) {
   router.get('/', home_controller)
-
   router.get('/login',auth_controller.user_login)
-
   router.get('/register',auth_controller.user_register)
-
   router.get('/recover',auth_controller.recover_account)
+
+  router.post("/user-create-new-account",auth_valid.register_valid, auth_controller.create_new_account)
 
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {
