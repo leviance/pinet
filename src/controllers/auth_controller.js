@@ -1,15 +1,15 @@
 const { validationResult } = require('express-validator');
 const { auth_services } = require('../services/index')
 
-let user_login = (req, res) => {
+let render_login_page = (req, res) => {
   return res.render('./login_page/auth-login')
 }
 
-let user_register = (req, res) => {
+let render_register_page = (req, res) => {
   return res.render('./register_page/auth-register')
 }
 
-let recover_account = (req, res) => {
+let render_recover_account_page = (req, res) => {
   return res.render('./recover_page/auth-recoverpw')
 }
 
@@ -31,9 +31,21 @@ let create_new_account = async (req, res) => {
   }
 }
 
+let user_active_accounts = async (req, res) => {
+  let token = req.params.token;
+  
+  try {
+    let result_active = await auth_services.user_active_account(token);
+    res.render("./active_account_page/active_account");
+  } catch (error) {
+    return res.render('./404_page/index')
+  }
+}
+
 module.exports = {
-  user_login,
-  user_register,
-  recover_account,
-  create_new_account
+  render_login_page,
+  render_register_page,
+  render_recover_account_page,
+  create_new_account,
+  user_active_accounts
 }
