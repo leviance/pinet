@@ -6,11 +6,12 @@ let router = express.Router()
 
 function init_routes(app) {
   router.get('/', home_controller)
-  router.get('/login',auth_controller.user_login)
-  router.get('/register',auth_controller.user_register)
-  router.get('/recover',auth_controller.recover_account)
+  router.get('/login',auth_controller.render_login_page)
+  router.get('/register',auth_controller.render_register_page)
+  router.get('/recover',auth_controller.render_recover_account_page)
 
   router.post("/user-create-new-account",auth_valid.register_valid, auth_controller.create_new_account)
+  router.get("/active-account/:token",auth_controller.user_active_accounts)
 
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {

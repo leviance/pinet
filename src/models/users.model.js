@@ -48,6 +48,10 @@ user_schema.statics = {
 
     find_user_by_account(name_account){
         return this.find({"local.name_account": name_account}).exec();
+    },
+
+    active_account(token){
+        return this.findOneAndUpdate({"local.verify_token": token},{"local.is_active": true}).exec();
     }
 
 }

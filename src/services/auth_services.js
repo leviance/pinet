@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 
 const saltRounds = 1;
 
-function create_new_account(email, name_account, password, url){ 
+let create_new_account = (email, name_account, password, url) => { 
   return new Promise( async (resolve, reject) =>{
     let check_email_is_exist = await user_model.find_user_by_email(email);
     if(check_email_is_exist.length > 0) return reject(register_valid_message.email_used)
@@ -15,7 +15,7 @@ function create_new_account(email, name_account, password, url){
     if(check_account_is_exist.length > 0) return reject(register_valid_message.name_account_used)
   
     let token = `${uuidv4()}${new Date().getTime()}`
-    let link_active = `${url}/${token}}`
+    let link_active = `${url}/active-account/${token}`
     let pass_hash = bcrypt.hashSync(password, saltRounds); // hash password
     
     send_mail(email,trans_mails.subject,trans_mails.html(link_active)).then(success => {
@@ -31,6 +31,18 @@ function create_new_account(email, name_account, password, url){
   })
 }
 
+let user_active_account = (token) => {
+  return new Promise( async (resolve, reject) => {
+    
+    let result_active = await user_model.active_account(token);
+    
+    if(result_active) return resolve(result_active)
+
+    return reject(result_active)
+  })
+}
+
 module.exports = {
-  create_new_account
+  create_new_account,
+  user_active_account
 }
