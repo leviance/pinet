@@ -7,7 +7,7 @@ const message_valid = {
 }
 
 function valid_email(email) {
-  let re = /^[a-zA-Z0-9]+(@gmail.com)$/;
+  let re = /^[a-zA-Z0-9]+(@gmail\.com)$/;
 
   result_valid = re.test(email);
 
