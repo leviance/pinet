@@ -13,7 +13,8 @@ let user_schema = new Schema({
         email: {type: String, trim: true},
         password: String,
         is_active: {type: Boolean, default: false},
-        verify_token: String
+        verify_token: String,
+        verify_code: String,
     },
     facebook: {
         uid: String,
@@ -52,6 +53,13 @@ user_schema.statics = {
 
     active_account(token){
         return this.findOneAndUpdate({"local.verify_token": token},{"local.is_active": true}).exec();
+    },
+
+    user_recover_password(email,password){
+        return this.updateOne(
+            {"local.email": email},
+            {"local.password": password}
+        )
     }
 
 }

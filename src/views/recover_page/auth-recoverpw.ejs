@@ -18,11 +18,33 @@
         <link href="/assets/css/app-dark.min.css" id="app-dark-style" rel="stylesheet" type="text/css" />
         <link href="/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
+        <!-- Css loading modal -->
+        <link rel="stylesheet" href="/custom/css/three-dots.min.css">
     </head>
 
     <body>
 
-        <div class="account-pages my-5 pt-sm-5">
+        <style>
+            .loading{
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: #00000047;
+                z-index: 1000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #modal-2{display: none}
+        </style>
+        <div class="loading">
+            <div class="dot-carousel"></div>
+        </div>
+
+        <div id="modal-1" class="account-pages my-5 pt-sm-5">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6 col-xl-5">
@@ -43,7 +65,7 @@
                                     <div class="alert alert-success text-center mb-4" role="alert">
                                         Nhập vào Email đã đăng ký tài khoản. Mã xác thực sẽ được gửi về Email của bạn !
                                     </div>
-                                    <form action="index.html">
+                                    <form action="javascript:void(0);">
     
                                         <div class="form-group mb-4">
                                             <label>Email</label>
@@ -53,13 +75,13 @@
                                                         <i class="ri-mail-line"></i>
                                                     </span>
                                                 </div>
-                                                <input type="email" class="form-control bg-soft-light border-light" placeholder="Nhập vào địa chỉ Mail">
+                                                <input id="input_email_to_recover_account" class="form-control bg-soft-light border-light" placeholder="Nhập vào địa chỉ Mail">
                                                 
                                             </div>
                                         </div>
 
                                         <div>
-                                            <button class="btn btn-primary btn-block waves-effect waves-light" type="submit">Đặt lại</button>
+                                            <button id="btn-submit-recover-account" class="btn btn-primary btn-block waves-effect waves-light" >Đặt lại</button>
                                         </div>
 
                                     </form>
@@ -75,7 +97,58 @@
             </div>
         </div>
 
+        <div id="modal-2" class="account-pages my-5 pt-sm-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="text-center mb-4">
+                            <a href="/" class="auth-logo mb-5 d-block">
+                                <img src="/assets/images/logo-dark.png" alt="" height="30" class="logo logo-dark">
+                                <img src="/assets/images/logo-light.png" alt="" height="30" class="logo logo-light">
+                            </a>
 
+                            <h4>Đặt lại mật khẩu</h4>
+                            <p class="text-muted mb-4">Đặt lại mật khẩu Pinet của bạn</p>
+                            
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body p-4">
+                                <div class="p-3">
+                                    <div class="alert alert-success text-center mb-4" role="alert">
+                                        Vui lòng nhập mã xác thực. Mã xác thực đã được gửi đến Email của bạn
+                                    </div>
+                                    <form action="javascript:void(0);">
+    
+                                        <div class="form-group mb-4">
+                                            <label>Mã xác thực</label>
+                                            <div class="input-group mb-3 bg-soft-light input-group-lg rounded-lg">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text border-light text-muted">
+                                                        <i class="ri-mail-line"></i>
+                                                    </span>
+                                                </div>
+                                                <input id="input_verify_code_to_recover_account" class="form-control bg-soft-light border-light" placeholder="Nhập vào mã xác thực">
+                                                
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <button id="btn-submit-verify_code" class="btn btn-primary btn-block waves-effect waves-light" >Đặt lại</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 text-center">
+                            <p>Bạn đã nhớ ra mật khẩu ? <a href="/login" class="font-weight-medium text-primary"> Đăng nhập </a> </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- JAVASCRIPT -->
         <script src="/assets/libs/jquery/jquery.min.js"></script>
@@ -85,5 +158,7 @@
 
         <script src="/assets/js/app.js"></script>
 
+        <!-- CUSTOM JS -->
+        <script src="/custom/js/auth_page/recover_account.js"></script>
     </body>
 </html>

@@ -1,8 +1,13 @@
 const { v4: uuidv4 } = require('uuid');
-const send_mail = require('../config/send_mail')
-const { trans_mails, register_valid_message } = require('../../lang/vi')
-const user_model = require('../models/users.model')
 const bcrypt = require('bcrypt');
+const uid = require('uid');
+
+const send_mail = require('../config/send_mail')
+const { trans_mails, register_valid_message, send_verify_code_mess, recover_account_valid_mess, send_new_password } = require('../../lang/vi')
+
+const user_model = require('../models/users.model')
+const verify_code_model = require('../models/verify_code_model')
+
 
 const saltRounds = 1;
 
@@ -42,7 +47,53 @@ let user_active_account = (token) => {
   })
 }
 
+let send_verify_code = (user_email) => {
+  return new Promise( async (resolve, reject) => {
+
+    let verify_code = uid();
+
+    let result_recover = await user_model.find_user_by_email(user_email);
+    
+    // if not find email end the program 
+    if(!result_recover || result_recover.length == 0) return reject(recover_account_valid_mess.email_incorrect)
+
+    // send verify code to email 
+    send_mail(user_email,send_verify_code_mess.subject,send_verify_code_mess.html(verify_code));
+
+    verify_code_model.create_recover_account_verify_code(user_email,verify_code)
+
+    return resolve()
+
+  })
+}
+
+let recover_user_password = (verify_code,user_email) => {
+  return new Promise( async (resolve, reject) => {
+    // check verify code is exist
+    let check_verify_code = await verify_code_model.find_verify_code_recover_account(verify_code,user_email)
+    if(!check_verify_code) return reject(recover_account_valid_mess.verify_code_incorrect)
+    
+    // create new password
+    let new_password = uid()
+    let hash_password = bcrypt.hashSync(new_password, saltRounds); // hash password
+
+    let result_recover = await user_model.user_recover_password(user_email,hash_password)
+
+    if(result_recover.nModified == 0) return reject(recover_account_valid_mess.unknown_error)
+
+    // send new password for user
+    send_mail(user_email,send_new_password.subject,send_new_password.html(new_password))
+
+    // remove verify code in database
+    await verify_code_model.remove_verify_code(user_email,verify_code)
+    
+    return resolve(recover_account_valid_mess.recover_account_success)
+  })
+}
+
 module.exports = {
   create_new_account,
-  user_active_account
+  user_active_account,
+  send_verify_code,
+  recover_user_password
 }
