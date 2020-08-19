@@ -8,6 +8,7 @@ let user_schema = new Schema({
     address: {type: String, default: null},
     avatar: {type: String, default: "avatar-defult.jpg"},
     role: {type: String, default: "user"},
+    class: {type: String, default: null},
     local: {
         name_account: String,
         email: {type: String, trim: true},
@@ -25,6 +26,9 @@ let user_schema = new Schema({
         uid: String,
         token: String,
         email: {type: String, trim: true}
+    },
+    student: {
+        student_code: String,
     },
     created_at: {type: Number, default: Date.now},
     updated_at: {type: Number, default: null},
@@ -48,7 +52,7 @@ user_schema.statics = {
     },
 
     find_user_by_account(name_account){
-        return this.find({"local.name_account": name_account}).exec();
+        return this.findOne({"local.name_account": name_account}).exec();
     },
 
     active_account(token){

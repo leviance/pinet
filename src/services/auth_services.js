@@ -3,7 +3,14 @@ const bcrypt = require('bcrypt');
 const uid = require('uid');
 
 const send_mail = require('../config/send_mail')
-const { trans_mails, register_valid_message, send_verify_code_mess, recover_account_valid_mess, send_new_password } = require('../../lang/vi')
+
+const { trans_mails, 
+        register_valid_message, 
+        send_verify_code_mess, 
+        recover_account_valid_mess, 
+        send_new_password,
+        user_login_mess
+      } = require('../../lang/vi')
 
 const user_model = require('../models/users.model')
 const verify_code_model = require('../models/verify_code_model')
@@ -17,7 +24,7 @@ let create_new_account = (email, name_account, password, url) => {
     if(check_email_is_exist.length > 0) return reject(register_valid_message.email_used)
 
     let check_account_is_exist = await user_model.find_user_by_account(name_account);
-    if(check_account_is_exist.length > 0) return reject(register_valid_message.name_account_used)
+    if(check_account_is_exist) return reject(register_valid_message.name_account_used)
   
     let token = `${uuidv4()}${new Date().getTime()}`
     let link_active = `${url}/active-account/${token}`
@@ -91,9 +98,34 @@ let recover_user_password = (verify_code,user_email) => {
   })
 }
 
+let user_login = (name_account,password) => {
+  return new Promise( async (resolve, reject) => {
+    // find name account in database
+    let account = await user_model.find_user_by_account(name_account)
+    
+    // when not found account
+    if(!account) return reject(user_login_mess.account_not_found)
+
+    // when account deleted
+    if(account.deleted_at != null) return reject(user_login_mess.account_deleted)
+
+    // when account is not authenticated 
+    if(account.is_active == "false") return reject(user_login_mess.account_is_not_authenticated)
+  
+    
+    let check_password = await bcrypt.compare(password, account.local.password);
+
+    if(!check_password) return reject(user_login_mess.password_wrong)
+    
+    return resolve(account)
+
+  })
+}
+
 module.exports = {
   create_new_account,
   user_active_account,
   send_verify_code,
-  recover_user_password
+  recover_user_password,
+  user_login
 }

@@ -12,8 +12,11 @@ function init_routes(app) {
 
   router.post("/user-create-new-account",auth_valid.register_valid, auth_controller.create_new_account)
   router.get("/active-account/:token",auth_controller.user_active_account)
+
   router.get("/recover-account/:email",auth_valid.valid_email,auth_controller.send_verify_code)
   router.get("/send-verify-code/:verify_code/:email",auth_valid.valid_verify_code,auth_controller.recover_user_password)
+  
+  router.post("/user-login",auth_valid.verify_user_login, auth_controller.user_login)
 
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {

@@ -24,25 +24,7 @@
 
     <body>
 
-        <style>
-            .loading{
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                top: 0;
-                left: 0;
-                background-color: #00000047;
-                z-index: 1000;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            #modal-2{display: none}
-        </style>
-        <div class="loading">
-            <div class="dot-carousel"></div>
-        </div>
+        <%- include('../loading_modal/loading.ejs')  %> 
 
         <div id="modal-1" class="account-pages my-5 pt-sm-5">
             <div class="container">
@@ -97,7 +79,7 @@
             </div>
         </div>
 
-        <div id="modal-2" class="account-pages my-5 pt-sm-5">
+        <div id="modal-2" class="account-pages my-5 pt-sm-5" style="display: none;" >
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6 col-xl-5">

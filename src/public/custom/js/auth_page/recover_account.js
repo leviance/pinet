@@ -29,6 +29,7 @@ function valid_verify_code(verify_code) {
 function render_message(message){
   $("#modal-1 .input-group").append(`
     <div class="valid-message" style="width: 100%; height: auto; text-align: center;">
+    <br>
         <label style="color: red; font-size: 13px; ">${message}</label>
     </div>`)
 }
@@ -81,6 +82,7 @@ function submit_verify_code(){
       $(".loading").hide();
       $("#modal-2 .input-group").append(`
           <div class="valid-message" style="width: 100%; height: auto; text-align: center;">
+          <br>
               <label style="color: red; font-size: 13px; ">${message_valid.verify_code_incorrect}</label>
           </div>`)
       
@@ -96,6 +98,7 @@ function submit_verify_code(){
         
         $("#modal-2 .input-group").append(`
           <div class="valid-message" style="width: 100%; height: auto; text-align: center;">
+          <br>
               <label style="color: #5246eb; font-size: 13px; ">${msg}</label>
           </div>`)
       },
@@ -105,6 +108,7 @@ function submit_verify_code(){
         
         $("#modal-2 .input-group").append(`
           <div class="valid-message" style="width: 100%; height: auto; text-align: center;">
+          <br>
               <label style="color: red; font-size: 13px; ">${msg.responseText}</label>
           </div>`)
       }
