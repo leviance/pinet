@@ -38,3 +38,12 @@ module.exports.send_new_password = {
             <p><i>Lưu ý không chia sẻ mã này với bất kỳ ai!</i></p>`
   }
 }
+
+module.exports.user_login_mess = {
+  name_account_incorrect: "Tài khoản bạn vừa nhập vào không hợp lệ",
+  password_incorrect: " Mật khẩu bạn vừa nhập vào không hợp lệ",
+  account_not_found: "Không tìm thấy tài khoản của bạn.",
+  account_deleted: "Tài khoản của bạn đã bị vô hiệu hóa. Nếu đây là một sự nhầm lẫn vui lòng liên hệ bộ phận hỗ trợ của chúng tôi!",
+  account_is_not_authenticated: "Tài khoản của bạn chưa được xác thực, vui lòng kiểm tra Email để xác thực tài khoản!",
+  password_wrong: "Mật khẩu không chính xác"
+}

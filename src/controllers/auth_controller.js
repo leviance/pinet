@@ -3,14 +3,18 @@ const { auth_services } = require('../services/index')
 const { recover_account_valid_mess } = require('../../lang/vi')
 
 let render_login_page = (req, res) => {
+  if(req.session.user_id) return res.redirect("/")
+
   return res.render('./login_page/auth-login')
 }
 
 let render_register_page = (req, res) => {
+  if(req.session.user_id) return res.redirect("/")
   return res.render('./register_page/auth-register')
 }
 
 let render_recover_account_page = (req, res) => {
+  if(req.session.user_id) return res.redirect("/")
   return res.render('./recover_page/auth-recoverpw')
 }
 
@@ -77,6 +81,32 @@ let recover_user_password = async (req, res) => {
   }
 }
 
+let user_login = async (req, res) => {
+  let result_valid = validationResult(req).errors;
+  let name_account = req.body.name_account;
+  let password = req.body.password;
+
+  if(result_valid.length > 0) return res.status(500).send(result_valid[0].msg)
+
+  try {
+    let user_data = await auth_services.user_login(name_account, password)
+    
+    // create session
+    req.session.user_id = user_data._id;
+    req.session.username = user_data.username;
+    req.session.gender = user_data.gender;
+    req.session.avatar = user_data.avatar;
+    req.session.class = user_data.class;
+    req.session.phone_number = user_data.phone_number;
+    req.session.address = user_data.address;
+    req.session.user_agent = req.headers["user-agent"];
+
+    return res.status(200).send()
+  } catch (error) {
+    return res.status(500).send(error)
+  }
+}
+
 module.exports = {
   render_login_page,
   render_register_page,
@@ -84,5 +114,6 @@ module.exports = {
   create_new_account,
   user_active_account,
   send_verify_code,
-  recover_user_password
+  recover_user_password,
+  user_login
 }

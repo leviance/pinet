@@ -3,6 +3,7 @@ const connectDB = require('./config/connectDB')
 const config_view_engine = require('./config/config_view_engine')
 const init_routes = require('./routes/web')
 const bodyParser = require('body-parser')
+const config_session = require('./config/config_session')
 
 const app = express()
 
@@ -15,6 +16,9 @@ config_view_engine(app)
 // add body parser
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+
+// config session
+config_session(app)
 
 // config routes
 init_routes(app)

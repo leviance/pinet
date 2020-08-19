@@ -13,3 +13,4 @@ export EMAIL_NAME=
 export EMAIL_PASS=
 export EMAIL_HOST=smtp.gmail.com
 export EMAIL_PORT=587
+

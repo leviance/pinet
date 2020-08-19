@@ -18,9 +18,13 @@
         <link href="/assets/css/app-dark.min.css" id="app-dark-style" rel="stylesheet" type="text/css" />
         <link href="/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
+        <!-- css loading modal -->
+        <link rel="stylesheet" href="/custom/css/three-dots.min.css">
     </head>
 
     <body>
+
+        <%- include('../loading_modal/loading.ejs')  %> 
 
         <div class="account-pages my-5 pt-sm-5">
             <div class="container">
@@ -41,9 +45,9 @@
                         <div class="card">
                             <div class="card-body p-4">
                                 <div class="p-3">
-                                    <form action="index.html">
+                                    <form action="javascript:void(0);">
     
-                                        <div class="form-group">
+                                        <div id="login-input-name-account-group" class="form-group">
                                             <label>Tài khoản</label>
                                             <div class="input-group mb-3 bg-soft-light input-group-lg rounded-lg">
                                                 <div class="input-group-prepend">
@@ -51,7 +55,7 @@
                                                         <i class="ri-user-2-line"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" class="form-control bg-soft-light border-light" placeholder="Nhập vào tên tài khoản">
+                                                <input id="login-user-input-name-account" type="text" class="form-control bg-soft-light border-light" placeholder="Nhập vào tên tài khoản">
                                                 
                                             </div>
                                         </div>
@@ -61,24 +65,24 @@
                                                 <a href="/recover" class="text-muted font-size-13">Quên mật khẩu?</a>
                                             </div>
                                             <label>Mật khẩu</label>
-                                            <div class="input-group mb-3 bg-soft-light input-group-lg rounded-lg">
+                                            <div id="login-input-password-group" class="input-group mb-3 bg-soft-light input-group-lg rounded-lg">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text border-light text-muted">
                                                         <i class="ri-lock-2-line"></i>
                                                     </span>
                                                 </div>
-                                                <input type="password" class="form-control bg-soft-light border-light" placeholder="Nhập vào mật khẩu">
+                                                <input id="login-input-user-password" type="password" class="form-control bg-soft-light border-light" placeholder="Nhập vào mật khẩu">
                                                 
                                             </div>
                                         </div>
 
-                                        <div class="custom-control custom-checkbox mb-4">
+                                        <!-- <div class="custom-control custom-checkbox mb-4">
                                             <input type="checkbox" class="custom-control-input" id="remember-check">
                                             <label class="custom-control-label" for="remember-check">Ghi nhớ</label>
-                                        </div>
+                                        </div> -->
 
                                         <div>
-                                            <button class="btn btn-primary btn-block waves-effect waves-light" >Đăng nhập</button>
+                                            <button id="login-button-submit" class="btn btn-primary btn-block waves-effect waves-light" >Đăng nhập</button>
                                         </div>
 
                                     </form>
@@ -104,5 +108,7 @@
 
         <script src="/assets/js/app.js"></script>
 
+        <!-- custom javascript -->
+        <script src="/custom/js/auth_page/user_login.js"></script>
     </body>
 </html>
