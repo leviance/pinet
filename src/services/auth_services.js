@@ -110,7 +110,7 @@ let user_login = (name_account,password) => {
     if(account.deleted_at != null) return reject(user_login_mess.account_deleted)
 
     // when account is not authenticated 
-    if(account.is_active == "false") return reject(user_login_mess.account_is_not_authenticated)
+    if(account.local.is_active === false) return reject(user_login_mess.account_is_not_authenticated)
   
     
     let check_password = await bcrypt.compare(password, account.local.password);
