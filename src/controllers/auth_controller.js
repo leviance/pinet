@@ -99,6 +99,7 @@ let user_login = async (req, res) => {
     req.session.class = user_data.class;
     req.session.phone_number = user_data.phone_number;
     req.session.address = user_data.address;
+    req.session.user_agent = req.headers["user-agent"];
 
     return res.status(200).send()
   } catch (error) {
@@ -115,6 +116,7 @@ let login_with_facebook = (req, res) => {
   req.session.class = req.session.passport.user.class;
   req.session.phone_number = req.session.passport.user.phone_number;
   req.session.address = req.session.passport.user.address;
+  req.session.user_agent = req.headers["user-agent"];
 
   return res.redirect("/")
 }
