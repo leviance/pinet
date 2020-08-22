@@ -2,6 +2,11 @@ const express = require('express')
 const {home_controller, auth_controller} = require('../controllers/index')
 const {auth_valid} = require('../validation/index')
 
+const passport = require('passport')
+const init_passport_facebook = require('../controllers/passport_controllers/facebook')
+
+init_passport_facebook()
+
 let router = express.Router()
 
 function init_routes(app) {
@@ -17,6 +22,9 @@ function init_routes(app) {
   router.get("/send-verify-code/:verify_code/:email",auth_valid.valid_verify_code,auth_controller.recover_user_password)
   
   router.post("/user-login",auth_valid.verify_user_login, auth_controller.user_login)
+
+  router.get('/auth/facebook',passport.authenticate('facebook',{scope : ["email"]}));
+  router.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRedirect: '/login'}),auth_controller.login_with_facebook);
 
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {

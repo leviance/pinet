@@ -20,9 +20,45 @@
 
         <!-- css loading modal -->
         <link rel="stylesheet" href="/custom/css/three-dots.min.css">
+        <!-- font-awesome 4 -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
     <body>
+        <style>
+            #login-with-other-app{
+                display: flex;
+                justify-content: center;
+                padding:0;
+            }
+            #login-with-other-app .login-with-facebook{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 35px;
+                height: 35px;
+                background-color:#1877f2;
+                border-radius: 50%;
+            }
+            #login-with-other-app a:nth-child(1){padding-right: 10px;}
+            #login-with-other-app .login-with-google{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 35px;
+                height: 35px;
+                background-color:#e0584a;
+                border-radius: 50%;
+            }
+
+            #login-with-other-app .login-with-google i{
+                color: white;
+            }
+
+            #login-with-other-app .login-with-facebook i{
+                color: white;
+            }
+        </style>
 
         <%- include('../loading_modal/loading.ejs')  %> 
 
@@ -74,6 +110,19 @@
                                                 <input id="login-input-user-password" type="password" class="form-control bg-soft-light border-light" placeholder="Nhập vào mật khẩu">
                                                 
                                             </div>
+                                        </div>
+
+                                        <div id="login-with-other-app" class="custom-control custom-checkbox mb-4">
+                                            <a href="/auth/facebook">
+                                                <div class="login-with-facebook">
+                                                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                                                </div>
+                                            </a>
+                                            <a href="">
+                                                <div class="login-with-google">
+                                                    <i class="fa fa-google" aria-hidden="true"></i>
+                                                </div>
+                                            </a>
                                         </div>
 
                                         <!-- <div class="custom-control custom-checkbox mb-4">

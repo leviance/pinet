@@ -18,17 +18,17 @@ let user_schema = new Schema({
         verify_code: String,
     },
     facebook: {
-        uid: String,
+        id: String,
         token: String,
         email: {type: String, trim: true}
     },
     google: {
-        uid: String,
+        id: String,
         token: String,
         email: {type: String, trim: true}
     },
     student: {
-        student_code: String,
+        student_code: {type: String, default: null}
     },
     created_at: {type: Number, default: Date.now},
     updated_at: {type: Number, default: null},
@@ -64,6 +64,14 @@ user_schema.statics = {
             {"local.email": email},
             {"local.password": password}
         )
+    },
+
+    find_by_facebook_id(facebook_id){
+        return this.findOne({"facebook.id": facebook_id}).exec()
+    },
+
+    create_with_app(data){
+        return this.create(data)
     }
 
 }
