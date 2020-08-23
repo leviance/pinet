@@ -4,8 +4,10 @@ const {auth_valid} = require('../validation/index')
 
 const passport = require('passport')
 const init_passport_facebook = require('../controllers/passport_controllers/facebook')
+const init_passport_google = require('../controllers/passport_controllers/google')
 
 init_passport_facebook()
+init_passport_google()
 
 let router = express.Router()
 
@@ -23,9 +25,14 @@ function init_routes(app) {
   
   router.post("/user-login",auth_valid.verify_user_login, auth_controller.user_login)
 
+  // router for login with facebook
   router.get('/auth/facebook',passport.authenticate('facebook',{scope : ["email"]}));
-  router.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRedirect: '/login'}),auth_controller.login_with_facebook);
+  router.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRedirect: '/login'}),auth_controller.login_with_app);
 
+  // router for login with google
+  app.get('/auth/google',passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login','https://www.googleapis.com/auth/userinfo.email'] }));
+  app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),auth_controller.login_with_app);
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {
     // respond with html page

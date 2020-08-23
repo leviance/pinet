@@ -107,7 +107,7 @@ let user_login = async (req, res) => {
   }
 }
 
-let login_with_facebook = (req, res) => {
+let login_with_app = (req, res) => {
   // create session
   req.session.user_id = req.session.passport.user._id;
   req.session.username = req.session.passport.user.username;
@@ -121,6 +121,7 @@ let login_with_facebook = (req, res) => {
   return res.redirect("/")
 }
 
+
 module.exports = {
   render_login_page,
   render_register_page,
@@ -130,5 +131,5 @@ module.exports = {
   send_verify_code,
   recover_user_password,
   user_login,
-  login_with_facebook
+  login_with_app
 }

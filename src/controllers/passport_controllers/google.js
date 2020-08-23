@@ -1,28 +1,26 @@
-const passport = require('passport')
-const FacebookStrategy = require('passport-facebook').Strategy;
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const user_model = require('../../models/users.model')
 const download_img = require('../../config/download_img')
 
-let init_passport_facebook = () => {
-
-  passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: process.env.FACEBOOK_APP_CALLBACK,
-    profileFields: ['id', 'displayName', 'email', 'gender', 'picture.type(large)'],
-    enableProof: true
+let init_passport_google = () => {
+  passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_APP_ID,
+    clientSecret: process.env.GOOGLE_APP_SECRET,
+    callbackURL: process.env.GOOGLE_APP_CALLBACK
   },
     async (accessToken, refreshToken, profile, done) => {
       
       try {
-        let user = await user_model.find_by_facebook_id(profile._json.id)
+        let user = await user_model.find_by_google_id(profile._json.sub)
 
+        // if found user
         if(user) return done(null, user)
 
         // download avatar user
-        let url_user_avatar = profile._json.picture.data.url;
+        let url_user_avatar = profile._json.picture;
         let avatar_name = ""
-
+        
         try {
           avatar_name = await download_img(url_user_avatar)
         } catch (error) {
@@ -33,10 +31,10 @@ let init_passport_facebook = () => {
         // if user not found create a new one
         let data = {
           username: profile._json.name,
-          avatar: avatar_name,
           local: {is_active : true},
-          facebook: {
-            id: profile._json.id,
+          avatar: avatar_name,
+          google: {
+            id: profile._json.sub,
             token: accessToken,
             email: profile._json.email
           }
@@ -47,11 +45,12 @@ let init_passport_facebook = () => {
         return done(null,new_user)
 
       } catch (error) {
-        console.log(`error login with facebook: ${error}`)
+        console.log(`error login with google: ${error}`)
         return done(null, false)
       }
     }
   ));
+
 
   // save user id to session
   passport.serializeUser((user,done) =>{
@@ -65,4 +64,4 @@ let init_passport_facebook = () => {
 
 }
 
-module.exports = init_passport_facebook
+module.exports = init_passport_google
