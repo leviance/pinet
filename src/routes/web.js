@@ -16,6 +16,7 @@ function init_routes(app) {
   router.get('/login',auth_controller.render_login_page)
   router.get('/register',auth_controller.render_register_page)
   router.get('/recover',auth_controller.render_recover_account_page)
+  router.get('/logout', auth_controller.user_logout)
 
   router.post("/user-create-new-account",auth_valid.register_valid, auth_controller.create_new_account)
   router.get("/active-account/:token",auth_controller.user_active_account)
@@ -30,9 +31,11 @@ function init_routes(app) {
   router.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRedirect: '/login'}),auth_controller.login_with_app);
 
   // router for login with google
-  app.get('/auth/google',passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login','https://www.googleapis.com/auth/userinfo.email'] }));
-  app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),auth_controller.login_with_app);
+  router.get('/auth/google',passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login','https://www.googleapis.com/auth/userinfo.email'] }));
+  router.get('/auth/google/callback',passport.authenticate('google', { failureRedirect: '/login' }),auth_controller.login_with_app);
+
+
+
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {
     // respond with html page
