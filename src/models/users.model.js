@@ -11,7 +11,7 @@ let user_schema = new Schema({
     class: {type: String, default: null},
     local: {
         name_account: String,
-        email: {type: String, trim: true},
+        email: {type: String, trim: true, default: null},
         password: String,
         is_active: {type: Boolean, default: false},
         verify_token: String,
@@ -72,6 +72,10 @@ user_schema.statics = {
 
     create_with_app(data){
         return this.create(data)
+    },
+
+    find_by_google_id(google_id){
+        return this.findOne({"google.id": google_id}).exec()
     }
 
 }

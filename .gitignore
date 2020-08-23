@@ -1,3 +1,5 @@
 node_modules
 
 sh/env.sh
+
+src/public/assets/images/users

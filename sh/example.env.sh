@@ -14,3 +14,11 @@ export EMAIL_PASS=
 export EMAIL_HOST=smtp.gmail.com
 export EMAIL_PORT=587
 
+export SESSION_SECRET=
+
+export FACEBOOK_APP_ID=
+export FACEBOOK_APP_SECRET=
+export FACEBOOK_APP_CALLBACK=
+
+export GOOGLE_APP_ID=
+export GOOGLE_APP_SECRET=
