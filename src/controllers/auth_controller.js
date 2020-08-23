@@ -121,6 +121,11 @@ let login_with_app = (req, res) => {
   return res.redirect("/")
 }
 
+let user_logout = (req, res) => {
+  req.session.destroy();
+  res.redirect("/login")
+}
+
 
 module.exports = {
   render_login_page,
@@ -131,5 +136,6 @@ module.exports = {
   send_verify_code,
   recover_user_password,
   user_login,
-  login_with_app
+  login_with_app,
+  user_logout
 }
