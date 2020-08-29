@@ -33,9 +33,19 @@
         <!-- My css add new -->
         <link rel="stylesheet" href="/assets/css/mycss.css">
 
+        <!-- alertify style -->
+        <link rel="stylesheet" href="/alertify/alertify.css" />
+        <link rel="stylesheet" href="/alertify/themes/default.min.css" />
+
+        <!-- custom css -->
+        <link rel="stylesheet" href="/custom/css/three-dots.min.css">
     </head>
 
     <body>
+        <!-- loadding modal start -->
+        <%- include("../loading_modal/loading") %> 
+        <!-- loadding modal end -->
+
 
         <div class="layout-wrapper d-lg-flex">
 
@@ -67,8 +77,13 @@
 
         <!-- page init -->
         <script src="/assets/js/pages/index.init.js"></script>
-
         <script src="/assets/js/app.js"></script>
+
+        <!-- alertify javascript -->
+        <script src="/alertify/alertify.min.js"></script>
+
+        <!-- custom javascript -->
+        <script src="/custom/js/home_page/user_setting/user_upload_avatar.js"></script>
 
     </body>
 </html>

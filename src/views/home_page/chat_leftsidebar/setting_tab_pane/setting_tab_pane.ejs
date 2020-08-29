@@ -1,4 +1,15 @@
 <div class="tab-pane" id="pills-setting" role="tabpanel" aria-labelledby="pills-setting-tab">
+    <style>
+        .status-user-online, .status-user-offline{
+            width: 10px;
+            height: 10px;
+            background-color: #4ed037;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 3px;
+        }
+        .status-user-offline{background-color: #f15f5f;}
+    </style>
   <!-- Start Settings content -->
   <div>
       <div class="px-4 pt-4">
@@ -7,21 +18,23 @@
 
       <div class="text-center border-bottom p-4">
           <div class="mb-4 profile-user">
-              <img src="/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-lg img-thumbnail" alt="">
-              <button type="button" class="btn bg-light avatar-xs p-0 rounded-circle profile-photo-edit">
+              <img id="test-img-user-avatar" src="" alt="" style="display: none;">
+              <img id="img-user-avatar" src=<%= `/assets/images/users/${user.avatar}` %> class="rounded-circle avatar-lg img-thumbnail" alt="" >
+              <button onclick="document.getElementById('user-selectet-avatar').click()" type="file" class="btn bg-light avatar-xs p-0 rounded-circle profile-photo-edit">
                   <i class="ri-pencil-fill"></i>
               </button>
+              <input type="file" id="user-selectet-avatar" accept="image/*" style="display: none;" />
           </div>
 
-          <h5 class="font-size-16 mb-1 text-truncate">Patricia Smith</h5>
+          <h5 class="font-size-16 mb-1 text-truncate"><%= user.username %> </h5>
           <div class="dropdown d-inline-block mb-1">
               <a class="text-muted dropdown-toggle pb-1 d-block" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Available <i class="mdi mdi-chevron-down"></i>
+                 <div class="status-user-online"></div> Đang hoạt động <i class="mdi mdi-chevron-down"></i>
               </a>
 
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Available</a>
-                <a class="dropdown-item" href="#">Busy</a>
+                <a class="dropdown-item" href="#"><div class="status-user-online"></div> Đang hoạt động</a>
+                <a class="dropdown-item" href="#"><div class="status-user-offline"></div> Ngoại tuyến</a>
               </div>
           </div>
       </div>
@@ -53,27 +66,40 @@
 
                           <div>
                               <p class="text-muted mb-1">Họ Tên</p>
-                              <h5 class="font-size-14">Dương Hoàng Dũng</h5>
+                              <h5 class="font-size-14"><%= user.username %> </h5>
                           </div>
 
                           <div class="mt-4">
                               <p class="text-muted mb-1">Email</p>
-                              <h5 class="font-size-14">adc@123.com</h5>
+                              <h5 class="font-size-14">
+                                  <% if(user.local.email) %> <%= user.local.email %> 
+                                  <% if(user.facebook.email) %> <%= user.facebook.email %> 
+                                  <% if(user.google.email) %> <%= user.google.email %> 
+                              </h5>
                           </div>
 
                           <div class="mt-4">
                               <p class="text-muted mb-1">Tuổi</p>
-                              <h5 class="font-size-14">20</h5>
+                              <h5 class="font-size-14">
+                                  <% if(user.age) {%> <%= user.age %>
+                                  <%} else {%> Chưa cập nhập <% } %>
+                              </h5>
                           </div>
 
                           <div class="mt-4">
                               <p class="text-muted mb-1">Địa chỉ</p>
-                              <h5 class="font-size-14 mb-0">California, USA</h5>
+                              <h5 class="font-size-14 mb-0">
+                                  <% if(user.address){ %> <%= user.address %>
+                                  <% } else { %> Chưa cập nhập <% } %>
+                              </h5>
                           </div>
 
                           <div class="mt-4">
                               <p class="text-muted mb-1">Lớp</p>
-                              <h5 class="font-size-14 mb-0">Thương mại điện tử k17A</h5>
+                              <h5 class="font-size-14 mb-0">
+                                <% if(user.class){ %> <%= user.class %>
+                                <% } else { %> Chưa cập nhập <% } %>
+                              </h5>
                           </div>
                       </div>
                   </div>
@@ -96,17 +122,17 @@
                           <div class="py-3">
                               <div class="media align-items-center">
                                   <div class="media-body overflow-hidden">
-                                      <h5 class="font-size-13 mb-0 text-truncate">Profile photo</h5>
+                                      <h5 class="font-size-13 mb-0 text-truncate">Anbum ảnh</h5>
 
                                   </div>
                                   <div class="dropdown ml-2">
                                       <button class="btn btn-light btn-sm dropdown-toggle w-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          Everyone <i class="mdi mdi-chevron-down"></i>
+                                          Tất cả mọi người <i class="mdi mdi-chevron-down"></i>
                                       </button>
                                       <div class="dropdown-menu dropdown-menu-right">
-                                          <a class="dropdown-item" href="#">Everyone</a>
-                                          <a class="dropdown-item" href="#">selected</a>
-                                          <a class="dropdown-item" href="#">Nobody</a>
+                                        <a class="dropdown-item" href="#">Tất cả mọi người</a>
+                                        <a class="dropdown-item" href="#">Bạn bè</a>
+                                        <a class="dropdown-item" href="#">Chỉ mình tôi</a>
                                       </div>
                                   </div>
                               </div>
@@ -114,7 +140,7 @@
                           <div class="py-3 border-top">
                               <div class="media align-items-center">
                                   <div class="media-body overflow-hidden">
-                                      <h5 class="font-size-13 mb-0 text-truncate">Last seen</h5>
+                                      <h5 class="font-size-13 mb-0 text-truncate">Nhận lời mời kết bạn</h5>
 
                                   </div>
                                   <div class="ml-2">
@@ -129,17 +155,17 @@
                           <div class="py-3 border-top">
                               <div class="media align-items-center">
                                   <div class="media-body overflow-hidden">
-                                      <h5 class="font-size-13 mb-0 text-truncate">Status</h5>
+                                      <h5 class="font-size-13 mb-0 text-truncate">Trạng thái hoạt động</h5>
 
                                   </div>
                                   <div class="dropdown ml-2">
                                       <button class="btn btn-light btn-sm dropdown-toggle w-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          Everyone <i class="mdi mdi-chevron-down"></i>
+                                          Tât cả mọi người <i class="mdi mdi-chevron-down"></i>
                                       </button>
                                       <div class="dropdown-menu dropdown-menu-right">
-                                          <a class="dropdown-item" href="#">Everyone</a>
-                                          <a class="dropdown-item" href="#">selected</a>
-                                          <a class="dropdown-item" href="#">Nobody</a>
+                                        <a class="dropdown-item" href="#">Tất cả mọi người</a>
+                                        <a class="dropdown-item" href="#">Bạn bè</a>
+                                        <a class="dropdown-item" href="#">Chỉ mình tôi</a>
                                       </div>
                                   </div>
                               </div>
@@ -148,12 +174,12 @@
                           <div class="py-3 border-top">
                               <div class="media align-items-center">
                                   <div class="media-body overflow-hidden">
-                                      <h5 class="font-size-13 mb-0 text-truncate">Read receipts</h5>
+                                      <h5 class="font-size-13 mb-0 text-truncate">Chỉ nhận tin nhắn từ bạn bè</h5>
 
                                   </div>
                                   <div class="ml-2">
                                       <div class="custom-control custom-switch">
-                                          <input type="checkbox" class="custom-control-input" id="privacy-readreceiptSwitch" checked>
+                                          <input type="checkbox" class="custom-control-input" id="privacy-readreceiptSwitch">
                                           <label class="custom-control-label" for="privacy-readreceiptSwitch"></label>
                                       </div>
                                   </div>
@@ -163,21 +189,37 @@
                           <div class="py-3 border-top">
                               <div class="media align-items-center">
                                   <div class="media-body overflow-hidden">
-                                      <h5 class="font-size-13 mb-0 text-truncate">Groups</h5>
+                                      <h5 class="font-size-13 mb-0 text-truncate">Hồ sơ cá nhân</h5>
 
                                   </div>
                                   <div class="dropdown ml-2">
                                       <button class="btn btn-light btn-sm dropdown-toggle w-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          Everyone <i class="mdi mdi-chevron-down"></i>
+                                        Tất cả mọi người <i class="mdi mdi-chevron-down"></i>
                                       </button>
                                       <div class="dropdown-menu dropdown-menu-right">
-                                          <a class="dropdown-item" href="#">Everyone</a>
-                                          <a class="dropdown-item" href="#">selected</a>
-                                          <a class="dropdown-item" href="#">Nobody</a>
+                                          <a class="dropdown-item" href="#">Tất cả mọi người</a>
+                                          <a class="dropdown-item" href="#">Bạn bè</a>
+                                          <a class="dropdown-item" href="#">Chỉ mình tôi</a>
                                       </div>
                                   </div>
                               </div>
                           </div>
+
+                          <div class="py-3 border-top">
+                            <div class="media align-items-center">
+                                <div class="media-body overflow-hidden">
+                                    <h5 class="font-size-13 mb-0 text-truncate">Xóa tin nhắn khi người nhận đã xem</h5>
+
+                                </div>
+                                <div class="ml-2">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="privacy-auto-remove-message">
+                                        <label class="custom-control-label" for="privacy-auto-remove-message"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                       </div>
   
                   </div>
@@ -190,7 +232,7 @@
                                   aria-controls="profile-setting-securitynoticollapse">
                       <div class="card-header" id="profile-setting-securitynotiheading">
                           <h5 class="font-size-14 m-0">
-                              Security
+                              Bảo mật
                               <i class="mdi mdi-chevron-up float-right accor-plus-icon"></i>
                           </h5>
                       </div>
@@ -199,10 +241,10 @@
                           data-parent="#profile-setting-accordion">
                       <div class="card-body">
   
-                          <div>
+                          <div class="py-3">
                               <div class="media align-items-center">
                                   <div class="media-body overflow-hidden">
-                                      <h5 class="font-size-13 mb-0 text-truncate">Show security notification</h5>
+                                      <h5 class="font-size-13 mb-0 text-truncate">Nhận thông đăng nhập lạ</h5>
 
                                   </div>
                                   <div class="ml-2">
@@ -213,6 +255,22 @@
                                   </div>
                               </div>
                           </div>
+
+                          <div class="py-3 border-top">
+                                <div class="media align-items-center">
+                                    <div class="media-body overflow-hidden">
+                                        <h5 class="font-size-13 mb-0 text-truncate">Bảo mật 2 lớp</h5>
+
+                                    </div>
+                                    <div class="ml-2">
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="security-two-level">
+                                            <label class="custom-control-label" for="security-two-level"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                          </div>
+
                       </div>
                   </div>
               </div>
@@ -224,7 +282,7 @@
                                   aria-controls="profile-setting-helpcollapse">
                       <div class="card-header" id="profile-setting-helpheading">
                           <h5 class="font-size-14 m-0">
-                              Help
+                              Trợ giúp
                               <i class="mdi mdi-chevron-up float-right accor-plus-icon"></i>
                           </h5>
                       </div>
@@ -238,10 +296,10 @@
                                   <h5 class="font-size-13 mb-0"><a href="#" class="text-body d-block">FAQs</a></h5>
                               </div>
                               <div class="py-3 border-top">
-                                  <h5 class="font-size-13 mb-0"><a href="#" class="text-body d-block">Contact</a></h5>
+                                  <h5 class="font-size-13 mb-0"><a href="#" class="text-body d-block">Liên hệ với chúng tôi</a></h5>
                               </div>
                               <div class="py-3 border-top">
-                                  <h5 class="font-size-13 mb-0"><a href="#" class="text-body d-block">Terms & Privacy policy</a></h5>
+                                  <h5 class="font-size-13 mb-0"><a href="#" class="text-body d-block">Điều khoản sử dụng</a></h5>
                               </div>
                           </div>
                       </div>

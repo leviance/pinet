@@ -47,3 +47,9 @@ module.exports.user_login_mess = {
   account_is_not_authenticated: "Tài khoản của bạn chưa được xác thực, vui lòng kiểm tra Email để xác thực tài khoản!",
   password_wrong: "Mật khẩu không chính xác"
 }
+
+module.exports.user_settings = {
+  avatar_type_error: "Kiểu file không hợp lệ",
+  avatar_size_error: "Kích thước ảnh không hợp lệ, tối đa 10MB",
+  unspecified_error: "Đã có lỗi bất ngờ xảy ra nếu còn gặp phải lỗi này xin vui lòng liên hệ bộ phận hỗ trợ của chúng tôi"
+}
