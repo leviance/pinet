@@ -107,6 +107,11 @@ let user_login = async (req, res) => {
   }
 }
 
+let check_login = (req, res, next) => {
+  if(!req.session.user_id) return res.status(500).send()
+  next()
+}
+
 let login_with_app = (req, res) => {
   // create session
   req.session.user_id = req.session.passport.user._id;
@@ -137,5 +142,6 @@ module.exports = {
   recover_user_password,
   user_login,
   login_with_app,
-  user_logout
+  user_logout,
+  check_login
 }

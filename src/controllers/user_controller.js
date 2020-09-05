@@ -3,6 +3,8 @@ const {app} = require('../config/app')
 const {user_settings} = require('../../lang/vi')
 const uid = require('uid')
 const multer = require('multer')
+const {home_valid} = require('../validation/index')
+const { validationResult } = require('express-validator');
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -50,6 +52,43 @@ let user_upload_avatar = async (req, res) => {
 
 }
 
+let user_edit_information = async (req, res) => {
+  let data = req.body
+  let user_id = req.session.user_id
+  let url = `${req.protocol}://${req.get("host")}`
+  
+  for (let key in data){
+    if(data[key] == "") delete data[key]
+  }
+
+  try {
+    await home_valid.valid_user_edit_infor(data)
+    
+    let result_valid = await user_services.user_edit_information(user_id, data, url)
+
+    return res.status(200).send(result_valid)
+
+  } catch (error) {
+    return res.status(500).send(error)
+  }
+  
+}
+
+let user_change_email = async (req, res) => {
+  let verify_code = req.params.verify_code;
+  let user_email = req.params.email;
+  let result_valid = validationResult(req).errors;
+
+  console.log(verify_code, user_email, result_valid)
+
+  if(result_valid.length > 0) return res.status(500).send(result_valid[0].msg)
+
+  let result_change_email = await user_services.user_change_email(verify_code, user_email, result_valid)
+  res.redirect('/login')
+}
+
 module.exports = {
-  user_upload_avatar
+  user_upload_avatar,
+  user_edit_information,
+  user_change_email
 }

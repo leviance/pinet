@@ -51,5 +51,17 @@ module.exports.user_login_mess = {
 module.exports.user_settings = {
   avatar_type_error: "Kiểu file không hợp lệ",
   avatar_size_error: "Kích thước ảnh không hợp lệ, tối đa 10MB",
-  unspecified_error: "Đã có lỗi bất ngờ xảy ra nếu còn gặp phải lỗi này xin vui lòng liên hệ bộ phận hỗ trợ của chúng tôi"
+  unspecified_error: "Đã có lỗi bất ngờ xảy ra nếu còn gặp phải lỗi này xin vui lòng liên hệ bộ phận hỗ trợ của chúng tôi",
+  username_error: "Tên người dùng không được chứa ký tự đặc biệt, độ dài tối đa 50 ký tự tối thiểu 1 ký tự",
+  email_error: "Email bạn nhập vào không hợp lệ",
+  age_error: "Tuôi bạn nhập vào không hợp lệ, chỉ chấp nhận số.",
+  address_error: "Địa chỉ bạn vừa nhập vào không hợp lệ",
+  class_error: "Lớp bạn nhập vào không hợp lệ",
+  update_infor_success: "Cập nhập thông tin thành công",
+  email_can_not_change: "Không thể thay đổi email do tài khoản của bạn được nhập bằng Google hoặc Facebook",
+  student_can_not_change: "Bạn không thể thay đổi tuổi, lớp, địa chỉ, tên người dùng do bạn đăng nhập với tài khoản sinh viên",
+  status_change_email: "Link xác thực đã được gửi đến Email của bạn vui lòng kiểm tra để hoàn tất thay đổi Email.",
+  update_infor_error: "Đã có lỗi bất ngờ xảy ra nếu tình trạng này còn xảy ra vui lòng liên hệ với bộ phận hỗ trợ của chúng tôi!",
+  subject_to_change_email: "Thay đổi Email tài khoản Pinet.",
+  html_to_change_email: (url) => `<p>Bạn vừa thực hiện thay đổi Email trên Pinet hãy click vào <a href="${url}">ĐÂY</a> để tiến hành hay đổi. Nếu không phải do bạn thực hiện để đảm bảo an toàn hãy đổi mật khẩu tài khoản Pinet của bạn. Xin cảm ơn.</p>`
 }

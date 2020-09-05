@@ -91,6 +91,13 @@ user_schema.statics = {
             {'_id': user_id},
             {'avatar': file_name}
         ).exec()
+    },
+
+    user_update_informations(user_id,data_to_update){
+        return this.updateOne(
+            {'_id': user_id},
+            data_to_update
+        ).exec()
     }
 
 }

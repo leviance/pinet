@@ -9,6 +9,16 @@
             margin-right: 3px;
         }
         .status-user-offline{background-color: #f15f5f;}
+
+        .form-user-edit-infor{
+            font-size: 14px;
+            border: 1px solid #7269ef;
+        }
+        .form-user-edit-infor:focus{
+            border: 2px solid #7269ef !important;
+            outline: none;
+        }
+
     </style>
   <!-- Start Settings content -->
   <div>
@@ -61,42 +71,44 @@
                       <div class="card-body">
 
                           <div class="float-right">
-                              <button type="button" class="btn btn-light btn-sm"><i class="ri-edit-fill mr-1 align-middle"></i> Edit</button>
+                              <button id="btn-user-edit-profile" type="button" class="btn btn-light btn-sm"><i class="ri-edit-fill mr-1 align-middle"></i> Chỉnh sửa</button>
+                              <button id="btn-user-save-edit-profile" type="button" class="btn btn-light btn-sm" style="background-color: #7269ef; color: white;" ><i class="fa fa-hdd-o mr-1 align-middle" aria-hidden="true"></i> Lưu lại</button>
+                              <button id="btn-user-cancel-edit-profile" type="button" class="btn btn-light btn-sm" style="background-color: rgb(238 79 118); color: white;" ><i class="fa fa-ban mr-1 align-middle" aria-hidden="true"></i> Hủy bỏ</button>
                           </div>
 
-                          <div>
+                          <div class="persional-information">
                               <p class="text-muted mb-1">Họ Tên</p>
-                              <h5 class="font-size-14"><%= user.username %> </h5>
+                              <h5 id="setting-profile-username" class="font-size-14"><%= user.username %> </h5>
                           </div>
-
-                          <div class="mt-4">
+                          
+                          <div class="mt-4 persional-information">
                               <p class="text-muted mb-1">Email</p>
-                              <h5 class="font-size-14">
+                              <h5 id="setting-profile-email" class="font-size-14">
                                   <% if(user.local.email) %> <%= user.local.email %> 
                                   <% if(user.facebook.email) %> <%= user.facebook.email %> 
                                   <% if(user.google.email) %> <%= user.google.email %> 
                               </h5>
                           </div>
 
-                          <div class="mt-4">
+                          <div class="mt-4 persional-information">
                               <p class="text-muted mb-1">Tuổi</p>
-                              <h5 class="font-size-14">
+                              <h5 id="setting-profile-age" class="font-size-14">
                                   <% if(user.age) {%> <%= user.age %>
                                   <%} else {%> Chưa cập nhập <% } %>
                               </h5>
                           </div>
 
-                          <div class="mt-4">
+                          <div class="mt-4 persional-information">
                               <p class="text-muted mb-1">Địa chỉ</p>
-                              <h5 class="font-size-14 mb-0">
+                              <h5 id="setting-profile-address" class="font-size-14 mb-0">
                                   <% if(user.address){ %> <%= user.address %>
                                   <% } else { %> Chưa cập nhập <% } %>
                               </h5>
                           </div>
 
-                          <div class="mt-4">
+                          <div class="mt-4 persional-information">
                               <p class="text-muted mb-1">Lớp</p>
-                              <h5 class="font-size-14 mb-0">
+                              <h5 id="setting-profile-class" class="font-size-14 mb-0">
                                 <% if(user.class){ %> <%= user.class %>
                                 <% } else { %> Chưa cập nhập <% } %>
                               </h5>

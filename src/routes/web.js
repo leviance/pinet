@@ -34,7 +34,10 @@ function init_routes(app) {
   router.get('/auth/google',passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login','https://www.googleapis.com/auth/userinfo.email'] }));
   router.get('/auth/google/callback',passport.authenticate('google', { failureRedirect: '/login' }),auth_controller.login_with_app);
 
-  router.put('/user-upload-avatar',user_controller.user_upload_avatar)
+  router.put('/user-upload-avatar',auth_controller.check_login,user_controller.user_upload_avatar)
+  router.put('/user-edit-information',auth_controller.check_login,user_controller.user_edit_information)
+  router.get("/verify-to-change-email/:verify_code/:email",auth_valid.valid_verify_code,user_controller.user_change_email)
+
 
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {
