@@ -98,6 +98,13 @@ user_schema.statics = {
             {'_id': user_id},
             data_to_update
         ).exec()
+    },
+
+    user_change_email(old_email,new_email){
+        return this.updateOne(
+            {'local.email': old_email},
+            {'local.email': new_email}
+        ).exec()
     }
 
 }

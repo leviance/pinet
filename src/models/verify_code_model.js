@@ -13,7 +13,8 @@ verify_code_schemas.index( { "createdAt": 1 }, { expireAfterSeconds: 60 * 60} ) 
 
 // type of verify code
 let type_verify_code = {
-  "recover_account": "recover account code"
+  recover_account: "recover account code",
+  change_email: "change email"
 }
 
 verify_code_schemas.statics = {
@@ -33,8 +34,24 @@ verify_code_schemas.statics = {
     }).exec();
   },
 
+  create_change_email_verify_code(email, verify_code){
+    return this.create({
+      "type": type_verify_code.change_email,
+      "email": email, 
+      "verify_code": verify_code
+    })
+  },
+
+  find_verify_code_change_email(verify_code,email){
+    return this.findOne({
+      "email": email,
+      "verify_code": verify_code, 
+      "type": type_verify_code.change_email
+    }).exec();
+  },
+
   remove_verify_code(email, verify_code){
-    return this.remove({
+    return this.deleteOne({
       "email": email,
       "verify_code": verify_code
     })

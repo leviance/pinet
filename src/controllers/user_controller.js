@@ -76,14 +76,14 @@ let user_edit_information = async (req, res) => {
 
 let user_change_email = async (req, res) => {
   let verify_code = req.params.verify_code;
-  let user_email = req.params.email;
+  let new_email = req.params.new_email;
+  let old_email = req.params.old_email;
   let result_valid = validationResult(req).errors;
-
-  console.log(verify_code, user_email, result_valid)
 
   if(result_valid.length > 0) return res.status(500).send(result_valid[0].msg)
 
-  let result_change_email = await user_services.user_change_email(verify_code, user_email, result_valid)
+  let result_change_email = await user_services.user_change_email(verify_code, new_email, old_email)
+
   res.redirect('/login')
 }
 

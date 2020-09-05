@@ -88,6 +88,7 @@ function click_btn_save_edit_profile(){
       data: data,
       success: function(msg) {
         alertify.success(msg)
+        change_user_profile_realtime(data)
       },
       error: function(msg) {
         alertify.error(msg.responseText)
@@ -95,6 +96,13 @@ function click_btn_save_edit_profile(){
     })
     
   }
+}
+
+function change_user_profile_realtime(data) {
+  if(data.username) $('#setting-profile-username').text(data.username)
+  if(data.age) $('#setting-profile-age').text(data.age)
+  if(data.address) $('#setting-profile-address').text(data.address)
+  if(data.classes) $('#setting-profile-class').text(data.classes)
 }
 
 function click_btn_cancel_edit_profile(){
