@@ -2,9 +2,10 @@ const user_model = require('../models/users.model')
 const {user_settings} = require('../../lang/vi')
 const send_mail = require('../config/send_mail')
 const uid = require('uid')
+const verify_code_model = require('../models/verify_code_model')
 
 
-let get_data_user = async (user_id) => {
+let get_data_user = (user_id) => {
   return new Promise( async (resolve, reject) => {
     let data_user = await user_model.find_user_by_id(user_id)
     //console.log(data_user)
@@ -22,7 +23,7 @@ let user_upload_avatar = (file_name, user_id) => {
   })
 }
 
-let user_edit_information = async (user_id, data, url) => {
+let user_edit_information = (user_id, data, url) => {
   return new Promise( async (resolve, reject) => {
     let check_email_changed = false
     let user_data = await user_model.find_user_by_id(user_id)
@@ -61,12 +62,17 @@ let user_edit_information = async (user_id, data, url) => {
     if(result_update.nModified == 0 && check_email_changed === false) return reject(user_settings.update_infor_error)
 
     if(check_email_changed === true) {
-      let url_to_change_email = `${url}/${uid()}${new Date().getTime()}/${user_data.local.email}`
+      let verify_code = `${uid()}${new Date().getTime()}`
+      let new_email = data.email
+      let old_email = user_data.local.email
+
+      let url_to_change_email = `${url}/verify-to-change-email/${verify_code}/${new_email}/${old_email}`
       
       // store verify code to DB
+      await verify_code_model.create_change_email_verify_code(new_email, verify_code)
 
       // send link verify for user to change email address
-      send_mail(user_data.local.email,user_settings.subject_to_change_email, user_settings.html_to_change_email(url_to_change_email))
+      send_mail(old_email,user_settings.subject_to_change_email, user_settings.html_to_change_email(url_to_change_email))
 
       return resolve(user_settings.status_change_email)
     }
@@ -75,8 +81,18 @@ let user_edit_information = async (user_id, data, url) => {
   })
 }
 
-let user_change_email = async (verify_code, user_email, result_valid) => {
+let user_change_email = (verify_code, new_email, old_email) => {
+  return new Promise( async (resolve, reject) => {
+    let find_verify_code_change_email = await verify_code_model.find_verify_code_change_email(verify_code, new_email)
+    
+    if(!find_verify_code_change_email) return reject()
 
+    await verify_code_model.remove_verify_code(new_email, verify_code)
+
+    await user_model.user_change_email(old_email,new_email)
+    
+    return resolve()
+  })
 }
 
 module.exports = {
