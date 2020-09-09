@@ -87,8 +87,26 @@ let user_change_email = async (req, res) => {
   res.redirect('/login')
 }
 
+let search_friend_to_add_contact = async (req, res) => {
+  let key_word = req.params.key_word;
+  let user_id = req.session.user_id
+  
+  try {
+    let result_search = await user_services.search_friend_to_add_contact(key_word)
+
+    result_search.forEach( (item, index) => {
+      if(item._id == user_id) result_search.splice(index, 1)
+    })
+
+    return res.status(200).send(result_search)
+  } catch (error) {
+    return res.status(500).send(error)
+  }
+}
+
 module.exports = {
   user_upload_avatar,
   user_edit_information,
-  user_change_email
+  user_change_email,
+  search_friend_to_add_contact
 }

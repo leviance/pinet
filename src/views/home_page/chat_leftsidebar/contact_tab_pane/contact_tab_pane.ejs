@@ -17,26 +17,53 @@
               <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                   <div class="modal-content">
                       <div class="modal-header">
-                          <h5 class="modal-title font-size-16" id="addContact-exampleModalLabel">Add Contact</h5>
+                          <h5 class="modal-title font-size-16" id="addContact-exampleModalLabel">Thêm bạn bè</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                           </button>
                       </div>
                       <div class="modal-body p-4">
-                          <form>
+                          <form action="javascript:void(0);">
                               <div class="form-group mb-4">
-                                  <label for="addcontactemail-input">Email</label>
-                                  <input type="email" class="form-control" id="addcontactemail-input" placeholder="Enter Email">
+                                  <label for="addcontactemail-input">Tên hoặc Email</label>
+                                  <input type="text" class="form-control" id="search-friend-input" placeholder="Tìm kiếm bạn bè">
                               </div>
-                              <div class="form-group">
+                              <div class="result-search-friend">
+                                <p id="search-friend-not-fond" style="color:#7269ef; display: none; text-align: center;">Không tìm thấy kết quả phù hợp</p>
+                                <div class="loading">
+                                    <div class="dot-carousel"></div>
+                                </div>
+
+                                <!-- <div class="friend">
+                                    <div class="left">
+                                      <div id="avatar-search-friend" class="friend-avatar">
+                                          <img src="/assets/images/users/r04d7fiybxz-1598929498329-234678.jpg" alt="">
+                                      </div>
+                                    </div>
+                                    <div class="between">
+                                      <h5 class="name">Vũ Thu Hằng</h5>
+                                      <p class="address">
+                                          Xóm nam 1 - Úc Kỳ - Phú Bình - Thái nguyên
+                                        </p>
+                                      <p class="class-name">
+                                          Thương mại điện tử K17A
+                                        </p>
+                                    </div>
+                                    <div class="right">
+                                        <div class="btn">Thêm</div>
+                                    </div>
+                                </div> -->
+                                
+                              </div>
+                              <!-- <div class="form-group">
                                   <label for="addcontact-invitemessage-input">Invatation Message</label>
                                   <textarea class="form-control" id="addcontact-invitemessage-input" rows="3" placeholder="Enter Message"></textarea>
-                              </div>
+                              </div> -->
                           </form>
                       </div>
                       <div class="modal-footer">
-                          <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Invite Contact</button>
+                          <button id="btn-close-search-friends" type="button" class="btn btn-link" data-dismiss="modal">Đóng</button>
+                          <button id="btn-search-friends" type="button" class="btn btn-primary">Tìm kiếm</button>
                       </div>
                   </div>
               </div>

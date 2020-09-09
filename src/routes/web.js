@@ -38,6 +38,8 @@ function init_routes(app) {
   router.put('/user-edit-information',auth_controller.check_login,user_controller.user_edit_information)
   router.get("/verify-to-change-email/:verify_code/:new_email/:old_email",auth_valid.valid_verify_code,user_controller.user_change_email)
 
+  router.get('/search-friend-to-add-contact-:key_word', user_controller.search_friend_to_add_contact)
+
 
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {

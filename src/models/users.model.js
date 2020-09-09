@@ -36,6 +36,9 @@ let user_schema = new Schema({
     deleted_at: {type: Number, default: null}
   });
 
+// create index for search
+user_schema.index( { username: "text" } );
+
 user_schema.statics = {
     create_new(email, name_account, password, token){
         return this.create({
@@ -105,6 +108,19 @@ user_schema.statics = {
             {'local.email': old_email},
             {'local.email': new_email}
         ).exec()
+    },
+
+    find_by_keyword(key_word){
+        return this.find({
+            $text: { $search: key_word}
+        },{
+            "username": 1,
+            "address": 1,
+            "gender": 1,
+            "avatar": 1,
+            "class": 1,
+            "age": 1,
+        }).sort( { score: { $meta: "textScore" } } ).exec()
     }
 
 }
