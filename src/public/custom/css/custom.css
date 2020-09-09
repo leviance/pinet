@@ -1,0 +1,85 @@
+.result-search-friend::-webkit-scrollbar {
+  width: 6px;
+}
+
+.result-search-friend::-webkit-scrollbar-track {
+  background: white;
+}
+
+.result-search-friend::-webkit-scrollbar-thumb {
+  background: #e8edf7;
+  border-radius: 10px;
+}
+
+.result-search-friend::-webkit-scrollbar-thumb:hover {
+  background: #7269ef;
+}
+
+.result-search-friend {
+  width: 100%;
+  height: 250px;
+  overflow-y: scroll;
+  position: relative;
+  display: none;
+}
+
+.result-search-friend .friend {
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+  min-height: 75px;
+}
+
+.result-search-friend .friend .left {
+  width: 20%;
+  min-width: 50px;
+}
+
+.result-search-friend .friend .left .friend-avatar {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.result-search-friend .friend .left .friend-avatar img {
+  height: 4rem;
+  border-radius: 50%;
+  width: 4rem;
+}
+
+.result-search-friend .friend .between {
+  width: 60%;
+  height: auto;
+  border-bottom: 1px solid #85858863;
+}
+
+.result-search-friend .friend .between .name {
+  margin-top: 10px;
+  color: #7269ef;
+  font-size: 15px;
+  padding-bottom: 10px;
+}
+
+.result-search-friend .friend .between .class-name {
+  font-size: 14px;
+}
+
+.result-search-friend .friend .between .address {
+  font-size: 13px;
+}
+
+.result-search-friend .friend .right {
+  width: 20%;
+  height: auto;
+}
+
+.result-search-friend .friend .right .btn {
+  width: 70px;
+  height: 35px;
+  background-color: #7269ef;
+  color: white;
+}
+/*# sourceMappingURL=custom.css.map */
