@@ -95,20 +95,11 @@ let user_change_email = (verify_code, new_email, old_email) => {
   })
 }
 
-let search_friend_to_add_contact = (key_word) => {
-  return new Promise( async (resolve, reject) => {
-    let result_search = await user_model.find_by_keyword(key_word)
-    
-    if(result_search.length === 0) return reject()
 
-    return resolve(result_search)
-  })
-}
 
 module.exports = {
   get_data_user,
   user_upload_avatar,
   user_edit_information,
-  user_change_email,
-  search_friend_to_add_contact
+  user_change_email
 }

@@ -18,19 +18,19 @@
                 text-align: center;
                 cursor: pointer;
                 transition: 0.4s;
+                
+                border-radius: 8px;
                 i{
                     font-size: 18px;
                 }
             }
-
+            .active{background-color: #7269ef3b;}
             li:hover{
                 color: #7269ef;
             }
         }
     }
-    .wrap-content{
-
-    }
+    
 }
 
 // style for icon in menu left when have new status

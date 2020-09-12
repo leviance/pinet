@@ -1,5 +1,5 @@
 const express = require('express')
-const {home_controller, auth_controller, user_controller} = require('../controllers/index')
+const {home_controller, auth_controller, user_controller, contact_controller} = require('../controllers/index')
 const {auth_valid} = require('../validation/index')
 
 const passport = require('passport')
@@ -38,7 +38,8 @@ function init_routes(app) {
   router.put('/user-edit-information',auth_controller.check_login,user_controller.user_edit_information)
   router.get("/verify-to-change-email/:verify_code/:new_email/:old_email",auth_valid.valid_verify_code,user_controller.user_change_email)
 
-  router.get('/search-friend-to-add-contact-:key_word', user_controller.search_friend_to_add_contact)
+  router.get('/search-friend-to-add-contact-:key_word', contact_controller.search_friend_to_add_contact)
+  router.put('/send-request-contact-:receiver_req_id', contact_controller.send_request_contact)
 
 
   // catch 404 and forward to error handler
