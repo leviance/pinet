@@ -25,10 +25,15 @@
   cursor: pointer;
   -webkit-transition: 0.4s;
   transition: 0.4s;
+  border-radius: 8px;
 }
 
 #pills-user .title-top ul li i {
   font-size: 18px;
+}
+
+#pills-user .title-top ul .active {
+  background-color: #7269ef3b;
 }
 
 #pills-user .title-top ul li:hover {

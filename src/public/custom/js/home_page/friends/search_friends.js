@@ -15,19 +15,22 @@ function model_result_search_friends(user_id,avatar,username,address,user_class)
                 </p>
             </div>
             <div class="right">
-                <div class="btn">Thêm</div>
+              <div id="btn-add-friend-in-model-search" class="btn-add-friend">Thêm</div>
+              <div id="btn-cancel-add-friend-in-model-search" class="btn-cancel-add-friend">Hủy</div>
             </div>
           </div>`
 }
 
 function show_result_search_friend(data){
-  console.log(data);
+
   data.forEach(function(item){
     if(item.address == null) item.address = "";
     if(item.age == null) item.age = "";
     if(item.class == null) item.class = "";
-    console.log(item._id,item.avatar,item.username,item.address,item.class)
+    
     $('.result-search-friend').append(model_result_search_friends(item._id,item.avatar,item.username,item.address,item.class))
+    
+    show_btn_interact_in_search_modal()
   })
 }
 
@@ -45,6 +48,8 @@ function user_search_friends(){
     success: function(msg) {
       $('#search-friend-not-fond').hide();
       $('.result-search-friend .loading').hide();
+      $('.result-search-friend .friend').remove();
+      
       show_result_search_friend(msg)
     },
     error: function() {

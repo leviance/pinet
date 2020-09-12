@@ -63,12 +63,51 @@
     .right{
       width: 20%;
       height: auto;
-      .btn{
+      .btn-add-friend{
         width: 70px;
         height: 35px;
         background-color: #7269ef;
         color: white;
+        cursor: pointer;
+        line-height: 35px;
+        display: block;
+        text-align: center;
+        border-radius: 5px;
+      }
+      .btn-cancel-add-friend{
+        width: 70px;
+        height: 35px;
+        background-color: #ef4970;
+        color: white;
+        cursor: pointer;
+        line-height: 35px;
+        display: none;
+        text-align: center;
+        border-radius: 5px;
       }
     }
   }
+}
+
+.list-notify-list-req-contact{
+  >div{
+    margin-top: 20px;
+    width: 100%;
+    height: calc(100vh - 80px);
+    .list-title{
+      .mb-4{font-size: 18px; text-align: center;}
+    }
+
+  }
+ 
+  #list-notice-received{
+    
+  }
+  #list-contacts-sent{
+    display: none;
+  }
+  #list-contacts-received{
+    display: none;
+  }
+
 }
