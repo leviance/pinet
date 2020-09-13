@@ -1,7 +1,7 @@
 function prepend_to_list_contact_sent(data){
   $('#content-list-contacts-sent').prepend(`
-    <li>
-        <a data-uid="${data.user_id}" href="javascript: void(0);" class="user-profile-show active">
+    <li data-uid="${data.user_id}" >
+        <a data-uid="${data.user_id}" href="javascript: void(0);" class="user-profile-show">
             <div class="media">
                 <div class="chat-user-img align-self-center mr-3">
                     <img src="/assets/images/users/${data.avatar}" class="rounded-circle avatar-xs" alt="">
