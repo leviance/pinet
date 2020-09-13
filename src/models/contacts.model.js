@@ -25,6 +25,15 @@ contacts_schema.statics = {
                 {"receiver_id": user_id}
             ]
         }).exec()
+    },
+
+    find_contact_sent(user_id){
+        return this.find({
+            $and: [
+                {"sender_id": user_id},
+                {"status": false}
+            ]
+        }).sort({"created_at": -1}).exec()
     }
 }
 

@@ -1,5 +1,6 @@
 const contact_model = require('../models/contacts.model')
 const user_model = require('../models/users.model')
+const convert_timestamp = require('../config/convert_timestamp')
 
 let search_friend_to_add_contact = (key_word,user_id) => {
   return new Promise( async (resolve, reject) => {
@@ -42,7 +43,30 @@ let send_request_contact = (sender_req_id, receiver_req_id) => {
   })
 }
 
+let get_list_contact_sent = (user_id) => {
+  return new Promise( async (resolve, reject) => {
+    let list_contact_sent = await contact_model.find_contact_sent(user_id)
+    list_contact_sent_infor = []
+
+    // convert timestamp to human time
+    for(let i = 0; i < list_contact_sent.length; i++) {
+      let contact = list_contact_sent[i]
+      let contact_info = await user_model.find_user_by_id(contact.receiver_id)
+
+      list_contact_sent_infor.push({
+        user_id: contact.receiver_id,
+        avatar: contact_info.avatar,
+        username: contact_info.username,
+        human_time: convert_timestamp(contact.created_at)
+      })
+    }
+  
+    return resolve(list_contact_sent_infor)
+  })
+}
+
 module.exports = {
   search_friend_to_add_contact,
-  send_request_contact
+  send_request_contact,
+  get_list_contact_sent
 }

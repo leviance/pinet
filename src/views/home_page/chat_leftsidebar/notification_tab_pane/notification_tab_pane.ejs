@@ -21,22 +21,23 @@
             <div class="list-title"><h5 class="mb-4">Lời mời đã gửi</h5></div>
             <div class="simplebar-content" style="padding: 0px;">
                 <ul id="content-list-contacts-sent" class="list-unstyled chat-list chat-user-list">
-                    <li>
-                        <a href="javascript: void(0);" class="user-profile-show">
-                            <div class="media">
-                                <div class="chat-user-img align-self-center mr-3">
-                                    <img src="/assets/images/users/avatar-4.jpg" class="rounded-circle avatar-xs" alt="">
+                    <% list_contact_sent.forEach(function(contact){%>
+                        <li data-uid=<%= contact.user_id %> >
+                            <a href="javascript: void(0);" class="user-profile-show">
+                                <div class="media">
+                                    <div class="chat-user-img align-self-center mr-3">
+                                        <img src=<%= `/assets/images/users/${contact.avatar}` %> class="rounded-circle avatar-xs" alt="">
+                                    </div>
+                                    <div class="media-body overflow-hidden">
+                                        <h5 class="text-truncate font-size-15 mb-1"><%= contact.username %></h5>
+                                        <div class="font-size-11"><%= contact.human_time %></div>
+                                    </div>
+                                    <!-- <div class="btn btn-primary font-size-10 btn-lg chat-send waves-effect waves-light mr-1">Chấp nhận</div> -->
+                                    <div data-uid=<%= contact.user_id %> class="btn btn-danger font-size-10 btn-lg chat-send waves-effect waves-light">Hủy</div>
                                 </div>
-                                <div class="media-body overflow-hidden">
-                                    <h5 class="text-truncate font-size-15 mb-1">Doris Brown</h5>
-                                    <div class="font-size-11">10:12 AM</div>
-                                </div>
-                                <!-- <div class="btn btn-primary font-size-10 btn-lg chat-send waves-effect waves-light mr-1">Chấp nhận</div> -->
-                                <div class="btn btn-danger font-size-10 btn-lg chat-send waves-effect waves-light">Hủy</div>
-                                
-                            </div>
-                        </a>
-                    </li>
+                            </a>
+                        </li>
+                    <% }) %>
                 </ul>
             </div>
         </div>
