@@ -40,6 +40,7 @@ function init_routes(app) {
 
   router.get('/search-friend-to-add-contact-:key_word', contact_controller.search_friend_to_add_contact)
   router.put('/send-request-contact-:receiver_req_id', contact_controller.send_request_contact)
+  router.put('/cancel-contact-sent-:receiver_id', contact_controller.cancel_contact_sent)
 
 
   // catch 404 and forward to error handler

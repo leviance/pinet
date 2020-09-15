@@ -34,6 +34,20 @@ contacts_schema.statics = {
                 {"status": false}
             ]
         }).sort({"created_at": -1}).exec()
+    },
+
+    remove_contact(sender_req_id, receiver_req_id){
+        return this.deleteOne({
+            "sender_id": sender_req_id,
+            "receiver_id": receiver_req_id
+        }).exec()
+    },
+
+    find_contact(sender_req_id, receiver_req_id){
+        return this.findOne({
+            "sender_id": sender_req_id,
+            "receiver_id": receiver_req_id
+        }).exec()
     }
 }
 

@@ -33,8 +33,22 @@ let send_request_contact = async (req, res) => {
   }
 }
 
+let cancel_contact_sent = async (req, res) => {
+  let receiver_id = req.params.receiver_id;
+  let sender_id = req.session.user_id
+
+  try {
+    await contact_services.cancel_contact_sent(sender_id,receiver_id)
+    return res.status(200).send()
+  } catch (error) {
+    return res.status(500).send()
+  }
+
+  
+}
 
 module.exports = {
   search_friend_to_add_contact,
-  send_request_contact
+  send_request_contact,
+  cancel_contact_sent
 }

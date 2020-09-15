@@ -10,7 +10,7 @@ function prepend_to_list_contact_sent(data){
                     <h5 class="text-truncate font-size-15 mb-1">${data.username}</h5>
                     <div class="font-size-11">Vừa xong</div>
                 </div>
-                <div data-uid="${data.user_id}" class="btn btn-danger font-size-10 btn-lg chat-send waves-effect waves-light">Hủy</div>
+                <div data-uid="${data.user_id}" class="btn-cancel-contact-sent btn btn-danger font-size-10 btn-lg chat-send waves-effect waves-light">Hủy</div>
             </div>
         </a>
     </li>`)
@@ -26,11 +26,14 @@ function show_btn_interact_in_search_modal(){
     $(this).hide();
     $('#btn-cancel-add-friend-in-model-search').show();
 
+    $(this).parents('.friend').remove()
+
     $.ajax({
       url: `/send-request-contact-${receiver_req_id}`,
       type: 'PUT',
       success: function(data) {
         prepend_to_list_contact_sent(data)
+        cancel_contact_sent()
       },
       error: function(){
         alertify.error("Có lỗi bất ngờ xảy ra vui lòng liên hệ với bộ phận hỗ trợ của chúng tôi!")
@@ -45,6 +48,25 @@ function show_btn_interact_in_search_modal(){
 
 }
 
+function cancel_contact_sent(){
+  $('#content-list-contacts-sent .btn-cancel-contact-sent').bind('click', function(){
+    let receiver_id = $(this).attr('data-uid')
+    let _this = $(this)
+    _this.parents('li').css('opacity', 0.5)
+
+    $.ajax({
+      url: `/cancel-contact-sent-${receiver_id}`,
+      type: "PUT",
+      success: function(){
+        _this.parents('li').remove();
+      },
+      error: function(){
+        alertify.error("Đã có lỗi bất ngờ xảy ra. nếu trình trạng này còn tiếp tục vui lòng liên hệ bộ phận hỗ trợ của chúng tôi!")
+      }
+    })
+  })
+}
+
 $(document).ready(function() {
-  
+  cancel_contact_sent()
 })

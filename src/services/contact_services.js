@@ -35,6 +35,11 @@ let send_request_contact = (sender_req_id, receiver_req_id) => {
     let check_id = user_model.find_user_by_id(receiver_req_id)
     if(!check_id) return reject()
 
+    // check has contact
+    let check_has_contact = await contact_model.find_contact(sender_req_id, receiver_req_id)
+    
+    if(check_has_contact != null) return reject()
+
     await contact_model.create_new(sender_req_id,receiver_req_id)
     
     let receiver_req_profile = check_id
@@ -65,8 +70,19 @@ let get_list_contact_sent = (user_id) => {
   })
 }
 
+let cancel_contact_sent = (sender_id,receiver_id) => {
+  return new Promise( async (resolve, reject) => {
+    let result = await contact_model.remove_contact(sender_id, receiver_id)
+    
+    if(result.deletedCount == 0)  return reject()
+
+    return resolve()
+  })
+}
+
 module.exports = {
   search_friend_to_add_contact,
   send_request_contact,
-  get_list_contact_sent
+  get_list_contact_sent,
+  cancel_contact_sent
 }
