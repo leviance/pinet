@@ -8,35 +8,38 @@ let convert_timestamp = (time) => {
     return
   }
 
-  ts = present_time - time;
+  if(new Date().toLocaleDateString() == timestamp.toLocaleDateString()){
+    ts = present_time - time;
 
-  //   second
-  ts = ts / 1000
-  if(ts < 60){
-    // example 09:14 => 9:14
-    let string_to_return = timestamp.toTimeString().match(re)[0]
-    if(string_to_return[0] == '0') string_to_return = string_to_return.substr(1)
-    return string_to_return
+    //   second
+    ts = ts / 1000
+    if(ts < 60){
+      // example 09:14 => 9:14
+      let string_to_return = timestamp.toTimeString().match(re)[0]
+      if(string_to_return[0] == '0') string_to_return = string_to_return.substr(1)
+      return string_to_return
+    }
+
+    //   minute
+    ts = ts / 60
+    if(ts < 60){
+      let string_to_return = timestamp.toTimeString().match(re)[0]
+      if(string_to_return[0] == '0') string_to_return = string_to_return.substr(1)
+      return string_to_return
+    }
+
+    // hour
+    ts = ts / 60
+    if(ts < 24){
+      let string_to_return = timestamp.toTimeString().match(re)[0]
+      if(string_to_return[0] == '0') string_to_return = string_to_return.substr(1)
+      return string_to_return
+    }
   }
 
-  //   minute
-  ts = ts / 60
-  if(ts < 60){
-    let string_to_return = timestamp.toTimeString().match(re)[0]
-    if(string_to_return[0] == '0') string_to_return = string_to_return.substr(1)
-    return string_to_return
-  }
-
-  // hour
-  ts = ts / 60
-  if(ts < 24){
-    let string_to_return = timestamp.toTimeString().match(re)[0]
-    if(string_to_return[0] == '0') string_to_return = string_to_return.substr(1)
-    return string_to_return
-  }
 
   // day
-  if(ts > 24) {
+  else {
     let timeline = timestamp.toLocaleDateString()
     timeline = timeline.split('/')
 

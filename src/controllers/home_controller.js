@@ -7,7 +7,6 @@ let home_controller = async (req, res) =>{
 
   let user = await user_services.get_data_user(user_id)
   let list_contact_sent = await contact_services.get_list_contact_sent(user_id)
-  console.log(list_contact_sent)
   
   return res.render('./home_page/index',{
     user: user,

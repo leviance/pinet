@@ -1,12 +1,12 @@
 function prepend_to_list_contact_sent(data){
   $('#content-list-contacts-sent').prepend(`
     <li data-uid="${data.user_id}" >
-        <a data-uid="${data.user_id}" href="javascript: void(0);" class="user-profile-show">
+        <a data-uid="${data.user_id}" href="javascript: void(0);" >
             <div class="media">
-                <div class="chat-user-img align-self-center mr-3">
+                <div class="chat-user-img align-self-center mr-3 user-profile-show">
                     <img src="/assets/images/users/${data.avatar}" class="rounded-circle avatar-xs" alt="">
                 </div>
-                <div class="media-body overflow-hidden">
+                <div class="media-body overflow-hidden user-profile-show">
                     <h5 class="text-truncate font-size-15 mb-1">${data.username}</h5>
                     <div class="font-size-11">Vừa xong</div>
                 </div>
