@@ -1,3 +1,5 @@
+const socket = io()
+
 function show_and_hide_list_notify_list_req_contact(){
   $('#btn-list-notice-received').bind('click', function(){
     $('#list-notice-received').show();
