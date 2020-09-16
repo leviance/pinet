@@ -1,7 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const user_model = require('../../models/users.model')
-const download_img = require('../../config/download_img')
+const download_img = require('../../helper/download_img')
 
 let init_passport_google = () => {
   passport.use(new GoogleStrategy({

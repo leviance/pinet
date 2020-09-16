@@ -1,6 +1,6 @@
 const contact_model = require('../models/contacts.model')
 const user_model = require('../models/users.model')
-const convert_timestamp = require('../config/convert_timestamp')
+const convert_timestamp = require('../helper/convert_timestamp')
 
 let search_friend_to_add_contact = (key_word,user_id) => {
   return new Promise( async (resolve, reject) => {
