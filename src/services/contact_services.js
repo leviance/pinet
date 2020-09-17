@@ -102,10 +102,51 @@ let cancel_contact_sent = (sender_id,receiver_id) => {
   })
 }
 
+let cancel_contact_received = (sender_id, user_id) => {
+  return new Promise( async (resolve, reject) => {
+    let receiver_id = user_id
+    let result = await contact_model.remove_contact(sender_id, receiver_id)
+    
+    if(result.deletedCount == 0)  return reject()
+
+    return resolve()
+  })
+}
+
+let count_contact_received = (user_id) => {
+  return new Promise( async (resolve, reject) => {
+    let count_contact_received = await contact_model.count_contact_received(user_id)
+    return resolve(count_contact_received)
+  })
+}
+
+let count_contact_sent = (user_id) => {
+  return new Promise( async (resolve, reject) => {
+    let count_contact_sent = await contact_model.count_contact_sent(user_id)
+    return resolve(count_contact_sent)
+  })
+}
+
+let accept_contact_received = (id_user_sent_contact,id_user_receive_contact) => {
+  return new Promise( async (resolve, reject) => {
+    let check_is_receive_contact = await contact_model.find_contact(id_user_sent_contact,id_user_receive_contact)
+
+    if(!check_is_receive_contact) return reject()
+
+    await contact_model.accept_contact_received(id_user_sent_contact,id_user_receive_contact)
+
+    return resolve()
+  })
+}
+
 module.exports = {
   search_friend_to_add_contact,
   send_request_contact,
   get_list_contact_sent,
   cancel_contact_sent,
-  get_list_contact_received
+  get_list_contact_received,
+  cancel_contact_received,
+  count_contact_received,
+  count_contact_sent,
+  accept_contact_received
 }

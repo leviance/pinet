@@ -57,6 +57,27 @@ contacts_schema.statics = {
             "sender_id": sender_req_id,
             "receiver_id": receiver_req_id
         }).exec()
+    },
+
+    count_contact_received(user_id){
+        return this.countDocuments({
+            "receiver_id": user_id,
+            "status": false
+        }).exec()
+    },
+
+    count_contact_sent(user_id){
+        return this.countDocuments({
+            "sender_id": user_id,
+            "status": false
+        }).exec()
+    },
+
+    accept_contact_received(sender_id,receiver_id){
+        return this.updateOne({
+            "sender_id": sender_id,
+            "receiver_id": receiver_id
+        },{"status": true}).exec()
     }
 }
 
