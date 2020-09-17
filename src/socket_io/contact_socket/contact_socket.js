@@ -1,8 +1,9 @@
 const emit_socket = require('../../helper/emit_socket')
 const user_model = require('../../models/users.model')
 
-let add_contact = (io) => {
+let contact_socket = (io) => {
   io.on('connection', socket => {
+    // add friend
     socket.on('request-add-friend', async (data) => {
       let sender_id = socket.request.session.user_id
 
@@ -17,7 +18,20 @@ let add_contact = (io) => {
 
       emit_socket('receive-request-add-friend',data_to_emit, io)
     })
+
+    // cancel contact sent
+    socket.on('cancel-request-add-friend', (data) => {
+      let sender_id = socket.request.session.user_id;
+
+      let data_to_emit = {
+        receiver_id: data.receiver_id,
+        sender_id: sender_id
+      }
+
+      emit_socket('receive-cancel-request-add-friend',data_to_emit, io)
+    })
+
   })
 }
 
-module.exports = add_contact
+module.exports = contact_socket

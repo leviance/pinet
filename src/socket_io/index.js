@@ -1,9 +1,9 @@
 const {user_socket} = require('./user_socket/user_socket')
-const add_contact = require('./contact_socket/add_contact')
+const contact_socket = require('./contact_socket/contact_socket')
 
 const init_socket_io = (io) => {
   user_socket(io)
-  add_contact(io)
+  contact_socket(io)
 }
 
 module.exports = init_socket_io;
