@@ -70,6 +70,28 @@ let get_list_contact_sent = (user_id) => {
   })
 }
 
+let get_list_contact_received = (user_id) => {
+  return new Promise( async (resolve, reject) => {
+    let list_contact_received = await contact_model.find_contact_received(user_id)
+    list_contact_received_infor = []
+
+    // convert timestamp to human time
+    for(let i = 0; i < list_contact_received.length; i++) {
+      let contact = list_contact_received[i]
+      let contact_info = await user_model.find_user_by_id(contact.sender_id)
+
+      list_contact_received_infor.push({
+        user_id: contact.sender_id,
+        avatar: contact_info.avatar,
+        username: contact_info.username,
+        human_time: convert_timestamp(contact.created_at)
+      })
+    }
+    
+    return resolve(list_contact_received_infor)
+  })
+}
+
 let cancel_contact_sent = (sender_id,receiver_id) => {
   return new Promise( async (resolve, reject) => {
     let result = await contact_model.remove_contact(sender_id, receiver_id)
@@ -84,5 +106,6 @@ module.exports = {
   search_friend_to_add_contact,
   send_request_contact,
   get_list_contact_sent,
-  cancel_contact_sent
+  cancel_contact_sent,
+  get_list_contact_received
 }

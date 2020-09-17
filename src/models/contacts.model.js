@@ -36,6 +36,15 @@ contacts_schema.statics = {
         }).sort({"created_at": -1}).exec()
     },
 
+    find_contact_received(user_id){
+        return this.find({
+            $and: [
+                {"receiver_id": user_id},
+                {"status": false}
+            ]
+        }).sort({"created_at": -1}).exec()
+    },
+
     remove_contact(sender_req_id, receiver_req_id){
         return this.deleteOne({
             "sender_id": sender_req_id,

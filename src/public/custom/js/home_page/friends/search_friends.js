@@ -15,8 +15,8 @@ function model_result_search_friends(user_id,avatar,username,address,user_class)
                 </p>
             </div>
             <div class="right">
-              <div id="btn-add-friend-in-model-search" class="btn-add-friend">Thêm</div>
-              <div id="btn-cancel-add-friend-in-model-search" class="btn-cancel-add-friend">Hủy</div>
+              <div class="btn-add-friend btn-add-friend-in-model-search">Thêm</div>
+              <div class="btn-cancel-add-friend btn-cancel-add-friend-in-model-search">Hủy</div>
             </div>
           </div>`
 }
