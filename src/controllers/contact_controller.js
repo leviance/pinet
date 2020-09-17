@@ -41,6 +41,7 @@ let cancel_contact_sent = async (req, res) => {
     await contact_services.cancel_contact_sent(sender_id,receiver_id)
     return res.status(200).send()
   } catch (error) {
+    console.log(error)
     return res.status(500).send()
   }
 
