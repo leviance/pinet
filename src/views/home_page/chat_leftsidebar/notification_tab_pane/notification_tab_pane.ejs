@@ -5,13 +5,23 @@
               <i class="fa fa-bell-o" aria-hidden="true"></i>
               <span class="badge badge-soft-danger badge-pill">01</span>
           </li>
-          <li title="Lời mời kết bạn nhận được" id="btn-list-contacts-sent">
+          <li title="Lời mời kết bạn đã gửi" id="btn-list-contacts-sent">
               <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
-              <span class="badge badge-soft-danger badge-pill">01</span>
+              <% if(count_contact_received > 0) { %>
+                <span class="badge badge-soft-danger badge-pill">
+                    <% if(count_contact_received < 10) count_contact_received = `0${count_contact_received}` %>
+                    <%= count_contact_received %>
+                </span>
+              <% } %>
           </li>
-          <li title="Lời mời kết bạn đã gửi" id="btn-list-contacts-received">
+          <li title="Lời mời kết bạn nhận được" id="btn-list-contacts-received">
               <i class="fa fa-user-plus" aria-hidden="true"></i>
-              <span class="badge badge-soft-danger badge-pill">01</span>
+              <% if(count_contact_sent > 0) { %>
+                <span class="badge badge-soft-danger badge-pill">
+                    <% if(count_contact_sent < 10) count_contact_sent = `0${count_contact_sent}` %>
+                    <%= count_contact_sent %>
+                </span>
+              <% } %>
           </li>
       </ul>
   </div>

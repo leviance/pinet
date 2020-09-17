@@ -1,4 +1,6 @@
-const socket = io()
+const socket = io({reconnection: false})
+
+const error_undefine_mess = "Có lỗi bất ngờ xảy ra vui lòng f5 lại trang. Nếu tình trạng này còn tiếp tục vui lòng liên hệ với bộ phận hỗ trợ của chúng tôi!"
 
 function show_and_hide_list_notify_list_req_contact(){
   $('#btn-list-notice-received').bind('click', function(){

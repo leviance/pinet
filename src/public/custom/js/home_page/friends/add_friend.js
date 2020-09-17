@@ -37,6 +37,8 @@ function prepend_to_list_contact_received(data){
   </li>`)
 
   show_user_profile()
+  cancel_contact_received()
+  accept_contact_received()
 }
 
 // this call in show_result_search_friend in search_friend.js
@@ -61,7 +63,7 @@ function show_btn_interact_in_search_modal(){
         socket.emit('request-add-friend', data_to_emit)
       },
       error: function(){
-        alertify.error("Có lỗi bất ngờ xảy ra vui lòng liên hệ với bộ phận hỗ trợ của chúng tôi!")
+        alertify.error(error_undefine_mess)
       }
     })
   })
@@ -69,6 +71,7 @@ function show_btn_interact_in_search_modal(){
 
 }
 
+// sender cancel contact sent
 function cancel_contact_sent(){
   $('#content-list-contacts-sent .btn-cancel-contact-sent').unbind('click').bind('click', function(){
     let receiver_id = $(this).attr('data-uid')
@@ -88,7 +91,32 @@ function cancel_contact_sent(){
         socket.emit('cancel-request-add-friend', data_to_emit)
       },
       error: function(){
-        alertify.error("Đã có lỗi bất ngờ xảy ra. nếu trình trạng này còn tiếp tục vui lòng liên hệ bộ phận hỗ trợ của chúng tôi!")
+        alertify.error(error_undefine_mess)
+      }
+    })
+  })
+}
+
+//  receiver cancel contact received
+function cancel_contact_received(){
+  $('.btn-cancel-contact-received').unbind('click').click(function(){
+    let _this = $(this)
+    let sender_id = _this.attr("data-uid")
+    _this.parents('li').css('opacity', 0.5)
+
+    $.ajax({
+      url: `/cancel-contact-received-${sender_id}`,
+      type: "PUT",
+      success: function(){
+        _this.parents('li').remove()
+
+        let data_to_emit = {
+          receiver_id: sender_id
+        }
+        socket.emit('request-cancel-contact-received', data_to_emit)
+      },
+      error: function(){
+        alertify.error(error_undefine_mess)
       }
     })
   })
@@ -96,13 +124,18 @@ function cancel_contact_sent(){
 
 $(document).ready(function() {
   cancel_contact_sent()
+  cancel_contact_received()
 
-  socket.on('receive-request-add-friend', data => {
+  socket.on('receive-request-add-friend', function(data){
     prepend_to_list_contact_received(data)
   })
 
-  socket.on('receive-cancel-request-add-friend', data => {
+  socket.on('receive-cancel-request-add-friend', function(data){
     $('#content-list-contacts-received').find(`li[data-uid="${data.sender_id}"]`).remove()
+  })
+
+  socket.on('receive-request-cancel-contact-received', function(data){
+    $('#list-contacts-sent').find(`li[data-uid="${data.sender_id}"]`).remove()
   })
 
 })

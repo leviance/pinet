@@ -48,8 +48,35 @@ let cancel_contact_sent = async (req, res) => {
   
 }
 
+let cancel_contact_received = async (req, res) => {
+  let sender_id = req.params.sender_id;
+  let user_id = req.session.user_id;
+
+  try {
+    await contact_services.cancel_contact_received(sender_id, user_id)
+    return res.status(200).send()
+    
+  } catch (error) {
+    return res.status(500).send()
+  }
+}
+
+let accept_contact_received = async (req, res) => {
+  let id_user_sent_contact = req.params.id_user_send_contact
+  let id_user_receive_contact = req.session.user_id
+
+  try {
+      await contact_services.accept_contact_received(id_user_sent_contact,id_user_receive_contact)
+      return res.status(200).send()
+  } catch (error) {
+      return res.status(500).send()
+  }
+}
+
 module.exports = {
   search_friend_to_add_contact,
   send_request_contact,
-  cancel_contact_sent
+  cancel_contact_sent,
+  cancel_contact_received,
+  accept_contact_received
 }
