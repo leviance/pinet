@@ -80,7 +80,12 @@ function cancel_contact_sent(){
       type: "PUT",
       success: function(){
         _this.parents('li').remove();
+
+        let data_to_emit = {
+          receiver_id: receiver_id,
+        }
         // handle real time do latter
+        socket.emit('cancel-request-add-friend', data_to_emit)
       },
       error: function(){
         alertify.error("Đã có lỗi bất ngờ xảy ra. nếu trình trạng này còn tiếp tục vui lòng liên hệ bộ phận hỗ trợ của chúng tôi!")
@@ -94,6 +99,10 @@ $(document).ready(function() {
 
   socket.on('receive-request-add-friend', data => {
     prepend_to_list_contact_received(data)
+  })
+
+  socket.on('receive-cancel-request-add-friend', data => {
+    $('#content-list-contacts-received').find(`li[data-uid="${data.sender_id}"]`).remove()
   })
 
 })
