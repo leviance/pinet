@@ -42,7 +42,7 @@ function prepend_to_list_contact_received(data){
 }
 
 // this call in show_result_search_friend in search_friend.js
-function show_btn_interact_in_search_modal(){
+function send_request_contact(){
   $('.btn-add-friend-in-model-search').unbind('click').bind('click', function(){
     let receiver_req_id = $(this).parent().parent().attr('data-uid');
 
@@ -60,6 +60,7 @@ function show_btn_interact_in_search_modal(){
           receiver_id: receiver_req_id,
         }
        
+        increase_total_tag('btn-list-contacts-sent')
         socket.emit('request-add-friend', data_to_emit)
       },
       error: function(){
@@ -87,7 +88,8 @@ function cancel_contact_sent(){
         let data_to_emit = {
           receiver_id: receiver_id,
         }
-        // handle real time do latter
+        
+        decrease_total_tag('btn-list-contacts-sent')
         socket.emit('cancel-request-add-friend', data_to_emit)
       },
       error: function(){
@@ -113,6 +115,8 @@ function cancel_contact_received(){
         let data_to_emit = {
           receiver_id: sender_id
         }
+
+        decrease_total_tag('btn-list-contacts-received')
         socket.emit('request-cancel-contact-received', data_to_emit)
       },
       error: function(){
@@ -128,14 +132,17 @@ $(document).ready(function() {
 
   socket.on('receive-request-add-friend', function(data){
     prepend_to_list_contact_received(data)
+    increase_total_tag('btn-list-contacts-received')
   })
 
   socket.on('receive-cancel-request-add-friend', function(data){
     $('#content-list-contacts-received').find(`li[data-uid="${data.sender_id}"]`).remove()
+    decrease_total_tag('btn-list-contacts-received')
   })
 
   socket.on('receive-request-cancel-contact-received', function(data){
     $('#list-contacts-sent').find(`li[data-uid="${data.sender_id}"]`).remove()
+    decrease_total_tag('btn-list-contacts-sent')
   })
 
 })

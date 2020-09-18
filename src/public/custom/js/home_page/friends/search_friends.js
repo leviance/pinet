@@ -30,7 +30,7 @@ function show_result_search_friend(data){
     
     $('.result-search-friend').append(model_result_search_friends(item._id,item.avatar,item.username,item.address,item.class))
     
-    show_btn_interact_in_search_modal()
+    send_request_contact()
   })
 }
 
