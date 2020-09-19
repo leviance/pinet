@@ -111,22 +111,18 @@
   text-align: center;
 }
 
-.list-notify-list-req-contact > div ul li > {
-  position: relative;
-  display: block;
-  padding: 15px 20px;
-  color: #7a7f9a;
-  -webkit-transition: all .4s;
-  transition: all .4s;
-  border-top: 1px solid #f5f7fb;
-  border-radius: 4px;
-}
-
 .list-notify-list-req-contact #list-contacts-sent {
   display: none;
 }
 
 .list-notify-list-req-contact #list-contacts-received {
   display: none;
+}
+
+.friend-item {
+  padding: 5px 20px;
+  cursor: pointer;
+  -webkit-transition: all .4s;
+  transition: all .4s;
 }
 /*# sourceMappingURL=custom.css.map */

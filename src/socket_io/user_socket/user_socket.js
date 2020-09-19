@@ -23,8 +23,7 @@ let user_socket = (io) => {
 
         if(list_socket[user_id] === []) delete list_socket[user_id];
     });
-    
-    console.log(list_socket)
+ 
   });
   
 }
