@@ -1,6 +1,7 @@
 const contact_model = require('../models/contacts.model')
 const user_model = require('../models/users.model')
 const convert_timestamp = require('../helper/convert_timestamp')
+const _ = require('lodash');
 
 let search_friend_to_add_contact = (key_word,user_id) => {
   return new Promise( async (resolve, reject) => {
@@ -139,6 +140,38 @@ let accept_contact_received = (id_user_sent_contact,id_user_receive_contact) => 
   })
 }
 
+let get_list_friends = (user_id) => {
+  return new Promise( async (resolve, reject) => {
+    let list_contact = await contact_model.get_list_friends(user_id)
+
+    let list_id = []
+    list_contact.forEach( contact => {
+      list_id.push(contact.sender_id)
+      list_id.push(contact.receiver_id)
+    })
+
+  
+    _.remove(list_id, function(id) {
+      return id == user_id;
+    });
+
+    let list_friends = []
+
+    for(let i = 0; i < list_id.length; i++) {
+      let contact_id = list_id[i]
+      let contact_info = await user_model.find_user_by_id(contact_id)
+
+      list_friends.push({
+        user_id: contact_id,
+        avatar: contact_info.avatar,
+        username: contact_info.username,
+      })
+    }
+
+    return resolve(list_friends)
+  })
+}
+
 module.exports = {
   search_friend_to_add_contact,
   send_request_contact,
@@ -148,5 +181,6 @@ module.exports = {
   cancel_contact_received,
   count_contact_received,
   count_contact_sent,
-  accept_contact_received
+  accept_contact_received,
+  get_list_friends
 }

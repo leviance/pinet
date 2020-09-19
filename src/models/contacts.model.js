@@ -78,6 +78,18 @@ contacts_schema.statics = {
             "sender_id": sender_id,
             "receiver_id": receiver_id
         },{"status": true}).exec()
+    },
+
+    get_list_friends(user_id){
+        return this.find({
+            $and: [
+                {$or: [
+                    {"sender_id": user_id},
+                    {"receiver_id": user_id}
+                ]},
+                {"status": true}
+            ]
+        }).sort({"created_at": -1}).exec()
     }
 }
 

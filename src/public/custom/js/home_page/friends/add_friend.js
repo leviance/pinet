@@ -126,9 +126,11 @@ function cancel_contact_received(){
   })
 }
 
+
 $(document).ready(function() {
   cancel_contact_sent()
   cancel_contact_received()
+
 
   socket.on('receive-request-add-friend', function(data){
     prepend_to_list_contact_received(data)
