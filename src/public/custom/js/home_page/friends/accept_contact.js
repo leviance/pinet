@@ -15,7 +15,7 @@ function append_to_list_friends(data){
                   <i class="ri-more-2-fill"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
-                  <a data-uid="${data.user_id}" class="dropdown-item" href="#">Xem hồ sơ <i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
+                  <a data-uid="${data.user_id}" class="dropdown-item btn-view-user-profile" href="#">Xem hồ sơ <i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
                   <a data-uid="${data.user_id}" class="dropdown-item btn-block-friend " href="#">Chặn <i class="ri-forbid-line float-right text-muted"></i></a>
                   <a data-uid="${data.user_id}" class="dropdown-item btn-unfriend" href="#">Hủy kết bạn <i class="ri-delete-bin-line float-right text-muted"></i></a>
               </div>

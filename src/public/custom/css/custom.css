@@ -125,4 +125,8 @@
   -webkit-transition: all .4s;
   transition: all .4s;
 }
+
+.notification-not-read {
+  background-color: var(--light);
+}
 /*# sourceMappingURL=custom.css.map */

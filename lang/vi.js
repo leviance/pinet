@@ -65,3 +65,9 @@ module.exports.user_settings = {
   subject_to_change_email: "Thay đổi Email tài khoản Pinet.",
   html_to_change_email: (url) => `<p>Bạn vừa thực hiện thay đổi Email trên Pinet hãy click vào <a href="${url}">ĐÂY</a> để tiến hành hay đổi. Nếu không phải do bạn thực hiện để đảm bảo an toàn hãy đổi mật khẩu tài khoản Pinet của bạn. Xin cảm ơn.</p>`
 }
+
+module.exports.notifications_content = {
+  "receive_request_cotact": (sender_conatct_name) => {
+    return `${sender_conatct_name} đã gửi cho bạn 1 lời mời kết bạn!`
+  }
+}
