@@ -135,6 +135,7 @@ $(document).ready(function() {
   socket.on('receive-request-add-friend', function(data){
     prepend_to_list_contact_received(data)
     increase_total_tag('btn-list-contacts-received')
+    notification_new_request_contact(data)
   })
 
   socket.on('receive-cancel-request-add-friend', function(data){

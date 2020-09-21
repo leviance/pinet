@@ -13,7 +13,7 @@ let contact_socket = (io) => {
         receiver_id: data.receiver_id,
         sender_avatar: sender_data.avatar,
         sender_username: sender_data.username,
-        sender_id: sender_id
+        sender_id: sender_id,
       }
 
       emit_socket('receive-request-add-friend',data_to_emit, io)

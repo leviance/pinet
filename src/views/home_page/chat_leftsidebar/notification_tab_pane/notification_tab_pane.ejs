@@ -3,7 +3,12 @@
       <ul>
           <li title="Thông báo" id="btn-list-notice-received" class="active" >
               <i class="fa fa-bell-o" aria-hidden="true"></i>
-              <span class="badge badge-soft-danger badge-pill">01</span>
+              <% if(count_notifications > 0) { %>
+                <span class="badge badge-soft-danger badge-pill">
+                  <% if(count_notifications < 10) count_notifications = `0${count_notifications}` %>
+                  <%= count_notifications %>
+                </span>
+              <% } %>
           </li>
           <li title="Lời mời kết bạn đã gửi" id="btn-list-contacts-sent">
               <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
@@ -26,7 +31,40 @@
       </ul>
   </div>
   <div class="px-2 list-notify-list-req-contact">
-        <div id="list-notice-received" data-simplebar></div>
+        <div id="list-notice-received" data-simplebar>
+            <div class="list-title"><h5 class="mb-4">Thông báo</h5></div>
+            <div class="simplebar-content" style="padding: 0px;">
+                <ul id="list-notifications" class="list-unstyled chat-list">
+                    <% list_notifications.forEach(function(notification){ %>
+                        <% if(notification.type == "receive_request_cotact"){ %>
+                            <li <% if(notification.is_read == false){%> class="notification-item notification-not-read" <%} else { %> class="notification-item" <% } %>  data-uid=<%= notification.user_id %> >
+                                <div class="media friend-item">
+                                    <div class="chat-user-img mr-3">
+                                        <div class="avatar-xs">
+                                            <img src=<%= `/assets/images/users/${notification.avatar}` %> class="rounded-circle avatar-xs" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="media-body overflow-hidden">
+                                        <h5 class=" font-size-13 mb-1"><%= notification.username %>  đã gửi cho bạn lời mời kết bạn!</h5>
+                                        <div class="font-size-11"><%= notification.human_time %></div>
+                                    </div>
+                                    <div class="dropdown">
+                                        <a href="#" class="text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="ri-more-2-fill"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a data-uid=<%= notification.user_id %> class="dropdown-item btn-view-user-profile" href="#">Xóa thông báo<i class="fa fa-minus float-right text-muted" aria-hidden="true"></i></a>
+                                            <a data-uid=<%= notification.user_id %> class="dropdown-item btn-block-friend " href="#">Chặn <i class="ri-forbid-line float-right text-muted"></i></a>
+                                            <a data-uid=<%= notification.user_id %> class="dropdown-item btn-unfriend" href="#">Hủy kết bạn <i class="ri-delete-bin-line float-right text-muted"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        <% } %> 
+                    <% }) %>
+                </ul>
+            </div>
+        </div>
         <div id="list-contacts-sent" data-simplebar>
             <div class="list-title"><h5 class="mb-4">Lời mời đã gửi</h5></div>
             <div class="simplebar-content" style="padding: 0px;">
@@ -54,7 +92,6 @@
         <div id="list-contacts-received" data-simplebar>
             <div class="list-title"><h5 class="mb-4">Lời mời nhận được</h5></div>
             <div class="simplebar-content" style="padding: 0px;">
-
                 <ul id="content-list-contacts-received" class="list-unstyled chat-list chat-user-list">
                     <% list_contact_received.forEach(function(contact){%>
                         <li data-uid=<%= contact.user_id %> >
@@ -74,22 +111,6 @@
                             </a>
                         </li>
                     <% }) %>
-                    <!-- <li>
-                        <a href="javascript: void(0);" >
-                            <div class="media">
-                                <div class="chat-user-img align-self-center mr-3 user-profile-show">
-                                    <img src="/assets/images/users/avatar-4.jpg" class="rounded-circle avatar-xs" alt="">
-                                </div>
-                                <div class="media-body overflow-hidden user-profile-show">
-                                    <h5 class="text-truncate font-size-15 mb-1">Doris Brown</h5>
-                                    <div class="font-size-11">10:12 AM</div>
-                                </div>
-                                <div class="btn-accept-contact-received btn btn-primary font-size-10 btn-lg chat-send waves-effect waves-light mr-1">Chấp nhận</div>
-                                <div class="btn-cancel-contact-received btn btn-danger font-size-10 btn-lg chat-send waves-effect waves-light">Hủy</div>
-                                
-                            </div>
-                        </a>
-                    </li> -->
                 </ul>
             </div>
         </div>

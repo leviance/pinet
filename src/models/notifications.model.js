@@ -18,4 +18,23 @@ let notifications_schema = new Schema({
     created_at: {type: Number, default: Date.now}
 })
 
-let notifications_model = mongoose.model('notifications', notifications_schema)
+notifications_schema.statics = {
+    notif_recieved_request_contact(notifications_data){
+        return this.create(notifications_data)
+    },
+
+    count_notifications(user_id){
+        return this.countDocuments({
+            "receiver.id":  user_id,
+            "is_read": false
+        }).exec()
+    },
+
+    get_list_notifications(user_id){
+        return this.find({
+            "receiver.id":  user_id,
+        }).limit(15).sort({"created_at": -1}).exec()
+    }
+}
+
+module.exports = mongoose.model('notifications', notifications_schema)

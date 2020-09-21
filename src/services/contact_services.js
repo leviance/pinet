@@ -1,6 +1,8 @@
 const contact_model = require('../models/contacts.model')
 const user_model = require('../models/users.model')
 const convert_timestamp = require('../helper/convert_timestamp')
+const notification_services = require('./notification_services')
+
 const _ = require('lodash');
 
 let search_friend_to_add_contact = (key_word,user_id) => {
@@ -33,7 +35,7 @@ let search_friend_to_add_contact = (key_word,user_id) => {
 
 let send_request_contact = (sender_req_id, receiver_req_id) => {
   return new Promise( async (resolve, reject) => {
-    let check_id = user_model.find_user_by_id(receiver_req_id)
+    let check_id = await user_model.find_user_by_id(receiver_req_id)
     if(!check_id) return reject()
 
     // check has contact
@@ -42,7 +44,9 @@ let send_request_contact = (sender_req_id, receiver_req_id) => {
     if(check_has_contact != null) return reject()
 
     await contact_model.create_new(sender_req_id,receiver_req_id)
-    
+
+    notification_services.notif_recieved_request_contact(sender_req_id, receiver_req_id)
+
     let receiver_req_profile = check_id
     return resolve(receiver_req_profile)
 
@@ -52,7 +56,7 @@ let send_request_contact = (sender_req_id, receiver_req_id) => {
 let get_list_contact_sent = (user_id) => {
   return new Promise( async (resolve, reject) => {
     let list_contact_sent = await contact_model.find_contact_sent(user_id)
-    list_contact_sent_infor = []
+    let list_contact_sent_infor = []
 
     // convert timestamp to human time
     for(let i = 0; i < list_contact_sent.length; i++) {

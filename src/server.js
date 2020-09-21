@@ -37,7 +37,6 @@ init_routes(app)
 config_socket_io(io,app, session)
 init_socket_io(io)
 
-
 server.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
   console.log(`Run success at http://${process.env.APP_HOST}:${process.env.APP_PORT}`)
 })
