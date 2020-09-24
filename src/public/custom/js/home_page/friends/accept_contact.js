@@ -77,5 +77,6 @@ $(document).ready(function(){
 
     append_to_list_friends(data_to_append)
     // thông báo cho người dùng 
+    notification_user_accepted_contact(data)
   })
 })
