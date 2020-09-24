@@ -69,5 +69,8 @@ module.exports.user_settings = {
 module.exports.notifications_content = {
   "receive_request_cotact": (sender_conatct_name) => {
     return `${sender_conatct_name} đã gửi cho bạn 1 lời mời kết bạn!`
-  }
+  },
+  "accept_request_contact": (sender_conatct_name) => {
+    return `${sender_conatct_name} đã chấp nhận lời mời kết bạn của bạn!`
+  },
 }

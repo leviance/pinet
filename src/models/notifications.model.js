@@ -19,7 +19,7 @@ let notifications_schema = new Schema({
 })
 
 notifications_schema.statics = {
-    notif_recieved_request_contact(notifications_data){
+    create_new_notification(notifications_data){
         return this.create(notifications_data)
     },
 
@@ -34,6 +34,12 @@ notifications_schema.statics = {
         return this.find({
             "receiver.id":  user_id,
         }).limit(15).sort({"created_at": -1}).exec()
+    },
+
+    mark_notifications_as_read(user_id){
+        return this.updateMany(
+            {"receiver.id": user_id},
+            {"is_read": true}).exec()
     }
 }
 

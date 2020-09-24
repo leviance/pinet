@@ -140,6 +140,8 @@ let accept_contact_received = (id_user_sent_contact,id_user_receive_contact) => 
 
     await contact_model.accept_contact_received(id_user_sent_contact,id_user_receive_contact)
 
+    notification_services.notif_accept_request_contact(id_user_sent_contact, id_user_receive_contact)
+
     return resolve()
   })
 }

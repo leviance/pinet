@@ -22,7 +22,30 @@ let notif_recieved_request_contact = async (sender_req_id, receiver_req_id) => {
     content: notifications_content.receive_request_cotact(sender_data.username),
   }
 
-  notifications_model.notif_recieved_request_contact(notifications_data)
+  notifications_model.create_new_notification(notifications_data)
+}
+
+let notif_accept_request_contact = async (receiver_notif_id, sender_notif_id) => {
+  let sender_data = await user_model.find_user_by_id(sender_notif_id)
+  let receiver_data = await user_model.find_user_by_id(receiver_notif_id)
+
+  let notifications_data = {
+    sender: {
+      id: sender_notif_id,
+      username: sender_data.username,
+      avatar: sender_data.avatar
+    },
+    receiver: {
+        id: receiver_notif_id,
+        username: receiver_data.username,
+        avatar: receiver_data.avatar
+    },
+    type: "accept_request_cotact",
+    content: notifications_content.accept_request_contact(sender_data.username),
+  }
+  
+  await notifications_model.create_new_notification(notifications_data)
+
 }
 
 let count_notifications = (user_id) => {
@@ -48,16 +71,23 @@ let get_list_notifications = (user_id) => {
         username: notification.sender.username,
         human_time: convert_timestamp(notification.created_at),
         type: notification.type,
-        is_read: notification.is_read
+        is_read: notification.is_read,
+        content: notification.content
       })
     }
-  
+    
     return resolve(list_notifications_infor)
   })
+}
+
+let mark_notifications_as_read = (user_id) => {
+  notifications_model.mark_notifications_as_read(user_id)
 }
 
 module.exports = {
   notif_recieved_request_contact,
   count_notifications,
-  get_list_notifications
+  get_list_notifications,
+  notif_accept_request_contact,
+  mark_notifications_as_read
 }

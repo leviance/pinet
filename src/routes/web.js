@@ -1,5 +1,5 @@
 const express = require('express')
-const {home_controller, auth_controller, user_controller, contact_controller} = require('../controllers/index')
+const {home_controller, auth_controller, user_controller, contact_controller, notification_controller} = require('../controllers/index')
 const {auth_valid} = require('../validation/index')
 
 const passport = require('passport')
@@ -44,6 +44,8 @@ function init_routes(app) {
   router.put('/cancel-contact-received-:sender_id', contact_controller.cancel_contact_received)
   router.put('/accept-contact-received-:id_user_send_contact', contact_controller.accept_contact_received)
 
+
+  router.put('/mark-notifications-as-read',notification_controller.mark_notifications_as_read)
 
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {
