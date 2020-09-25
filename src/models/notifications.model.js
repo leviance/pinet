@@ -33,13 +33,19 @@ notifications_schema.statics = {
     get_list_notifications(user_id){
         return this.find({
             "receiver.id":  user_id,
-        }).limit(15).sort({"created_at": -1}).exec()
+        }).limit(20).sort({"created_at": -1}).exec()
     },
 
     mark_notifications_as_read(user_id){
         return this.updateMany(
             {"receiver.id": user_id},
             {"is_read": true}).exec()
+    },
+
+    read_more_notifications(user_id, skip){
+        return this.find({
+            "receiver.id":  user_id,
+        }).limit(13).sort({"created_at": -1}).skip(skip).exec()
     }
 }
 

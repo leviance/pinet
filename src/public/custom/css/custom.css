@@ -129,4 +129,83 @@
 .notification-not-read {
   background-color: var(--light);
 }
+
+.lazy-load {
+  width: 364px;
+  height: 65px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.lazy-load .wrap {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 60px 0 20px;
+}
+
+.lazy-load .wrap .left {
+  position: relative;
+  height: 38px;
+  width: 38px;
+  background-color: #abb4d2;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.lazy-load .wrap .right {
+  width: 215px;
+  height: 11px;
+  background-color: #abb4d2;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.lazy-load .wrap .left::after, .lazy-load .wrap .right::after {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 20px;
+  background-color: #fafafa54;
+  top: 0;
+  left: 0;
+  -webkit-transform: skewX(-20deg);
+          transform: skewX(-20deg);
+  -webkit-animation: lazyload 1.5s infinite;
+          animation: lazyload 1.5s infinite;
+}
+
+@-webkit-keyframes lazyload {
+  from {
+    left: 0px;
+  }
+  to {
+    left: 105%;
+  }
+}
+
+@keyframes lazyload {
+  from {
+    left: 0px;
+  }
+  to {
+    left: 105%;
+  }
+}
 /*# sourceMappingURL=custom.css.map */
