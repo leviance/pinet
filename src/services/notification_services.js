@@ -84,10 +84,39 @@ let mark_notifications_as_read = (user_id) => {
   notifications_model.mark_notifications_as_read(user_id)
 }
 
+let read_more_notifications = (user_id, skip_notifications) => {
+  return new Promise( async (resolve, reject) => {
+    let list_notifications = await notifications_model.read_more_notifications(user_id,skip_notifications)
+    let list_notifications_infor = [];
+
+    if(list_notifications.length > 0) {
+      // convert timestamp to human time
+      for(let i = 0; i < list_notifications.length; i++) {
+        let notification = list_notifications[i]
+
+        list_notifications_infor.push({
+          sender_id: notification.sender.id,
+          sender_avatar: notification.sender.avatar,
+          sender_username: notification.sender.username,
+          human_time: convert_timestamp(notification.created_at),
+          type: notification.type,
+          is_read: notification.is_read,
+          content: notification.content
+        })
+      }
+
+      return resolve(list_notifications_infor)
+    }
+    
+    return reject()
+  })
+}
+
 module.exports = {
   notif_recieved_request_contact,
   count_notifications,
   get_list_notifications,
   notif_accept_request_contact,
-  mark_notifications_as_read
+  mark_notifications_as_read,
+  read_more_notifications
 }
