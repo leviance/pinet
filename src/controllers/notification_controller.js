@@ -19,7 +19,15 @@ let read_more_notifications = async (req, res) => {
 
 }
 
+let remove_all_notifications = (req, res) => {
+  let user_id = req.session.user_id
+  notification_services.remove_all_notifications(user_id)
+
+  return res.status(200).send()
+}
+
 module.exports = {
   mark_notifications_as_read,
-  read_more_notifications
+  read_more_notifications,
+  remove_all_notifications
 }

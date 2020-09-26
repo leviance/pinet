@@ -165,9 +165,24 @@ function view_more_notifications(){
     })
 }
 
-
+function remove_all_notifications() {
+    $('.btn-remove-all-notification').on('click', function(){
+        $.ajax({
+            type: 'PUT',
+            url: '/remove-all-notifications',
+            success: function(){
+                $('#list-notifications li').remove();
+                $('#btn-list-notice-received span').remove();
+            },
+            error: function(){
+                alertify.error(error_undefine_mess)
+            }
+        })
+    })
+}
 
 $(document).ready(function(){
     check_user_view_notification()
     view_more_notifications()
+    remove_all_notifications()
 })

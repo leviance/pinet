@@ -32,7 +32,18 @@
   </div>
   <div class="px-2 list-notify-list-req-contact">
         <div id="list-notice-received" data-simplebar>
-            <div class="list-title"><h5 class="mb-4">Thông báo</h5></div>
+            <div class="list-title mb-4">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <h5 >Thông báo</h5>
+                      </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="#">Tắt thông báo</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item btn-remove-all-notification" href="#">Xóa toàn bộ thông báo</a>
+                    </div>
+                  </div>
+            </div>
             <div class="simplebar-content" style="padding: 0px;">
                 <ul id="list-notifications" class="list-unstyled chat-list">
                     <% list_notifications.forEach(function(notification){ %>
@@ -67,7 +78,7 @@
             </div>
         </div>
         <div id="list-contacts-sent" data-simplebar>
-            <div class="list-title"><h5 class="mb-4">Lời mời đã gửi</h5></div>
+            <div class="list-title"><h5 class="mb-2">Lời mời đã gửi</h5></div>
             <div class="simplebar-content" style="padding: 0px;">
                 <ul id="content-list-contacts-sent" class="list-unstyled chat-list chat-user-list">
                     <% list_contact_sent.forEach(function(contact){%>
@@ -91,7 +102,7 @@
             </div>
         </div>
         <div id="list-contacts-received" data-simplebar>
-            <div class="list-title"><h5 class="mb-4">Lời mời nhận được</h5></div>
+            <div class="list-title"><h5 class="mb-2">Lời mời nhận được</h5></div>
             <div class="simplebar-content" style="padding: 0px;">
                 <ul id="content-list-contacts-received" class="list-unstyled chat-list chat-user-list">
                     <% list_contact_received.forEach(function(contact){%>

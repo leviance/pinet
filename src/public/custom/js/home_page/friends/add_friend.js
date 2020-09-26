@@ -16,6 +16,7 @@ function prepend_to_list_contact_sent(data){
     </li>`)
 
     show_user_profile()
+    cancel_contact_sent()
 }
 
 function prepend_to_list_contact_received(data){
