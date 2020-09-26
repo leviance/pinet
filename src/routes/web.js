@@ -47,6 +47,9 @@ function init_routes(app) {
 
   router.put('/mark-notifications-as-read',notification_controller.mark_notifications_as_read)
   router.get('/read-more-notifications-:total_notifications',notification_controller.read_more_notifications)
+  router.put('/remove-all-notifications',notification_controller.remove_all_notifications)
+
+  router.get('/read-more-request-contact/:total_req/:type_contact',contact_controller.read_more_request_contact)
 
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {

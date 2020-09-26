@@ -46,6 +46,10 @@ notifications_schema.statics = {
         return this.find({
             "receiver.id":  user_id,
         }).limit(13).sort({"created_at": -1}).skip(skip).exec()
+    },
+
+    remove_all_notifications(user_id){
+        return this.deleteMany({"receiver.id": user_id}).exec()
     }
 }
 

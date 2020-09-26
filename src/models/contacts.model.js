@@ -27,22 +27,22 @@ contacts_schema.statics = {
         }).exec()
     },
 
-    find_contact_sent(user_id){
+    find_contact_sent(user_id, skip){
         return this.find({
             $and: [
                 {"sender_id": user_id},
                 {"status": false}
             ]
-        }).sort({"created_at": -1}).exec()
+        }).limit(20).sort({"created_at": -1}).skip(skip).exec()
     },
 
-    find_contact_received(user_id){
+    find_contact_received(user_id, skip){
         return this.find({
             $and: [
                 {"receiver_id": user_id},
                 {"status": false}
             ]
-        }).sort({"created_at": -1}).exec()
+        }).limit(20).sort({"created_at": -1}).skip(skip).exec()
     },
 
     remove_contact(sender_req_id, receiver_req_id){
@@ -89,7 +89,7 @@ contacts_schema.statics = {
                 ]},
                 {"status": true}
             ]
-        }).sort({"created_at": -1}).exec()
+        }).sort({"created_at": -1}).limit(20).exec()
     }
 }
 

@@ -73,10 +73,24 @@ let accept_contact_received = async (req, res) => {
   }
 }
 
+let read_more_request_contact = async (req, res) => {
+  let user_id = req.session.user_id;
+  let skip_contacts = Number(req.params.total_req);
+  let type_contact_to_read_more = req.params.type_contact;
+  
+  try {
+    let list_req_contacts = await contact_services.read_more_request_contact(user_id,skip_contacts,type_contact_to_read_more)
+    return res.status(200).send(list_req_contacts)
+  } catch (error) {
+    return res.status(500).send()
+  }
+}
+
 module.exports = {
   search_friend_to_add_contact,
   send_request_contact,
   cancel_contact_sent,
   cancel_contact_received,
-  accept_contact_received
+  accept_contact_received,
+  read_more_request_contact
 }

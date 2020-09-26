@@ -112,11 +112,16 @@ let read_more_notifications = (user_id, skip_notifications) => {
   })
 }
 
+let remove_all_notifications = (user_id) => {
+  notifications_model.remove_all_notifications(user_id)
+}
+
 module.exports = {
   notif_recieved_request_contact,
   count_notifications,
   get_list_notifications,
   notif_accept_request_contact,
   mark_notifications_as_read,
-  read_more_notifications
+  read_more_notifications,
+  remove_all_notifications
 }

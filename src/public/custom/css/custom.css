@@ -106,8 +106,28 @@
   height: calc(100vh - 80px);
 }
 
-.list-notify-list-req-contact > div .list-title .mb-4 {
-  font-size: 18px;
+.list-notify-list-req-contact > div .list-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: auto;
+}
+
+.list-notify-list-req-contact > div .list-title button {
+  height: 35px;
+}
+
+.list-notify-list-req-contact > div .list-title button h5 {
+  font-size: 16px;
+  text-align: center;
+  color: white;
+}
+
+.list-notify-list-req-contact > div .list-title h5 {
+  font-size: 16px;
   text-align: center;
 }
 
