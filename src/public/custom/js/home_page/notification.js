@@ -58,7 +58,7 @@ function notification_new_request_contact(data){
                   <i class="ri-more-2-fill"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
-                <a data-uid="${data.sender_id}" class="dropdown-item btn-view-user-profile" href="#">Xem hồ sơ<i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
+                <a data-uid="${data.sender_id}" class="dropdown-item btn-view-user-profile user-profile-show" href="#">Xem hồ sơ<i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
                 <a data-uid="${data.sender_id}" class="dropdown-item btn-block-user-notification" href="#">Tắt thông báo<i class="fa fa-minus float-right text-muted" aria-hidden="true"></i></a>
                 <a data-uid="${data.sender_id}" class="dropdown-item btn-block-friend " href="#">Chặn<i class="ri-forbid-line float-right text-muted"></i></a>
                 <a data-uid="${data.sender_id}" class="dropdown-item btn-unfriend" href="#">Xóa thông báo<i class="ri-delete-bin-line float-right text-muted"></i></a>
@@ -69,6 +69,7 @@ function notification_new_request_contact(data){
 
     increase_total_tag('btn-list-notice-received')
     check_user_view_notification()
+    show_user_profile()
 }
 
 function notification_user_accepted_contact(data) {
@@ -89,7 +90,7 @@ function notification_user_accepted_contact(data) {
                   <i class="ri-more-2-fill"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
-                <a data-uid="${data.sender_id}" class="dropdown-item btn-view-user-profile" href="#">Xem hồ sơ<i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
+                <a data-uid="${data.sender_id}" class="dropdown-item btn-view-user-profile user-profile-show" href="#">Xem hồ sơ<i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
                 <a data-uid="${data.sender_id}" class="dropdown-item btn-block-user-notification" href="#">Tắt thông báo<i class="fa fa-minus float-right text-muted" aria-hidden="true"></i></a>
                 <a data-uid="${data.sender_id}" class="dropdown-item btn-block-friend " href="#">Chặn<i class="ri-forbid-line float-right text-muted"></i></a>
                 <a data-uid="${data.sender_id}" class="dropdown-item btn-unfriend" href="#">Xóa thông báo<i class="ri-delete-bin-line float-right text-muted"></i></a>
@@ -100,6 +101,7 @@ function notification_user_accepted_contact(data) {
 
     increase_total_tag('btn-list-notice-received')
     check_user_view_notification()
+    show_user_profile()
 }
 
 function append_notification_read_more(data){
@@ -122,7 +124,7 @@ function append_notification_read_more(data){
                             <i class="ri-more-2-fill"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a data-uid="${notification.sender_id}" class="dropdown-item btn-view-user-profile" href="#">Xem hồ sơ<i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
+                            <a data-uid="${notification.sender_id}" class="dropdown-item btn-view-user-profile user-profile-show" href="#">Xem hồ sơ<i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
                             <a data-uid="${notification.sender_id}" class="dropdown-item btn-block-user-notification" href="#">Tắt thông báo<i class="fa fa-minus float-right text-muted" aria-hidden="true"></i></a>
                             <a data-uid="${notification.sender_id}" class="dropdown-item btn-block-friend " href="#">Chặn<i class="ri-forbid-line float-right text-muted"></i></a>
                             <a data-uid="${notification.sender_id}" class="dropdown-item btn-unfriend" href="#">Xóa thông báo<i class="ri-delete-bin-line float-right text-muted"></i></a>
@@ -131,6 +133,8 @@ function append_notification_read_more(data){
                 </div>
             </li>`)
     })
+
+    show_user_profile()
 }
 
 function view_more_notifications(){

@@ -182,9 +182,31 @@
   }
 }
 
+.pdtb-20{
+  padding: 20px 0;
+}
 
 
+.loading-message-chat-frame{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #00000000;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 
-
+.message-let-talk-together{
+  display: flex;
+  justify-content: center;
+  .ctext-wrap-content{
+    border-radius: 8px !important;
+  }
+  .ctext-wrap-content::before{display: none}
+}
 

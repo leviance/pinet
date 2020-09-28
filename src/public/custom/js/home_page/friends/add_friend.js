@@ -1,9 +1,9 @@
 function prepend_to_list_contact_sent(data){
   $('#content-list-contacts-sent').prepend(`
     <li data-uid="${data.user_id}" >
-        <a data-uid="${data.user_id}" href="javascript: void(0);" >
+        <a href="javascript: void(0);" >
             <div class="media">
-                <div class="chat-user-img align-self-center mr-3 user-profile-show">
+                <div class="align-self-center mr-3 user-profile-show">
                     <img src="/assets/images/users/${data.avatar}" class="rounded-circle avatar-xs" alt="">
                 </div>
                 <div class="media-body overflow-hidden user-profile-show">
@@ -22,9 +22,9 @@ function prepend_to_list_contact_sent(data){
 function prepend_to_list_contact_received(data){
   $('#content-list-contacts-received').prepend(`
   <li data-uid="${data.sender_id}" >
-    <a data-uid="${data.sender_id}" href="javascript: void(0);" >
+    <a href="javascript: void(0);" >
         <div class="media">
-            <div class="chat-user-img align-self-center mr-3 user-profile-show">
+            <div class="align-self-center mr-3 user-profile-show">
               <img src="/assets/images/users/${data.sender_avatar}" class="rounded-circle avatar-xs" alt="">
             </div>
             <div class="media-body overflow-hidden user-profile-show">
