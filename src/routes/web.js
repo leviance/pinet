@@ -1,5 +1,5 @@
 const express = require('express')
-const {home_controller, auth_controller, user_controller, contact_controller, notification_controller} = require('../controllers/index')
+const {home_controller, auth_controller, user_controller, contact_controller, notification_controller, message_controller} = require('../controllers/index')
 const {auth_valid} = require('../validation/index')
 
 const passport = require('passport')
@@ -50,6 +50,8 @@ function init_routes(app) {
   router.put('/remove-all-notifications',notification_controller.remove_all_notifications)
 
   router.get('/read-more-request-contact/:total_req/:type_contact',contact_controller.read_more_request_contact)
+
+  router.get('/get-persional-messages/:user_id',message_controller.get_persional_messages)
 
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {

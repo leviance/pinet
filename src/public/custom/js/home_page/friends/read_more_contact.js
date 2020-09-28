@@ -6,9 +6,9 @@ let message_read_more_contact = {
 function append_to_list_contact_sent(data){
   $('#content-list-contacts-sent').append(`
     <li data-uid="${data.user_id}" >
-        <a data-uid="${data.user_id}" href="javascript: void(0);" >
+        <a href="javascript: void(0);" >
             <div class="media">
-                <div class="chat-user-img align-self-center mr-3 user-profile-show">
+                <div class="align-self-center mr-3 user-profile-show">
                     <img src="/assets/images/users/${data.avatar}" class="rounded-circle avatar-xs" alt="">
                 </div>
                 <div class="media-body overflow-hidden user-profile-show">
@@ -27,7 +27,7 @@ function append_to_list_contact_sent(data){
 function append_to_list_contact_received(data){
   $('#content-list-contacts-received').append(`
   <li data-uid="${data.user_id}" >
-    <a data-uid="${data.user_id}" href="javascript: void(0);" >
+    <a href="javascript: void(0);" >
         <div class="media">
             <div class="chat-user-img align-self-center mr-3 user-profile-show">
               <img src="/assets/images/users/${data.avatar}" class="rounded-circle avatar-xs" alt="">
@@ -71,7 +71,7 @@ function read_more_request_contact(){
               url: `/read-more-request-contact/${total_req}/sent`,
               success: function(data) {
                   $('#content-list-contacts-sent').find('.lazy-load').remove()
-                  console.log(data)
+                  
                   data.forEach(function(req_sent){
                     append_to_list_contact_sent(req_sent)
                   })
@@ -101,7 +101,7 @@ function read_more_request_contact(){
               url: `/read-more-request-contact/${total_req}/received`,
               success: function(data) {
                   $('#content-list-contacts-received').find('.lazy-load').remove()
-                  console.log(data)
+                  
                   data.forEach(function(req_received){
                     append_to_list_contact_received(req_received)
                   })

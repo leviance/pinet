@@ -1,13 +1,13 @@
-function append_to_list_friends(data){
+function prepend_to_list_friends(data){
   $('#list-friends').prepend(`
     <li data-uid="${data.user_id}">
       <div class="media align-items-center friend-item">
-          <div class="chat-user-img mr-3">
+          <div class="chat-user-img mr-3 show-modal-chat-persional">
               <div class="avatar-xs">
                   <img src="${data.avatar}" class="rounded-circle avatar-xs" alt="">
               </div>
           </div>
-          <div class="media-body overflow-hidden">
+          <div class="media-body overflow-hidden show-modal-chat-persional pdtb-20">
               <h5 class="text-truncate font-size-14 mb-0">${data.username}</h5>
           </div>
           <div class="dropdown">
@@ -23,6 +23,8 @@ function append_to_list_friends(data){
       </div>
     </li>
   `)
+
+  show_modal_chat_personal()
 }
 
 function accept_contact_received(){
@@ -51,7 +53,7 @@ function accept_contact_received(){
           avatar: _this.parents('li').find('img').attr('src'),
           username: _this.parents('li').find('h5').text()
         }
-        append_to_list_friends(data_to_append)
+        prepend_to_list_friends(data_to_append)
       },
       error: function(){
         alertify.error(error_undefine_mess)
@@ -75,7 +77,7 @@ $(document).ready(function(){
       username: data.sender_username
     }
 
-    append_to_list_friends(data_to_append)
+    prepend_to_list_friends(data_to_append)
     // thông báo cho người dùng 
     notification_user_accepted_contact(data)
   })

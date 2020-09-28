@@ -9,6 +9,10 @@ const lazy_loadings = `<div class="lazy-load">
                           </div>
                         </div>`
 
+const lazy_loadings_message_frame = ` <div class="loading-message-chat-frame">
+                                        <div class="dot-carousel"></div>
+                                      </div>`
+
 function show_and_hide_list_notify_list_req_contact(){
   $('#btn-list-notice-received').bind('click', function(){
     $('#list-notice-received').show();
@@ -79,9 +83,10 @@ function show_user_profile(){
   })
 }
 
+
+
 $(document).ready(function(){
   show_and_hide_list_notify_list_req_contact()
   show_user_profile()
-
   
 })
