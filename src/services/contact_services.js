@@ -229,6 +229,14 @@ let read_more_request_contact = (user_id,skip_contacts,type_contact_to_read_more
   })
 }
 
+let check_has_contact = (sender_id,receiver_id) => {
+  return new Promise( async (resolve, reject) => {
+    let check_has_contact = await contact_model.check_has_contact(sender_id,receiver_id)
+    
+    return resolve(check_has_contact)
+  })
+}
+
 module.exports = {
   search_friend_to_add_contact,
   send_request_contact,
@@ -240,5 +248,6 @@ module.exports = {
   count_contact_sent,
   accept_contact_received,
   get_list_friends,
-  read_more_request_contact
+  read_more_request_contact,
+  check_has_contact
 }

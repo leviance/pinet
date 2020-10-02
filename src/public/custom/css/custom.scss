@@ -210,3 +210,37 @@
   .ctext-wrap-content::before{display: none}
 }
 
+.emojionearea.emojionearea-inline > .emojionearea-button {
+  top: 0px;
+  right: -57px;
+  width: 45px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+}
+
+.emojionearea.emojionearea-inline {
+  height: 43px;
+}
+
+img.emojione {
+  width: 25px;
+  padding-left: 5px;
+}
+
+.emojionearea.emojionearea-inline > .emojionearea-editor {
+  height: 32px;
+  min-height: 20px;
+  margin-top: 5px;
+  color: var(--dark);
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  position: absolute;
+  top: 0;
+  left: 12px;
+  right: 24px;
+  padding: 6px 0;
+}

@@ -7,7 +7,7 @@ let contacts_schema = new Schema({
     status: {type: Boolean, default: false},
     created_at: {type: Number, default: Date.now},
     updated_at: {type: Number, default: null},
-    deleted_at: {type: Number, default: null}
+    deleted_at: {type: Number, default: null},
 });
 
 contacts_schema.statics = {
@@ -90,6 +90,15 @@ contacts_schema.statics = {
                 {"status": true}
             ]
         }).sort({"created_at": -1}).limit(20).exec()
+    },
+
+    check_has_contact(sender_id,receiver_id){
+        return this.findOne({
+            $or: [
+                {"sender_id": sender_id, "receiver_id": receiver_id, "status": true},
+                {"sender_id": receiver_id, "receiver_id": sender_id, "status": true}
+            ]
+        }).exec()
     }
 }
 
