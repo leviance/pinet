@@ -52,12 +52,10 @@ function render_img_mess_to_chat_frame(message){
 
   // neu message do người dùng gửi đi thì gắn class right
   let type_of_message = ""
-  let partner_name = `<div class="chat-persional-username conversation-name">${message.sender.username}</div>`
 
   // if the message is sent by user
   if(message.sender.id != partner_id){
     type_of_message = "right"
-    partner_name = ""
   }
 
   $('#list-messages-frame').prepend(`
@@ -87,7 +85,6 @@ function render_img_mess_to_chat_frame(message){
               </div>
               
           </div>
-          ${partner_name}
       </div>
     </div>
   </li>
@@ -97,11 +94,9 @@ function render_img_mess_to_chat_frame(message){
 function render_text_mess_to_chat_frame(message, type){
   // if user  sent message
   let type_of_message = ""
-  let partner_name = `<div class="chat-persional-username conversation-name">${message.sender.username}</div>`
 
   if(type == "sent"){
     type_of_message = "right"
-    partner_name = ""
   }
 
   $('#list-messages-frame').prepend(`
@@ -131,7 +126,6 @@ function render_text_mess_to_chat_frame(message, type){
                     </div>
                 </div>
             </div>
-            ${partner_name}
         </div>
     </div>
   </li>`)
@@ -142,12 +136,10 @@ function render_file_message_to_chat_frame(message){
 
   // neu message do người dùng gửi đi thì gắn class right
   let type_of_message = ""
-  let partner_name = `<div class="chat-persional-username conversation-name">${message.sender.username}</div>`
 
   // if the message is sent by user
   if(message.sender.id != partner_id){
     type_of_message = "right"
-    partner_name = ""
   }
 
   $('#list-messages-frame').prepend(`
@@ -201,7 +193,6 @@ function render_file_message_to_chat_frame(message){
                 </div>
                 
             </div>
-            ${partner_name}
         </div>
         
     </div>
@@ -268,6 +259,7 @@ function show_modal_chat_personal(){
 
         // scroll chat frame to bottom
         $('.simplebar-content-wrapper').scrollTop($("#list-messages-frame").height());
+        convert_unicode_to_emoji()
       },
       error: function(msg){
         $('.loading-message-chat-frame').remove()
