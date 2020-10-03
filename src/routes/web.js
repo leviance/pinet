@@ -52,6 +52,7 @@ function init_routes(app) {
   router.get('/read-more-request-contact/:total_req/:type_contact',contact_controller.read_more_request_contact)
 
   router.get('/get-persional-messages/:user_id',message_controller.get_persional_messages)
+  router.post('/user-send-file-image-persional',message_controller.user_send_file_image_persional)
 
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {

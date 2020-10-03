@@ -1,5 +1,3 @@
-let message_audio = new Audio('/assets/file/message.mp3');
-
 function append_text_message_sent_to_chat_frame(message){
   let time_stamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
 
@@ -35,7 +33,7 @@ function append_text_message_sent_to_chat_frame(message){
         </div>
       </li>`)
 
-      $('.simplebar-content-wrapper').scrollTop($("#list-messages-frame").height());
+      scroll_to_bottom_chat_frame()
 
       $("p").each(function() {
         var original = $(this).html();
@@ -103,7 +101,7 @@ function append_received_text_message_to_chat_frame(data) {
       </div>
     </li>`)
 
-    $('.simplebar-content-wrapper').scrollTop($("#list-messages-frame").height());
+    scroll_to_bottom_chat_frame()
     convert_unicode_to_emoji()
   }
 }
@@ -124,10 +122,7 @@ function config_emojione(){
       keyup: function(editor, event){
         if(event.keyCode === 13){
           let message = el[0].emojioneArea.getText()
-          let receiver_id = $('#chat-frame').attr('data-uid')
-          send_text_message(message,receiver_id)
-
-          $('.emojionearea-editor').html("")
+          user_send_personal_message(message)
         }
       },
       click: function(){
@@ -141,10 +136,23 @@ function config_emojione(){
 
   $('#btn-send-chat').on('click', function(){
     let message = el[0].emojioneArea.getText()
+    user_send_personal_message(message)
+    
+  })
+}
+
+function user_send_personal_message(message){
+  if(message != ""){
     let receiver_id = $('#chat-frame').attr('data-uid')
     send_text_message(message,receiver_id)
     $('.emojionearea-editor').html("")
-  })
+  }
+  
+  if(form_data_user_send_file_image_personal != null){
+    // chat_file_message_personal.js
+    user_send_file_image()
+  }
+  
 }
 
 $(document).ready(function() {

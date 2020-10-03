@@ -43,7 +43,7 @@ chat_personal_schema.statics = {
         }).limit(25).sort({"created_at": -1}).skip(skip).exec()
     },
 
-    user_send_text_message_persional(model){
+    user_send_message_persional(model){
         return this.create(model)
     }
 }
