@@ -244,3 +244,55 @@ img.emojione {
   right: 24px;
   padding: 6px 0;
 }
+
+.preview-file-attachment{
+  position: absolute;
+  top: -100px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  overflow-x: auto;
+  display: inline-flex;
+  padding-bottom: 10px;
+  cursor: pointer;
+    .img-content{
+      position: relative;
+      width: auto;
+      height: 100%;
+      margin: 0 10px;
+      img{
+        height: 100%;
+        border-radius: 10px;
+      }
+
+      .btn-remove-file-img{
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 23px;
+        right: 10%;
+        top: 10%;
+        background-color: var(--light);
+        transition: 0.3s;
+      }
+      .btn-remove-file-img:hover{
+        background-color: var(--dark);
+        color: var(--light)
+      }
+    }
+}
+
+
+.preview-file-attachment::-webkit-scrollbar {
+  height: 7px;
+  
+}
+
+ 
+/* Handle */
+.preview-file-attachment::-webkit-scrollbar-thumb {
+  background: #a2adb793; 
+  border-radius: 10px;
+}

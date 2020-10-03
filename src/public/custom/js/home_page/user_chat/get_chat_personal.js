@@ -258,8 +258,9 @@ function show_modal_chat_personal(){
         $('.loading-message-chat-frame').remove()
 
         // scroll chat frame to bottom
-        $('.simplebar-content-wrapper').scrollTop($("#list-messages-frame").height());
+        scroll_to_bottom_chat_frame()
         convert_unicode_to_emoji()
+        view_message_image()
       },
       error: function(msg){
         $('.loading-message-chat-frame').remove()
@@ -274,6 +275,6 @@ function show_modal_chat_personal(){
 
 $(document).ready(function() {
   show_modal_chat_personal()
-
-  $('.simplebar-content-wrapper').scrollTop($("#list-messages-frame").height());
+  scroll_to_bottom_chat_frame()
+  
 })

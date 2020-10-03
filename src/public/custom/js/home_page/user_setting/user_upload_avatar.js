@@ -8,12 +8,12 @@ function user_upload_avatar(){
     let limit = 1048576 * 10;
     
     if(!$.inArray(file.type,['image/jpg','image/png','image/gif', 'image/jpeg'])) {
-      alertify.error("File ảnh không hợp lệ")
+      alertify.error(message_validation_file.image_type_incorrect)
       return false
     };
 
     if(file.size < 1024 || file.size > limit) {
-      alertify.error("Kích thước ảnh không hợp lệ")
+      alertify.error(message_validation_file.image_size_incorrect)
       return false
     };
 

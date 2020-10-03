@@ -21,6 +21,24 @@ let message_socket = (io) => {
 
         emit_socket("receiver-user-send-text-message",data_to_emit, io)
       }
+    }),
+
+    socket.on("request-user-send-image-message", async (data) => {
+      let sender_id = socket.request.session.user_id
+      let receiver_id = data.receiver_id
+
+      check_has_contact = await contact_services.check_has_contact(sender_id,receiver_id)
+
+      if(check_has_contact != null) {
+        let data_to_emit = {
+          receiver_id: receiver_id,
+          sender_id: sender_id,
+          message_id: data.message_id,
+          images: data.images,
+        }
+
+        emit_socket("receiver-user-send-image-message",data_to_emit, io)
+      }
     })
 
   })
