@@ -77,6 +77,7 @@ module.exports.notifications_content = {
 
 module.exports.send_message_error = {
   not_friend: "Bạn phải kết bạn để gửi tin nhắn cho người này",
+  send_text_message_error: "Đã có lỗi bất ngờ xảy ra khi gửi tin nhắn này.",
   send_image_error: "Có lỗi xảy ra khi gửi ảnh",
   send_image_type_error: "File ảnh không hợp lệ. Chỉ chấp nhận jpg, png, gif, jpeg",
   unspecified_error: "Đã có lỗi bất ngờ xảy ra nếu còn gặp phải lỗi này xin vui lòng liên hệ bộ phận hỗ trợ của chúng tôi",

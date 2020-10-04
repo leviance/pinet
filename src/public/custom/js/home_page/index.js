@@ -21,6 +21,10 @@ const lazy_loadings_message_frame = ` <div class="loading-message-chat-frame">
                                       </div>`
 
 
+function get_current_time(){
+  return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
+}
+
 function view_message_image(){
   $(".popup-img").magnificPopup({
     type: "image",

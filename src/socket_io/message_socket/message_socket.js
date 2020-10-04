@@ -3,6 +3,7 @@ const emit_socket = require('../../helper/emit_socket')
 
 let message_socket = (io) => {
   io.on('connection', socket => {
+    
     socket.on('request-user-send-text-message', async (data) => {
       let sender_id = socket.request.session.user_id
       let receiver_id = data.receiver_id

@@ -4,6 +4,8 @@ const {app} = require('../config/app')
 const uid = require('uid')
 const multer = require('multer')
 
+const emit_socket = require('../helper/emit_socket')
+
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, app.avatar_directory)
@@ -21,6 +23,7 @@ let upload_avatar = multer({
   storage: storage,
   limits: {fileSize: app.avatar_limit_size}
 }).array('message_images',50);
+
 
 let user_send_file_image_persional = async (req, res) => {
 
@@ -69,7 +72,41 @@ let get_persional_messages = async (req, res) => {
   }
 }
 
+let user_send_text_message_persional = async (req, res) => {
+  try {
+    let sender = {
+      id: req.session.user_id,
+      username: req.session.username,
+      avatar: req.session.avatar
+    }
+    let receiver_id = req.body.receiver_id;
+    let message = req.body.message;
+
+    let result_send = await message_services.user_send_text_message_persional(sender, receiver_id, message)
+    
+    let data_to_emit = {
+      receiver_id: receiver_id,
+      sender_id: sender.id,
+      message: message
+    }
+    
+    emit_socket("receiver-user-send-text-message",data_to_emit, req.io)
+
+    return res.status(200).send(result_send)
+  } catch (error) {
+    return res.status(500).send(send_message_error.send_text_message_error)
+  }
+}
+
+let test = (io) => {
+  console.log(io)
+  console.log("ok")
+  return 
+}
+
 module.exports = {
   get_persional_messages,
-  user_send_file_image_persional
+  user_send_file_image_persional,
+  user_send_text_message_persional,
+  test
 }
