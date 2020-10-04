@@ -30,12 +30,12 @@ app.use(bodyParser.json())
 app.use(passport.initialize());
 app.use(passport.session()); 
 
-// config routes
-init_routes(app)
-
 // config for socket.io
 config_socket_io(io,app, session)
 init_socket_io(io)
+
+// config routes
+init_routes(app, io)
 
 server.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
   console.log(`Run success at http://${process.env.APP_HOST}:${process.env.APP_PORT}`)

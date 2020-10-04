@@ -11,7 +11,12 @@ init_passport_google()
 
 let router = express.Router()
 
-function init_routes(app) {
+function init_routes(app, io) {
+  app.use(function(req,res,next){
+    req.io = io;
+    next();
+  });
+
   router.get('/', home_controller)
   router.get('/login',auth_controller.render_login_page)
   router.get('/register',auth_controller.render_register_page)
@@ -53,6 +58,7 @@ function init_routes(app) {
 
   router.get('/get-persional-messages/:user_id',message_controller.get_persional_messages)
   router.post('/user-send-file-image-persional',message_controller.user_send_file_image_persional)
+  router.post('/user-send-text-message-persional',message_controller.user_send_text_message_persional)
 
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {
