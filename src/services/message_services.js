@@ -94,9 +94,47 @@ let user_send_text_message_persional = (sender, receiver_id, message) => {
 
 }
 
+let user_send_file_attachment_persional = (sender_id,receiver_id,files_data) => {
+  return new Promise( async (resolve, reject) => {
+    let check_has_contact = await contact_model.check_has_contact(sender_id,receiver_id)
+    if(check_has_contact == null) return reject(send_message_error.not_friend)
+    
+    let sender_profile = await user_model.find_user_by_id(sender_id);
+    let receiver_profile = await user_model.find_user_by_id(receiver_id)
+
+    let list_results = []
+
+    for(let i = 0; i < files_data.length; i++){
+      let file_data = files_data[i]
+      
+      let model = {
+        sender: {
+          id: sender_profile._id,
+          username: sender_profile.username,
+          avatar: sender_profile.avatar
+        },
+        receiver: {
+          id: receiver_profile._id,
+          username: receiver_profile.username,
+          avatar: receiver_profile.avatar
+        },
+        file: file_data.name,
+        file_size: file_data.size,
+        file_src: file_data.src
+      }
+      
+      let result_send_images_message = await chat_personal_model.user_send_message_persional(model)
+
+      list_results.push(result_send_images_message)
+    }
+
+    return resolve(list_results)
+  })
+}
 
 module.exports = {
   get_persional_messages,
   user_send_text_message_persional,
   user_send_file_image_persional,
+  user_send_file_attachment_persional
 }

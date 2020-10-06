@@ -1,40 +1,19 @@
 const {message_services} = require('../services/index')
 const {send_message_error} = require('../../lang/vi')
-const {app} = require('../config/app')
-const uid = require('uid')
-const multer = require('multer')
+const upload_file = require('../helper/upload_file')
 
 const emit_socket = require('../helper/emit_socket')
 
-let storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, app.avatar_directory)
-  },
-  filename: function (req, file, cb) {
-    let match = app.avatar_type
-    if(match.indexOf(file.mimetype) == -1) return cb(send_message_error.send_image_type_error, null)
+let user_send_file_image_persional = (req, res) => {
 
-    let avatar_name = `${uid()}-${new Date().getTime()}-${file.originalname}` 
-    cb(null, avatar_name)
-  }
-})
-
-let upload_avatar = multer({ 
-  storage: storage,
-  limits: {fileSize: app.avatar_limit_size}
-}).array('message_images',50);
-
-
-let user_send_file_image_persional = async (req, res) => {
-
-  upload_avatar(req, res, async (error) => {
+  upload_file.message_image(req, res, async (error) => {
 
     if(error) {
       if(error.message){
         return res.status(500).send(send_message_error.send_image_error)
       }
 
-      return res.status(500).send(error)
+      return res.status(500).send(send_message_error.unspecified_error)
     }
 
     
@@ -98,15 +77,55 @@ let user_send_text_message_persional = async (req, res) => {
   }
 }
 
-let test = (io) => {
-  console.log(io)
-  console.log("ok")
-  return 
+let user_send_file_attachment_persional = (req, res) => {
+  upload_file.message_file(req, res, async (error) => {
+
+    if(error) {
+      if(error.message){
+        return res.status(500).send(send_message_error.send_file_error)
+      }
+
+      return res.status(500).send(send_message_error.unspecified_error)
+    }
+    
+    try {
+      let sender_id = req.session.user_id
+      let receiver_id = req.body.receiver_id
+      
+      let files_data = []
+      let re = /^([A-Za-z0-9]*-)([A-Za-z0-9]*-)/
+
+      req.files.forEach(file => {
+        let filename = file.filename
+        filename = filename.replace(re, "")
+
+        let file_data = {
+          name: filename,
+          src: file.filename,
+          size: file.size
+        }
+        files_data.push(file_data)
+      })
+      
+      let list_results_send_files_message = await message_services.user_send_file_attachment_persional(sender_id,receiver_id,files_data)
+
+      let data_to_emit = list_results_send_files_message
+      data_to_emit.receiver_id = receiver_id
+      
+      emit_socket('receiver-user-send-attachment-message',data_to_emit, req.io)
+
+      return res.status(200).send(list_results_send_files_message)
+
+    } catch (error) {
+      return res.status(500).send(error)
+    }
+  })
 }
+
 
 module.exports = {
   get_persional_messages,
   user_send_file_image_persional,
   user_send_text_message_persional,
-  test
+  user_send_file_attachment_persional
 }

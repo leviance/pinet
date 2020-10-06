@@ -143,7 +143,7 @@ function render_file_message_to_chat_frame(message){
   }
 
   $('#list-messages-frame').prepend(`
-  <li data-uid="${message._id}" class="${type_of_message}">
+  <li data-uid="${message._id}" class="${type_of_message} message-file-attachment">
     <div class="conversation-list">
         <div class="chat-avatar">
             <img src="assets/images/users/${message.sender.avatar}" alt="">
@@ -163,14 +163,14 @@ function render_file_message_to_chat_frame(message){
                             <div class="media-body">
                                 <div class="text-left">
                                     <h5 class="font-size-14 mb-1">${message.file}</h5>
-                                    <p class="text-muted font-size-13 mb-0">${message.file_size}</p>
+                                    <p class="text-muted font-size-13 mb-0">${bytesToSize(message.file_size)}</p>
                                 </div>
                             </div>
 
                             <div class="ml-4">
                                 <ul class="list-inline mb-0 font-size-20">
                                     <li class="list-inline-item">
-                                        <a href="/assets/file/${message.file}" class="text-muted">
+                                        <a href="/assets/file/${message.file_src}" class="text-muted">
                                             <i class="ri-download-2-line"></i>
                                         </a>
                                     </li>

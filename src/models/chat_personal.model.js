@@ -12,8 +12,10 @@ let chat_personal_schema = new Schema({
         username: String,
         avatar: String
     },
+    is_read: {type: String, default: null},
     text: {type: String, default: null},
     file: {type: String, default: null},
+    file_src: {type: String, default: null},
     images: [],
     file_size: {type: String, default: null},
     created_at: {type: Number, default: Date.now},
