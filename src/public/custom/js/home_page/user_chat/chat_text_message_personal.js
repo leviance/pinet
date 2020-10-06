@@ -152,6 +152,10 @@ function user_send_personal_message(message){
     user_send_file_image()
   }
   
+  if(form_data_user_send_file_personal != null){
+    // chat_file_message_personal.js
+    user_send_file_attachment()
+  }
 }
 
 $(document).ready(function() {

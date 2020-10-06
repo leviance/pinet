@@ -317,6 +317,7 @@ img.emojione {
   width: 100%;
   height: 100px;
   overflow-x: auto;
+  overflow-y: hidden;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -336,7 +337,35 @@ img.emojione {
   border-radius: 10px;
 }
 
-.preview-file-attachment .img-content .btn-remove-file-img {
+.preview-file-attachment .file-attachment {
+  position: relative;
+  width: auto;
+  height: 100%;
+  margin: 24px 10px 0 10px;
+}
+
+.preview-file-attachment .file-attachment .card {
+  background-color: var(--dark);
+  padding-right: 40px !important;
+}
+
+.preview-file-attachment .file-attachment .card .media-body {
+  width: 100px;
+}
+
+.preview-file-attachment .file-attachment .card h5, .preview-file-attachment .file-attachment .card p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--light) !important;
+}
+
+.preview-file-attachment .file-attachment .btn-remove-file-attachment-in-preview {
+  right: 2% !important;
+  top: 4% !important;
+}
+
+.preview-file-attachment .file-attachment .btn-remove-file-attachment-in-preview, .preview-file-attachment .img-content .btn-remove-file-attachment-in-preview {
   position: absolute;
   width: 25px;
   height: 25px;
@@ -350,7 +379,7 @@ img.emojione {
   transition: 0.3s;
 }
 
-.preview-file-attachment .img-content .btn-remove-file-img:hover {
+.preview-file-attachment .file-attachment .btn-remove-file-attachment-in-preview:hover, .preview-file-attachment .img-content .btn-remove-file-attachment-in-preview:hover {
   background-color: var(--dark);
   color: var(--light);
 }
@@ -363,5 +392,9 @@ img.emojione {
 .preview-file-attachment::-webkit-scrollbar-thumb {
   background: #a2adb793;
   border-radius: 10px;
+}
+
+.message-file-attachment .card {
+  max-width: 400px;
 }
 /*# sourceMappingURL=custom.css.map */

@@ -252,6 +252,7 @@ img.emojione {
   width: 100%;
   height: 100px;
   overflow-x: auto;
+  overflow-y: hidden;
   display: inline-flex;
   padding-bottom: 10px;
   cursor: pointer;
@@ -265,7 +266,36 @@ img.emojione {
         border-radius: 10px;
       }
 
-      .btn-remove-file-img{
+    }
+
+    .file-attachment{
+      position: relative;
+      width: auto;
+      height: 100%;
+      margin: 24px 10px 0 10px;
+      .card{
+        background-color: var(--dark);
+        padding-right: 40px !important;
+        .media-body{
+          width: 100px;
+        }
+
+        h5 , p{
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          color: var(--light) !important;
+        }
+      }
+
+      .btn-remove-file-attachment-in-preview{
+        right: 2% !important;
+        top: 4% !important;
+      }
+    }
+
+    .file-attachment, .img-content{
+      .btn-remove-file-attachment-in-preview{
         position: absolute;
         width: 25px;
         height: 25px;
@@ -277,7 +307,7 @@ img.emojione {
         background-color: var(--light);
         transition: 0.3s;
       }
-      .btn-remove-file-img:hover{
+      .btn-remove-file-attachment-in-preview:hover{
         background-color: var(--dark);
         color: var(--light)
       }
@@ -295,4 +325,9 @@ img.emojione {
 .preview-file-attachment::-webkit-scrollbar-thumb {
   background: #a2adb793; 
   border-radius: 10px;
+}
+
+
+.message-file-attachment{
+  .card{max-width: 400px;}
 }

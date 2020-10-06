@@ -1,4 +1,4 @@
-let form_data_user_send_image_personal = null
+let form_data_user_send_image_personal = null;
 
 function validation_images(images){
   const accept_type = ['image/jpg','image/png','image/gif', 'image/jpeg']
@@ -14,6 +14,7 @@ function validation_images(images){
 
     if(image.size < 1024 || image.size > limit) {
       alertify.error(message_validation_file.image_size_incorrect)
+      result = false
       return false
     };
   })
@@ -21,11 +22,35 @@ function validation_images(images){
   return result
 }
 
-function remove_image_from_preview(){
-  $('.btn-remove-file-img').unbind('click').bind('click', function(){
+function remove_file_image_in_preview(){
+  $('.btn-remove-file-attachment-in-preview').unbind('click').bind('click', function(){
     let image_to_preview =  $('.preview-file-attachment .img-content')
-    if(image_to_preview.length == 1) $('#chat-frame .preview-file-attachment').hide()
-    form_data_user_send_image_personal = null
+    let file_to_preview = $('.preview-file-attachment .file-attachment')
+
+    let name_of_file = $(this).attr('data-name')
+
+    if(image_to_preview.length == 1){
+      $('#chat-frame .preview-file-attachment').hide()
+      form_data_user_send_image_personal = null
+    }
+
+    if(file_to_preview.length == 1){
+      $('#chat-frame .preview-file-attachment').hide()
+      form_data_user_send_file_personal = null
+    }
+
+    if(form_data_user_send_image_personal != null){
+      let data = form_data_user_send_image_personal.getAll('message_images')
+
+      form_data_user_send_image_personal.delete('message_images')
+
+      for(let i = 0; i < data.length; i++){
+        if(data[i].name != name_of_file){
+          form_data_user_send_image_personal.append('message_images', data[i])
+        }
+      }
+    }
+   
     $(this).parent().remove()
   })
 }
@@ -34,7 +59,7 @@ function preview_image_before_send(images){
   $('#chat-frame .preview-file-attachment').show()
   $('#chat-frame .preview-file-attachment').children().remove()
 
-  images.forEach(function(image){
+  images.forEach(function(image,i){
     let reader = new FileReader();
 
     reader.onload = function(e){
@@ -42,12 +67,12 @@ function preview_image_before_send(images){
       base64_img = e.target.result
 
       $('#chat-frame .preview-file-attachment').append(`
-        <div class="img-content">
+        <div class="img-content" >
           <img src="${base64_img}" alt="">
-          <div class="btn-remove-file-img"><i class="fa fa-times" aria-hidden="true"></i></div>
+          <div data-name="${image.name}" class="btn-remove-file-attachment-in-preview"><i class="fa fa-times" aria-hidden="true"></i></div>
         </div>`)
 
-        remove_image_from_preview()
+        remove_file_image_in_preview()
     }
 
     reader.readAsDataURL(image)
@@ -128,7 +153,6 @@ function append_image_sent_to_chat_frame(data){
   view_message_image()
   scroll_to_bottom_chat_frame()
 
-  form_data_user_send_image_personal = null
   $('#chat-frame .preview-file-attachment').hide()
   $('#chat-frame .preview-file-attachment').children().remove()
 }
@@ -143,7 +167,8 @@ function user_send_file_image(){
       data: form_data_user_send_image_personal,
       success: function(data){
         append_image_sent_to_chat_frame(data)
-
+        
+        form_data_user_send_image_personal = null
         let data_to_emit = {
           receiver_id: data.receiver.id,
           message_id: data._id,
@@ -171,7 +196,7 @@ $(document).ready(function(){
     let receiver_id = $('#chat-frame').attr('data-uid')
     
     if(!validation_images(images)) return false; 
-    $('#chat-frame .preview-file-attachment').show()
+    
     preview_image_before_send(images)
 
     let form_data = new FormData()
@@ -180,13 +205,12 @@ $(document).ready(function(){
     }
 
     form_data.append('receiver_id', receiver_id)
-
+    
     form_data_user_send_image_personal = form_data
   })
 
 
   socket.on('receiver-user-send-image-message', function(data){
-    console.log(data)
     message_audio.play()
     let time_stamp = get_current_time()
 
