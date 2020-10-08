@@ -3,24 +3,46 @@
 
   <div class="chat-message-list" data-simplebar>
 
-      <ul class="list-unstyled chat-list chat-user-list">
-          <li>
-              <a href="#">
-                  <div class="media">
-
-                      <div class="chat-user-img online align-self-center mr-3">
-                          <img src="/assets/images/users/avatar-2.jpg" class="rounded-circle avatar-xs" alt="">
-                          <span class="user-status"></span>
-                      </div>
-
-                      <div class="media-body overflow-hidden">
-                          <h5 class="text-truncate font-size-15 mb-1">Patrick Hendricks</h5>
-                          <p class="chat-user-message text-truncate mb-0">Hey! there I'm available</p>
-                      </div>
-                      <div class="font-size-11">05 min</div>
-                  </div>
-              </a>
-          </li>
+      <ul id="chat-message-list" class="list-unstyled chat-list chat-user-list">
+          <% for(let i = list_messages.length - 1; i >= 0; i--) { %>
+            <% let message = list_messages[i]; %>
+            <li data-uid="<%= message.receiver.id %>" >
+                <a href="javascript: void(0);">
+                    <div class="media">
+  
+                        <div class="chat-user-img online align-self-center mr-3">
+                            <% if(message.receiver.avatar != null) {%> 
+                                <img src="/assets/images/users/<%= message.receiver.avatar %>" class="rounded-circle avatar-xs" alt="">
+                            <%} else {%>
+                                <% 
+                                let group_avatar = message.receiver.username
+                                group_avatar = group_avatar.split(" ")
+                                group_avatar = group_avatar[group_avatar.length -1]
+                                group_avatar = group_avatar[0] 
+                                %> 
+                                <div class="avatar-xs">
+                                    <span class="avatar-title rounded-circle bg-soft-primary text-primary">
+                                        <%= group_avatar %>
+                                    </span>
+                                </div>
+                            <% } %>
+                            <span class="user-status"></span>
+                        </div>
+  
+                        <div class="media-body overflow-hidden">
+                            <h5 class="text-truncate font-size-15 mb-1"><%= message.receiver.username %></h5>
+                            <p class="chat-user-message text-truncate mb-0">
+                                <% if(message.text != null){%> <%= message.text %> <%} %>
+                                <% if(message.file != null){%> <%= message.sender.username %> đã gửi 1 tệp đính kèm <%} %>
+                                <% if(message.images.length > 0){%> <%= message.sender.username %> đã gửi 1 ảnh <%} %>
+                            </p>
+                        </div>
+                        <div class="font-size-11"><%= message.human_time %></div>
+                    </div>
+                </a>
+            </li>
+          <% } %>
+          
 
           <li class="unread">
               <a href="#">
