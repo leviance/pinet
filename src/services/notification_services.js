@@ -116,6 +116,41 @@ let remove_all_notifications = (user_id) => {
   notifications_model.remove_all_notifications(user_id)
 }
 
+let notification_new_group = (sender_id,list_id_members,group_name) => {
+  return new Promise( async (resolve, reject) => {
+    let sender_data = await user_model.find_user_by_id(sender_id)
+
+    let list_notifications = []
+
+    for(let i = 0; i < list_id_members.length; i++) {
+      let receiver_id = list_id_members[i]
+
+      let receiver_data = await user_model.find_user_by_id(receiver_id)
+
+      let notification_data = {
+        sender: {
+          id: sender_id,
+          username: sender_data.username,
+          avatar: sender_data.avatar
+        },
+        receiver: {
+            id: receiver_id,
+            username: receiver_data.username,
+            avatar: receiver_data.avatar
+        },
+        type: "notification_new_group",
+        content: notifications_content.notification_new_group(sender_data.username, group_name),
+      }
+
+      let notification = await notifications_model.create_new_notification(notification_data)
+
+      list_notifications.push(notification)
+    }
+
+    return resolve(list_notifications)
+  })
+}
+
 module.exports = {
   notif_recieved_request_contact,
   count_notifications,
@@ -123,5 +158,6 @@ module.exports = {
   notif_accept_request_contact,
   mark_notifications_as_read,
   read_more_notifications,
-  remove_all_notifications
+  remove_all_notifications,
+  notification_new_group
 }

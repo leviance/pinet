@@ -397,4 +397,13 @@ img.emojione {
 .message-file-attachment .card {
   max-width: 400px;
 }
+
+.result-list-friend-to-create-new-group > div {
+  margin-left: 12px;
+}
+
+.result-list-friend-to-create-new-group > label {
+  position: absolute;
+  top: 7px;
+}
 /*# sourceMappingURL=custom.css.map */

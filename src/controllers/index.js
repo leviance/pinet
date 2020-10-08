@@ -4,6 +4,7 @@ const user_controller = require('./user_controller')
 const contact_controller = require('./contact_controller')
 const notification_controller = require('./notification_controller')
 const message_controller = require('./message_controller')
+const group_controller = require('./group_controller')
 
 module.exports.home_controller = home_controller
 module.exports.auth_controller = auth_controller
@@ -11,3 +12,4 @@ module.exports.user_controller = user_controller
 module.exports.contact_controller = contact_controller
 module.exports.notification_controller = notification_controller
 module.exports.message_controller = message_controller
+module.exports.group_controller = group_controller

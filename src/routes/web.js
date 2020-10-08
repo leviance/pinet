@@ -1,5 +1,5 @@
 const express = require('express')
-const {home_controller, auth_controller, user_controller, contact_controller, notification_controller, message_controller} = require('../controllers/index')
+const {home_controller, auth_controller, user_controller, contact_controller, notification_controller, message_controller, group_controller} = require('../controllers/index')
 const {auth_valid} = require('../validation/index')
 
 const passport = require('passport')
@@ -61,6 +61,9 @@ function init_routes(app, io) {
   router.post('/user-send-file-image-persional',message_controller.user_send_file_image_persional)
   router.post('/user-send-text-message-persional',message_controller.user_send_text_message_persional)
   router.post('/user-send-file-attachment-persional',message_controller.user_send_file_attachment_persional)
+
+  router.get('/user-get-list-friend-to-create-group',group_controller.get_list_friends_to_create_group)
+  router.post('/create-new-group',group_controller.create_new_group)
 
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {

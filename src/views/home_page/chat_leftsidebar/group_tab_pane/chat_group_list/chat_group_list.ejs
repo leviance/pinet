@@ -1,105 +1,37 @@
 <div class="p-4 chat-message-list chat-group-list" data-simplebar>
   <ul class="list-unstyled chat-list">
-      <li>
-          <a href="#">
-              <div class="media align-items-center">
-                  <div class="chat-user-img mr-3">
-                      <div class="avatar-xs">
-                          <span class="avatar-title rounded-circle bg-soft-primary text-primary">
-                              G
-                          </span>
-                      </div>
-                  </div>
-                  <div class="media-body overflow-hidden">
-                      <h5 class="text-truncate font-size-14 mb-0">#General</h5>
-                  </div>
-              </div>
-          </a>
-      </li>
-
-      <li>
-          <a href="#">
-              <div class="media align-items-center">
-                  <div class="chat-user-img mr-3">
-                      <div class="avatar-xs">
-                          <span class="avatar-title rounded-circle bg-soft-primary text-primary">
-                              R
-                          </span>
-                      </div>
-                  </div>
-                  <div class="media-body overflow-hidden">
-                      <h5 class="text-truncate font-size-14 mb-0">#Reporting <span class="badge badge-soft-danger badge-pill float-right">+23</span></h5>
-                  </div>
-              </div>
-          </a>
-      </li>
-
-      <li>
-          <a href="#">
-              <div class="media align-items-center">
-                  <div class="chat-user-img mr-3">
-                      <div class="avatar-xs">
-                          <span class="avatar-title rounded-circle bg-soft-primary text-primary">
-                              D
-                          </span>
-                      </div>
-                  </div>
-                  <div class="media-body overflow-hidden">
-                      <h5 class="text-truncate font-size-14 mb-0">#Designers</h5>
-                  </div>
-              </div>
-          </a>
-      </li>
-
-      <li>
-          <a href="#">
-              <div class="media align-items-center">
-                  <div class="chat-user-img mr-3">
-                      <div class="avatar-xs">
-                          <span class="avatar-title rounded-circle bg-soft-primary text-primary">
-                              D
-                          </span>
-                      </div>
-                  </div>
-                  <div class="media-body overflow-hidden">
-                      <h5 class="text-truncate font-size-14 mb-0">#Developers <span class="badge badge-soft-danger badge-pill float-right">New</span></h5>
-                  </div>
-              </div>
-          </a>
-      </li>
-
-      <li>
-          <a href="#">
-              <div class="media align-items-center">
-                  <div class="chat-user-img mr-3">
-                      <div class="avatar-xs">
-                          <span class="avatar-title rounded-circle bg-soft-primary text-primary">
-                              P
-                          </span>
-                      </div>
-                  </div>
-                  <div class="media-body overflow-hidden">
-                      <h5 class="text-truncate font-size-14 mb-0">#Project-alpha</h5>
-                  </div>
-              </div>
-          </a>
-      </li>
-
-      <li>
-          <a href="#">
-              <div class="media align-items-center">
-                  <div class="chat-user-img mr-3">
-                      <div class="avatar-xs">
-                          <span class="avatar-title rounded-circle bg-soft-primary text-primary">
-                              B
-                          </span>
-                      </div>
-                  </div>
-                  <div class="media-body overflow-hidden">
-                      <h5 class="text-truncate font-size-14 mb-0">#Snacks</h5>
-                  </div>
-              </div>
-          </a>
-      </li>
+      <% list_groups.forEach( group => { %>
+        <li data-uid="<%= group._id %>" >
+            <a href="javascript: void(0);">
+                <div class="media align-items-center">
+                    <div class="chat-user-img mr-3">
+                        <% if(group.avatar == null){ %>
+                            <% 
+                            let group_avatar = group.group_name
+                            group_avatar = group_avatar.split(" ")
+                            group_avatar = group_avatar[group_avatar.length -1]
+                            group_avatar = group_avatar[0] 
+                            %> 
+                            <div class="avatar-xs">
+                                <span class="avatar-title rounded-circle bg-soft-primary text-primary">
+                                    <%= group_avatar %>
+                                </span>
+                            </div>
+                        <% } else { %>
+                            <img src="/assets/images/users/<%= group.avatar %>" class="rounded-circle avatar-xs" alt="">
+                        <% } %>
+                    </div>
+                    <div class="media-body overflow-hidden">
+                        <h5 class="text-truncate font-size-14 mb-0">
+                            <%= group.group_name %>
+                            <% if(new Date().getTime() - group.created_at < 1000*60*60*12 ) { %>
+                                <span class="badge badge-soft-danger badge-pill float-right">New</span>
+                            <% } %>
+                        </h5>
+                    </div>
+                </div>
+            </a>
+        </li>
+      <% }) %>
   </ul>
 </div>

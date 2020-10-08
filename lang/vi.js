@@ -73,6 +73,9 @@ module.exports.notifications_content = {
   "accept_request_contact": (sender_conatct_name) => {
     return `${sender_conatct_name} đã chấp nhận lời mời kết bạn của bạn!`
   },
+  "notification_new_group": (sender_name, group_name) => {
+    return `${sender_name} đã thêm bạn vào nhóm ${group_name}.`
+  },
 }
 
 module.exports.send_message_error = {
@@ -82,4 +85,8 @@ module.exports.send_message_error = {
   send_image_type_error: "File ảnh không hợp lệ. Chỉ chấp nhận jpg, png, gif, jpeg",
   unspecified_error: "Đã có lỗi bất ngờ xảy ra vui lòng F5 lại trang. Nếu còn gặp phải lỗi này xin vui lòng liên hệ bộ phận hỗ trợ của chúng tôi",
   send_file_error: "Kích thước file quá lơn tối đa 1GB."
+}
+
+module.exports.group_messages = {
+  
 }

@@ -47,7 +47,6 @@
             <div class="simplebar-content" style="padding: 0px;">
                 <ul id="list-notifications" class="list-unstyled chat-list">
                     <% list_notifications.forEach(function(notification){ %>
-                        <% if(notification.type == "receive_request_cotact" || notification.type == "accept_request_cotact"){ %>
                             <li <% if(notification.is_read == false){%> class="notification-item notification-not-read" <%} else { %> class="notification-item" <% } %>  data-uid=<%= notification.user_id %> >
                                 <div class="media friend-item">
                                     <div class="mr-3">
@@ -72,7 +71,6 @@
                                     </div>
                                 </div>
                             </li>
-                        <% } %> 
                     <% }) %>
                 </ul>
             </div>
