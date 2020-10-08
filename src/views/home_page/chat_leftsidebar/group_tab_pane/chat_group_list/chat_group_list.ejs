@@ -1,5 +1,5 @@
 <div class="p-4 chat-message-list chat-group-list" data-simplebar>
-  <ul class="list-unstyled chat-list">
+  <ul id="chat-groups-list" class="list-unstyled chat-list">
       <% list_groups.forEach( group => { %>
         <li data-uid="<%= group._id %>" >
             <a href="javascript: void(0);">
