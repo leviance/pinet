@@ -77,6 +77,34 @@ function prepend_group_to_chat_list(data){
     message_audio.play()
 }
 
+function prepend_group_to_list_groups(data){
+  let group_avatar = data.group_name
+  group_avatar = group_avatar.split(" ")
+  group_avatar = group_avatar[group_avatar.length -1]
+  group_avatar = group_avatar[0]
+
+  $('#chat-groups-list').prepend(`
+    <li data-uid="${data._id}">
+        <a href="javascript: void(0);">
+            <div class="media align-items-center">
+                <div class="chat-user-img mr-3">
+                  <div class="avatar-xs">
+                      <span class="avatar-title rounded-circle bg-soft-primary text-primary">
+                        ${group_avatar}
+                      </span>
+                  </div>
+                </div>
+                <div class="media-body overflow-hidden">
+                    <h5 class="text-truncate font-size-14 mb-0">
+                      ${data.group_name}
+                      <span class="badge badge-soft-danger badge-pill float-right">New</span>
+                    </h5>
+                </div>
+            </div>
+        </a>
+    </li>`)
+}
+
 function create_group(){
   $('#btn-create-group').on('click', function(){
     let find_friend_checked = $('#result-list-friend-to-create-new-group input')
@@ -110,7 +138,8 @@ function create_group(){
       },
       success: function(data){
         prepend_group_to_chat_list(data)
-
+        prepend_group_to_list_groups(data)
+        
         alertify.success('Nhóm đã được tạo')
         $('#addgroupname-input').val("")
         $('#result-list-friend-to-create-new-group').children().remove()
@@ -137,6 +166,7 @@ $(document).ready(function(){
   socket.on('receiver-create-new-group', function(data){
     message_audio.play()
     prepend_group_to_chat_list(data)
+    prepend_group_to_list_groups(data)
   })
 
   
