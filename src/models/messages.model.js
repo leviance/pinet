@@ -26,7 +26,7 @@ let messages_schema = new Schema({
 })
 
 messages_schema.statics = {
-    get_list_messages(sender_id,receiver_id, skip){
+    get_list_messages_personal(sender_id,receiver_id, skip){
         return this.find({
             $and: [
                 {
@@ -44,6 +44,15 @@ messages_schema.statics = {
                 {"deleted_at": null}
             ]
         }).limit(25).sort({"created_at": -1}).skip(skip).exec()
+    },
+
+    get_list_messages_group(group_id, skip) {
+        return this.find({
+            $and: [
+                {"receiver.id": group_id},
+                {"deleted_at": null}
+            ]
+        }).limit(50).sort({"created_at": -1}).skip(skip).exec()
     },
 
     create_new(model){

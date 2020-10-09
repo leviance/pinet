@@ -4,6 +4,7 @@ let message_audio = new Audio('/assets/files/message.mp3');
 
 const error_undefine_mess = "Có lỗi bất ngờ xảy ra vui lòng f5 lại trang. Nếu tình trạng này còn tiếp tục vui lòng liên hệ với bộ phận hỗ trợ của chúng tôi!"
 
+
 const message_validation_file = {
   image_type_incorrect : "File ảnh không hợp lệ. Chỉ chấp nhận jpg, png, gif, jpeg",
   image_size_incorrect : "Kích thước ảnh quá lớn!",
@@ -182,4 +183,6 @@ $(document).ready(function(){
   show_and_hide_list_notify_list_req_contact()
   show_user_profile()
   view_message_image()
+
+  
 })

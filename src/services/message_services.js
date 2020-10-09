@@ -1,7 +1,7 @@
 const messages_model = require('../models/messages.model')
 const contact_model = require('../models/contacts.model')
-const user_model = require('../models/users.model')
 const groups_model = require('../models/groups.model')
+const user_model = require('../models/users.model')
 
 const _ = require('lodash');
 
@@ -12,8 +12,7 @@ const convert_timestamp = require('../helper/convert_timestamp')
 
 let get_persional_messages = (yourself_user_id,partner_id) => {
   return new Promise( async (resolve, reject) => {
-    let skip = 0;
-    let list_messages = await messages_model.get_list_messages(yourself_user_id,partner_id, skip)
+    let list_messages = await messages_model.get_list_messages_personal(yourself_user_id,partner_id, 0)
     
     let list_messages_info = []
 
@@ -38,11 +37,23 @@ let get_persional_messages = (yourself_user_id,partner_id) => {
         file: message.file,
         file_size: message.file_size,
         images: message.images,
+        type: message.type,
         updated_at: convert_timestamp(message.updated_at)
       })
     }
     
     return resolve(list_messages_info)
+  })
+}
+
+let get_group_messages = (user_id,group_id) => {
+  return new Promise( async (resolve, reject) => {
+    let check_user_in_group = await groups_model.check_user_in_group(user_id, group_id)
+    if(check_user_in_group == null) return reject()
+
+    let list_messages = await messages_model.get_list_messages_group(group_id, 0)
+    
+    return resolve(list_messages)
   })
 }
 
@@ -152,37 +163,65 @@ let get_list_messages = (user_id) => {
       let receiver_message_id = ""
 
       if(sender_contact_id != user_id) receiver_message_id = sender_contact_id
-      if(receiver_contact_id != user_id) receiver_message = receiver_contact_id
+      if(receiver_contact_id != user_id) receiver_message_id = receiver_contact_id
 
       let have_sent_messages = await messages_model.check_sent_message(user_id,receiver_message_id)
 
-      if(have_sent_messages.length > 0) list_messages.push(have_sent_messages[0])
-    }
+      if(have_sent_messages.length > 0){
+        let message = {}
 
-    for(let i = 0; i < list_groups.length; i++){
-      let group_id = list_groups[i]._id
-      
-      let have_sent_messages = await messages_model.check_sent_message_in_group(group_id)
-
-      if(have_sent_messages.length > 0) list_messages.push(have_sent_messages[0])
-
-      if(have_sent_messages.length == 0) {
-        let message = {
-          receiver: {
-              id: group_id,
-              username: list_groups[i].group_name,
-              avatar: list_groups[i].avatar
-          },
-          type: app.chat_group,
-          is_read: true,
-          file: null,
-          images: [],
-          text: list_groups[i].invite_message,
-          created_at: list_groups[i].created_at
+        if(user_id == have_sent_messages[0].receiver.id){
+          message.partner_id = have_sent_messages[0].sender.id;
+          message.partner_username = have_sent_messages[0].sender.username;
+          message.partner_avatar = have_sent_messages[0].sender.avatar;
+          message.created_at = have_sent_messages[0].created_at;
+          message.type = "chat_personal"
+          if(have_sent_messages[0].text != null) message.message = have_sent_messages[0].text
+          if(have_sent_messages[0].file != null) message.message = `${have_sent_messages[0].sender.username} đã gửi cho bạn 1 file đính kèm.`
+          if(have_sent_messages[0].images.length > 0) message.message = `${have_sent_messages[0].sender.username} đã gửi cho bạn 1 hình ảnh.`
+        }
+        else{
+          message.partner_id = have_sent_messages[0].receiver.id;
+          message.partner_username = have_sent_messages[0].receiver.username;
+          message.partner_avatar = have_sent_messages[0].receiver.avatar;
+          message.created_at = have_sent_messages[0].created_at;
+          message.type = "chat_personal"
+          if(have_sent_messages[0].text != null) message.message = `Bạn: ${have_sent_messages[0].text}`
+          if(have_sent_messages[0].file != null) message.message = `Bạn đã gửi 1 file đính kèm.`
+          if(have_sent_messages[0].images.length > 0) message.message = `Bạn đã gửi 1 hình ảnh.`
         }
 
         list_messages.push(message)
       }
+    }
+
+    for(let i = 0; i < list_groups.length; i++){
+      let group_id = list_groups[i]._id
+      let message = {}
+      
+      let have_sent_messages = await messages_model.check_sent_message_in_group(group_id)
+
+      if(have_sent_messages.length > 0){
+        message.partner_id = have_sent_messages[0].receiver.id;
+        message.partner_username = have_sent_messages[0].receiver.username;
+        message.partner_avatar = have_sent_messages[0].receiver.avatar;
+        message.created_at = have_sent_messages[0].created_at;
+        message.type = "chat_group"
+        if(have_sent_messages[0].text != null) message.message = `${have_sent_messages[0].sender.username}: ${have_sent_messages[0].text}`
+        if(have_sent_messages[0].file != null) message.message = `${have_sent_messages[0].sender.username} đã gửi 1 file đính kèm.`
+        if(have_sent_messages[0].images.length > 0) message.message = `${have_sent_messages[0].sender.username} đã gửi 1 hình ảnh.`
+      }
+
+      if(have_sent_messages.length == 0) {
+        message.partner_id = group_id;
+        message.partner_username = list_groups[i].group_name
+        message.partner_avatar = list_groups[i].avatar;
+        message.message = list_groups[i].invite_message;
+        message.created_at = list_groups[i].created_at;
+        message.type = "chat_group"
+      }
+      
+      list_messages.push(message)
     }
 
     // sort old -> new
@@ -191,7 +230,7 @@ let get_list_messages = (user_id) => {
     for(let i = 0; i < list_messages.length; i++) {
       list_messages[i].human_time = convert_timestamp(list_messages[i].created_at)
     }
-    
+
     return resolve(list_messages)
   })
 }
@@ -201,5 +240,6 @@ module.exports = {
   user_send_text_message_persional,
   user_send_file_image_persional,
   user_send_file_attachment_persional,
-  get_list_messages
+  get_list_messages,
+  get_group_messages
 }

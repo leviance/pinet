@@ -6,36 +6,25 @@
       <ul id="chat-message-list" class="list-unstyled chat-list chat-user-list">
           <% for(let i = list_messages.length - 1; i >= 0; i--) { %>
             <% let message = list_messages[i]; %>
-            <li data-uid="<%= message.receiver.id %>" >
+            
+            <% 
+            let message_class = "";
+            if(message.type == "chat_group") message_class = "show-modal-chat-group"
+            if(message.type == "chat_personal") message_class = "show-modal-chat-persional"
+            %>
+
+            <li data-uid="<%= message.partner_id %>" class="<%= message_class %>" chat-type="<%= message.type %>" >
                 <a href="javascript: void(0);">
                     <div class="media">
   
                         <div class="chat-user-img online align-self-center mr-3">
-                            <% if(message.receiver.avatar != null) {%> 
-                                <img src="/assets/images/users/<%= message.receiver.avatar %>" class="rounded-circle avatar-xs" alt="">
-                            <%} else {%>
-                                <% 
-                                let group_avatar = message.receiver.username
-                                group_avatar = group_avatar.split(" ")
-                                group_avatar = group_avatar[group_avatar.length -1]
-                                group_avatar = group_avatar[0] 
-                                %> 
-                                <div class="avatar-xs">
-                                    <span class="avatar-title rounded-circle bg-soft-primary text-primary">
-                                        <%= group_avatar %>
-                                    </span>
-                                </div>
-                            <% } %>
+                            <img src="/assets/images/users/<%= message.partner_avatar %>" class="rounded-circle avatar-xs" alt="">
                             <span class="user-status"></span>
                         </div>
   
                         <div class="media-body overflow-hidden">
-                            <h5 class="text-truncate font-size-15 mb-1"><%= message.receiver.username %></h5>
-                            <p class="chat-user-message text-truncate mb-0">
-                                <% if(message.text != null){%> <%= message.text %> <%} %>
-                                <% if(message.file != null){%> <%= message.sender.username %> đã gửi 1 tệp đính kèm <%} %>
-                                <% if(message.images.length > 0){%> <%= message.sender.username %> đã gửi 1 ảnh <%} %>
-                            </p>
+                            <h5 class="text-truncate font-size-15 mb-1"><%= message.partner_username %></h5>
+                            <p class="chat-user-message text-truncate mb-0"><%= message.message %></p>
                         </div>
                         <div class="font-size-11"><%= message.human_time %></div>
                     </div>
