@@ -1,18 +1,3 @@
-function message_let_talk_together(partner_name){
-  let modal_list_messages = $('#list-messages-frame');
-
-  modal_list_messages.append(`
-    <li class="message-let-talk-together" >
-      <div class="conversation-list">
-        <div class="user-chat-content">
-          <div class="ctext-wrap-content">
-            <p class="mb-0"> Hãy gửi lời chào đến ${partner_name} </p>
-          </div>
-        </div>
-      </div>
-    </li>`)
-}
-
 function model_messae_img(message, image){
   return `<li data-uid="${message._id}" class="list-inline-item message-img-list">
             <div>
@@ -42,9 +27,9 @@ function model_messae_img(message, image){
           </li>`
 }
 
-function render_img_mess_to_chat_frame(message){
+function render_image_message_personal_to_chat_frame(message){
   let partner_id = $('#chat-frame').attr('data-uid');
-  let model_images = ``
+  let model_images = ""
 
   message.images.forEach(function(image){
     model_images += model_messae_img(message, image)
@@ -91,7 +76,7 @@ function render_img_mess_to_chat_frame(message){
   `)
 }
 
-function render_text_mess_to_chat_frame(message, type){
+function render_text_message_personal_to_chat_frame(message, type){
   // if user  sent message
   let type_of_message = ""
 
@@ -131,7 +116,7 @@ function render_text_mess_to_chat_frame(message, type){
   </li>`)
 }
 
-function render_file_message_to_chat_frame(message){
+function render_file_message_personal_to_chat_frame(message){
   let partner_id = $('#chat-frame').attr('data-uid');
 
   // neu message do người dùng gửi đi thì gắn class right
@@ -199,64 +184,74 @@ function render_file_message_to_chat_frame(message){
   </li>`)
 }
 
-function append_message_to_chat_frame(data, partner_id){
+function append_message_personal_to_chat_frame(data, partner_id){
   data.forEach(function(message){
-    // if message is file
+    // if message is image
     if(message.images.length > 0){
-      render_img_mess_to_chat_frame(message)
+      render_image_message_personal_to_chat_frame(message)
     }
     // if message is text
     if(message.text != null){
       // if user receive message
       if(message.sender.id == partner_id){ 
-        render_text_mess_to_chat_frame(message, "received")
+        render_text_message_personal_to_chat_frame(message, "received")
       }
       // if user send message
       else{
-        render_text_mess_to_chat_frame(message, "sent")
+        render_text_message_personal_to_chat_frame(message, "sent")
       }
     }
     // if message is file
     if(message.file != null){
-      render_file_message_to_chat_frame(message)
+      render_file_message_personal_to_chat_frame(message)
     }
   })
 }
 
-function append_data_to_chat_frame(data, partner_name, partner_id){
-  if(data.length == 0){
-    message_let_talk_together(partner_name)
-  } 
-
-  if(data.length > 0){
-    append_message_to_chat_frame(data, partner_id)
-  }
-}
-
 function show_modal_chat_personal(){
-  $('.show-modal-chat-persional').on('click', function(){
+  $('.show-modal-chat-persional').unbind('click').bind('click', function(){
     $(".user-chat").addClass("user-chat-show")
     $('#list-messages-frame li').remove()
-
     $('#list-messages-frame').append(lazy_loadings_message_frame)
 
-    let wrap_user_info = $(this).parents('li')
+    let user_id = ""
+    let user_avatar = ""
+    let username = ""
+    let chat_type = ""
 
-    let user_id = wrap_user_info.attr('data-uid')
-    let user_avatar = wrap_user_info.find('img').attr('src')
-    let username = wrap_user_info.find('h5').text()
+    // when click btn in #chat-message-list
+    if($(this)[0].localName == "li"){
+      user_id = $(this).attr('data-uid')
+      chat_type = $(this).attr('chat-type')
+      user_avatar = $(this).find('img').attr('src')
+      username = $(this).find('h5').text()
+    }
+
+    // when click btn in #list-friends
+    if($(this)[0].localName == "div"){
+      let wrap_user_info = $(this).parents('li')
+
+      user_id = wrap_user_info.attr('data-uid')
+      chat_type = wrap_user_info.attr('chat-type')
+      user_avatar = wrap_user_info.find('img').attr('src')
+      username = wrap_user_info.find('h5').text()
+    }
+    
+    if(chat_type == "chat_group") return false
 
     $('#chat-frame').attr('data-uid', user_id)
-    $('#chat-frame .chat-persional-user-avatar').attr('src', user_avatar)
+    $('#chat-frame').attr('chat-type', chat_type)
     $('#chat-frame .chat-persional-username').text(username)
+    $('#chat-frame .chat-persional-user-avatar').attr('src', user_avatar)
+    
 
     $.ajax({
       type: 'GET',
       url: `/get-persional-messages/${user_id}`,
       success: function(data){
-        append_data_to_chat_frame(data,username,user_id)
+        append_message_personal_to_chat_frame(data, user_id)
         $('.loading-message-chat-frame').remove()
-
+        
         // scroll chat frame to bottom
         scroll_to_bottom_chat_frame()
         convert_unicode_to_emoji()
@@ -271,10 +266,7 @@ function show_modal_chat_personal(){
   })
 }
 
-
-
 $(document).ready(function() {
   show_modal_chat_personal()
   scroll_to_bottom_chat_frame()
-  
 })

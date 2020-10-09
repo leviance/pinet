@@ -45,20 +45,13 @@ function select_member_to_create_group(){
 }
 
 function prepend_group_to_chat_list(data){
-  let group_avatar = data.group_name
-  group_avatar = group_avatar.split(" ")
-  group_avatar = group_avatar[group_avatar.length -1]
-  group_avatar = group_avatar[0]
-
   $('#chat-message-list').prepend(`
-    <li data-uid="${data._id}" >
+    <li data-uid="${data._id}" class="show-modal-chat-group" chat-type="chat_group" >
         <a href="javascript:void(0)">
             <div class="media">
                 <div class="chat-user-img align-self-center online mr-3">
                     <div class="avatar-xs">
-                        <span class="avatar-title rounded-circle bg-soft-primary text-primary">
-                            ${group_avatar}
-                        </span>
+                      <img src="/assets/images/users/group_avatar.png" class="rounded-circle avatar-xs" alt="">
                     </div>
                     <span class="user-status"></span>
                 </div>
@@ -78,20 +71,13 @@ function prepend_group_to_chat_list(data){
 }
 
 function prepend_group_to_list_groups(data){
-  let group_avatar = data.group_name
-  group_avatar = group_avatar.split(" ")
-  group_avatar = group_avatar[group_avatar.length -1]
-  group_avatar = group_avatar[0]
-
   $('#chat-groups-list').prepend(`
-    <li data-uid="${data._id}">
+    <li data-uid="${data._id}" chat-type="chat_group" >
         <a href="javascript: void(0);">
             <div class="media align-items-center">
                 <div class="chat-user-img mr-3">
                   <div class="avatar-xs">
-                      <span class="avatar-title rounded-circle bg-soft-primary text-primary">
-                        ${group_avatar}
-                      </span>
+                    <img src="/assets/images/users/group_avatar.png" class="rounded-circle avatar-xs" alt="">
                   </div>
                 </div>
                 <div class="media-body overflow-hidden">

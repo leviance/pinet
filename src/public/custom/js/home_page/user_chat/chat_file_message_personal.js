@@ -71,7 +71,7 @@ function preview_file_before_send(files){
   })
 }
 
-function append_image_sent_to_chat_frame(files_attachment, type = ""){
+function append_file_sent_to_chat_frame(files_attachment, type = ""){
   files_attachment.forEach(function(file){
     $('#list-messages-frame').append(`
       <li data-uid="${file._id}" class="${type} message-file-attachment">
@@ -144,9 +144,8 @@ function user_send_file_attachment(){
       processData: false,
       data: form_data_user_send_file_personal,
       success: function(data){
-        console.log(data);
         form_data_user_send_file_personal = null
-        append_image_sent_to_chat_frame(data, "right")
+        append_file_sent_to_chat_frame(data, "right")
       }, 
       error: function(msg){
         alertify.error(msg)
@@ -184,7 +183,7 @@ $(document).ready(function(){
     message_audio.play()
 
     if(files[0].sender.id == $('#chat-frame').attr('data-uid')){
-      append_image_sent_to_chat_frame(files)
+      append_file_sent_to_chat_frame(files)
       scroll_to_bottom_chat_frame()
     }
   })

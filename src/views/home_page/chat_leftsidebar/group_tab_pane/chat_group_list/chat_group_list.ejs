@@ -1,25 +1,11 @@
 <div class="p-4 chat-message-list chat-group-list" data-simplebar>
   <ul id="chat-groups-list" class="list-unstyled chat-list">
       <% list_groups.forEach( group => { %>
-        <li data-uid="<%= group._id %>" >
+        <li data-uid="<%= group._id %>" class="show-modal-chat-group"chat-type="chat_group">
             <a href="javascript: void(0);">
                 <div class="media align-items-center">
                     <div class="chat-user-img mr-3">
-                        <% if(group.avatar == null){ %>
-                            <% 
-                            let group_avatar = group.group_name
-                            group_avatar = group_avatar.split(" ")
-                            group_avatar = group_avatar[group_avatar.length -1]
-                            group_avatar = group_avatar[0] 
-                            %> 
-                            <div class="avatar-xs">
-                                <span class="avatar-title rounded-circle bg-soft-primary text-primary">
-                                    <%= group_avatar %>
-                                </span>
-                            </div>
-                        <% } else { %>
-                            <img src="/assets/images/users/<%= group.avatar %>" class="rounded-circle avatar-xs" alt="">
-                        <% } %>
+                        <img src="/assets/images/users/<%= group.avatar %>" class="rounded-circle avatar-xs" alt="">
                     </div>
                     <div class="media-body overflow-hidden">
                         <h5 class="text-truncate font-size-14 mb-0">

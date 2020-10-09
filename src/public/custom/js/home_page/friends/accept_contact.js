@@ -1,6 +1,6 @@
 function prepend_to_list_friends(data){
   $('#list-friends').prepend(`
-    <li data-uid="${data.user_id}">
+    <li data-uid="${data.user_id}" chat-type="chat_personal" >
       <div class="media align-items-center friend-item">
           <div class="chat-user-img mr-3 show-modal-chat-persional">
               <div class="avatar-xs">

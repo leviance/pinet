@@ -51,6 +51,19 @@ let get_persional_messages = async (req, res) => {
   }
 }
 
+let get_group_messages = async (req, res) => {
+  try {
+    let user_id = req.session.user_id;
+    let group_id = req.params.user_id;
+
+    let list_messages = await message_services.get_group_messages(user_id,group_id)
+
+    return res.status(200).send(list_messages)
+  } catch (error) {
+    return res.status(500).send()
+  }
+}
+
 let user_send_text_message_persional = async (req, res) => {
   try {
     let sender = {
@@ -127,5 +140,6 @@ module.exports = {
   get_persional_messages,
   user_send_file_image_persional,
   user_send_text_message_persional,
-  user_send_file_attachment_persional
+  user_send_file_attachment_persional,
+  get_group_messages
 }

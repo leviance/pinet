@@ -57,6 +57,7 @@ function init_routes(app, io) {
   router.get('/read-more-request-contact/:total_req/:type_contact',contact_controller.read_more_request_contact)
 
   router.get('/get-persional-messages/:user_id',message_controller.get_persional_messages)
+  router.get('/get-group-messages/:user_id',message_controller.get_group_messages)
 
   router.post('/user-send-file-image-persional',message_controller.user_send_file_image_persional)
   router.post('/user-send-text-message-persional',message_controller.user_send_text_message_persional)
