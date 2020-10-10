@@ -13,7 +13,7 @@
             if(message.type == "chat_personal") message_class = "show-modal-chat-persional"
             %>
 
-            <li data-uid="<%= message.partner_id %>" class="<%= message_class %>" chat-type="<%= message.type %>" >
+            <li data-uid="<%= message.partner_id %>" class="<%= message_class %> typing" chat-type="<%= message.type %>" >
                 <a href="javascript: void(0);">
                     <div class="media">
   

@@ -24,7 +24,7 @@ function prepend_to_list_friends(data){
     </li>
   `)
 
-  show_modal_chat_personal()
+  show_personal_chat_frame()
 }
 
 function accept_contact_received(){

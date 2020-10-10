@@ -2,6 +2,7 @@ const {message_services} = require('../services/index')
 const {send_message_error} = require('../../lang/vi')
 const upload_file = require('../helper/upload_file')
 
+const message_socket = require('../socket_io/message_socket')
 const emit_socket = require('../helper/emit_socket')
 
 let user_send_file_image_persional = (req, res) => {
@@ -36,7 +37,6 @@ let user_send_file_image_persional = (req, res) => {
   })
 
 }
-
 
 let get_persional_messages = async (req, res) => {
   try {
@@ -76,13 +76,27 @@ let user_send_text_message_persional = async (req, res) => {
 
     let result_send = await message_services.user_send_text_message_persional(sender, receiver_id, message)
     
-    let data_to_emit = {
-      receiver_id: receiver_id,
-      sender_id: sender.id,
-      message: message
+    message_socket.user_send_text_message_personal(result_send,req.io)
+
+    return res.status(200).send(result_send)
+  } catch (error) {
+    return res.status(500).send(send_message_error.send_text_message_error)
+  }
+}
+
+let user_send_text_message_group = async (req, res) => {
+  try {
+    let sender = {
+      id: req.session.user_id,
+      username: req.session.username,
+      avatar: req.session.avatar
     }
+    let group_id = req.body.group_id;
+    let message = req.body.message;
+
+    let [result_send, group_data] = await message_services.user_send_text_message_group(sender, group_id, message)
     
-    emit_socket("receiver-user-send-text-message",data_to_emit, req.io)
+    message_socket.user_send_text_message_group(result_send, group_data,req.io)
 
     return res.status(200).send(result_send)
   } catch (error) {
@@ -136,10 +150,13 @@ let user_send_file_attachment_persional = (req, res) => {
 }
 
 
+
+
 module.exports = {
   get_persional_messages,
   user_send_file_image_persional,
   user_send_text_message_persional,
   user_send_file_attachment_persional,
-  get_group_messages
+  get_group_messages,
+  user_send_text_message_group
 }

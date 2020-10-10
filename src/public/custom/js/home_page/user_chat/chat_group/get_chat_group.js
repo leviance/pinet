@@ -1,4 +1,4 @@
-function show_modal_chat_group(){
+function show_group_chat_frame(){
   $('.show-modal-chat-group').unbind('click').bind('click', function(){
     $(".user-chat").addClass("user-chat-show")
     $('#list-messages-frame li').remove()
@@ -22,13 +22,7 @@ function show_modal_chat_group(){
       url: `/get-group-messages/${group_id}`,
       success: function(messages){
         append_message_group_to_chat_frame(messages)
-        console.log(messages)
         $('.loading-message-chat-frame').remove()
-        
-        // scroll chat frame to bottom
-        scroll_to_bottom_chat_frame()
-        convert_unicode_to_emoji()
-        view_message_image()
       },
       error: function(msg){
         $('.loading-message-chat-frame').remove()
@@ -42,7 +36,7 @@ function append_message_group_to_chat_frame(messages){
   let user_id = $('#profile-setting-accordion').attr('data-uid')
   
   messages.forEach(function(message){
-    // if message sent
+    // if message send
     if(message.sender.id == user_id){
       // if message is text
       if(message.text != null) {
@@ -58,7 +52,7 @@ function append_message_group_to_chat_frame(messages){
       }
     }
 
-    // if message received
+    // if message receive
     if(message.sender.id != user_id){
       // if message is text
       if(message.text != null) {
@@ -84,9 +78,9 @@ function render_text_message_group_to_chat_frame(message, type){
     message_class = "right"
     tag_show_name = ""
   }
-
-  $('#list-messages-frame').prepend(`
-    <li data-uid="${message._id} class="${message_class}">
+  
+  $('#list-messages-frame').append(`
+    <li data-uid="${message._id}" class="${message_class}">
           <div class="conversation-list">
             <div class="chat-avatar">
                 <img src="assets/images/users/${message.sender.avatar}" alt="">
@@ -115,6 +109,9 @@ function render_text_message_group_to_chat_frame(message, type){
             </div>
           </div>
       </li>`)
+
+    scroll_to_bottom_chat_frame()
+    convert_unicode_to_emoji()
 }
 
 function render_image_message_group_to_chat_frame(message, type){
@@ -131,7 +128,7 @@ function render_image_message_group_to_chat_frame(message, type){
     model_images += model_messae_img(message, image)
   })
 
-  $('#list-messages-frame').prepend(`
+  $('#list-messages-frame').append(`
       <li data-uid="${message._id}" class="${message_class}">
           <div class="conversation-list">
               <div class="chat-avatar">
@@ -165,6 +162,8 @@ function render_image_message_group_to_chat_frame(message, type){
               
           </div>
       </li>`)
+
+    scroll_to_bottom_chat_frame()
 }
 
 function render_file_message_group_to_chat_frame(message, type){
@@ -176,7 +175,7 @@ function render_file_message_group_to_chat_frame(message, type){
     tag_show_name = ""
   }
 
-  $('#list-messages-frame').prepend(`
+  $('#list-messages-frame').append(`
     <li data-uid="${message._id}" class="${message_class} message-file-attachment">
       <div class="conversation-list">
           <div class="chat-avatar">
@@ -230,8 +229,10 @@ function render_file_message_group_to_chat_frame(message, type){
           </div>
       </div>
     </li>`)
+    
+    scroll_to_bottom_chat_frame()
 }
 
 $(document).ready(function(){
-  show_modal_chat_group()
+  show_group_chat_frame()
 })
