@@ -46,7 +46,7 @@ function select_member_to_create_group(){
 
 function prepend_group_to_chat_list(data){
   $('#chat-message-list').prepend(`
-    <li data-uid="${data._id}" class="show-modal-chat-group" chat-type="chat_group" >
+    <li data-uid="${data._id}" class="show-modal-chat-group typing" chat-type="chat_group" >
         <a href="javascript:void(0)">
             <div class="media">
                 <div class="chat-user-img align-self-center online mr-3">
@@ -67,6 +67,7 @@ function prepend_group_to_chat_list(data){
         </a>
     </li>`)
 
+    show_group_chat_frame()
     message_audio.play()
 }
 
@@ -89,6 +90,8 @@ function prepend_group_to_list_groups(data){
             </div>
         </a>
     </li>`)
+
+    show_group_chat_frame()
 }
 
 function create_group(){
