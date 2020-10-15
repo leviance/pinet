@@ -1,59 +1,4 @@
-let form_data_user_send_image_personal = null;
-
-function validation_images(images){
-  const accept_type = ['image/jpg','image/png','image/gif', 'image/jpeg']
-  let limit = 1048576 * 10;
-  let result = true
-
-  images.forEach(function(image){
-    if(!accept_type.includes(image.type)) {
-      alertify.error(message_validation_file.image_type_incorrect)
-      result = false
-      return false
-    };
-
-    if(image.size < 1024 || image.size > limit) {
-      alertify.error(message_validation_file.image_size_incorrect)
-      result = false
-      return false
-    };
-  })
-
-  return result
-}
-
-function remove_file_image_in_preview(){
-  $('.btn-remove-file-attachment-in-preview').unbind('click').bind('click', function(){
-    let image_to_preview =  $('.preview-file-attachment .img-content')
-    let file_to_preview = $('.preview-file-attachment .file-attachment')
-
-    let name_of_file = $(this).attr('data-name')
-
-    if(image_to_preview.length == 1){
-      $('#chat-frame .preview-file-attachment').hide()
-      form_data_user_send_image_personal = null
-    }
-
-    if(file_to_preview.length == 1){
-      $('#chat-frame .preview-file-attachment').hide()
-      form_data_user_send_file_personal = null
-    }
-
-    if(form_data_user_send_image_personal != null){
-      let data = form_data_user_send_image_personal.getAll('message_images')
-
-      form_data_user_send_image_personal.delete('message_images')
-
-      for(let i = 0; i < data.length; i++){
-        if(data[i].name != name_of_file){
-          form_data_user_send_image_personal.append('message_images', data[i])
-        }
-      }
-    }
-   
-    $(this).parent().remove()
-  })
-}
+let form_data_user_send_image = null;
 
 function preview_image_before_send(images){
   $('#chat-frame .preview-file-attachment').show()
@@ -72,7 +17,7 @@ function preview_image_before_send(images){
           <div data-name="${image.name}" class="btn-remove-file-attachment-in-preview"><i class="fa fa-times" aria-hidden="true"></i></div>
         </div>`)
 
-        remove_file_image_in_preview()
+        remove_file_showing_in_preview()
     }
 
     reader.readAsDataURL(image)
@@ -82,16 +27,29 @@ function preview_image_before_send(images){
   
 }
 
-function append_image_sent_to_chat_frame(data){
-  let message_id = data._id
-  let avatar = $('#img-user-avatar').attr('src')
-  let time_stamp = get_current_time()
-
+function append_image_sent_to_chat_frame(message, type_of_message){
+  let id_in_chat_frame = $('#chat-frame').attr('data-uid')
   let model_images_to_append = ""
+  let sender_name = ""
+  
+   // xem chat frame đang mở có phải là cuộc trò truyện này không nếu phải thì append message vào nếu không thì thôi
+   if(type_of_message == "receive"){
+    type_of_message = ""
 
-  data.images.forEach(function(image_name){
+    if(message.type == "chat_group"){
+      if(message.receiver.id != id_in_chat_frame) return false
+      else sender_name = `<div class="conversation-name">${message.sender.username}</div>`
+    }
+    if(message.type == "chat_personal"){
+      if(message.sender.id != id_in_chat_frame) return false
+    }
+  }
+
+  if(type_of_message == "send") type_of_message = "right"
+
+  message.images.forEach(function(image_name){
     model_images_to_append += `
-      <li data-uid="${message_id}" class="list-inline-item message-img-list">
+      <li data-uid="${message._id}" class="list-inline-item message-img-list">
         <div>
             <a class="popup-img d-inline-block m-1" href="/assets/images/users/${image_name}">
                 <img src="/assets/images/users/${image_name}" alt="" class="rounded border">
@@ -109,9 +67,9 @@ function append_image_sent_to_chat_frame(data){
                         <i class="ri-more-fill"></i>
                     </a>
                     <div class="dropdown-menu">
-                        <a data-uid="${message_id}" class="dropdown-item btn-coppy-image-message" href="javascript:void(0)">Sao chép <i class="ri-file-copy-line float-right text-muted"></i></a>
-                        <a data-uid="${message_id}" class="dropdown-item btn-forward-image-message" href="javascript:void(0)">Chuyển tiếp <i class="ri-chat-forward-line float-right text-muted"></i></a>
-                        <a data-uid="${message_id}" class="dropdown-item btn-delete-image-message" href="javascript:void(0)">Xóa <i class="ri-delete-bin-line float-right text-muted"></i></a>
+                        <a data-uid="${message._id}" class="dropdown-item btn-coppy-image-message" href="javascript:void(0)">Sao chép <i class="ri-file-copy-line float-right text-muted"></i></a>
+                        <a data-uid="${message._id}" class="dropdown-item btn-forward-image-message" href="javascript:void(0)">Chuyển tiếp <i class="ri-chat-forward-line float-right text-muted"></i></a>
+                        <a data-uid="${message._id}" class="dropdown-item btn-delete-image-message" href="javascript:void(0)">Xóa <i class="ri-delete-bin-line float-right text-muted"></i></a>
                     </div>
                 </li>
             </ul>
@@ -121,10 +79,10 @@ function append_image_sent_to_chat_frame(data){
 
 
   $('#list-messages-frame').append(`
-  <li data-uid="${message_id}" class="right">
+  <li data-uid="${message._id}" class="${type_of_message}">
     <div class="conversation-list">
       <div class="chat-avatar">
-          <img class="chat-persional-user-avatar" src="${avatar}" alt="">
+          <img class="chat-persional-user-avatar" src="/assets/images/users/${message.sender.avatar}" alt="">
       </div>
 
       <div class="user-chat-content">
@@ -133,7 +91,7 @@ function append_image_sent_to_chat_frame(data){
                   <ul class="list-inline message-img  mb-0">
                     ${model_images_to_append}
                   </ul>
-                  <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">${time_stamp}</span></p>
+                  <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">${convert_timestamp(message.created_at)}</span></p>
               </div>
                   
               <div class="dropdown align-self-start">
@@ -141,11 +99,12 @@ function append_image_sent_to_chat_frame(data){
                       <i class="ri-more-2-fill"></i>
                   </a>
                   <div class="dropdown-menu">
-                      <a data-uid="${message_id}" class="dropdown-item btn-forward-message" href="javascript:void(0)">Chuyển tiếp <i class="ri-chat-forward-line float-right text-muted"></i></a>
-                      <a data-uid="${message_id}" class="dropdown-item btn-delete-message" href="javascript:void(0)">Xóa <i class="ri-delete-bin-line float-right text-muted"></i></a>
+                      <a data-uid="${message._id}" class="dropdown-item btn-forward-message" href="javascript:void(0)">Chuyển tiếp <i class="ri-chat-forward-line float-right text-muted"></i></a>
+                      <a data-uid="${message._id}" class="dropdown-item btn-delete-message" href="javascript:void(0)">Xóa <i class="ri-delete-bin-line float-right text-muted"></i></a>
                   </div>
               </div>
           </div>
+          ${sender_name}
       </div>
     </div>
   </li>`)
@@ -157,29 +116,21 @@ function append_image_sent_to_chat_frame(data){
   $('#chat-frame .preview-file-attachment').children().remove()
 }
 
-function user_send_file_image(){
+function user_send_file_image(message_type){
   $.ajax({
-      url: "/user-send-file-image-persional",
+      url: `/user-send-file-image-${message_type}`,
       type: "POST",
       cache: false,
       contentType: false,
       processData: false,
-      data: form_data_user_send_image_personal,
+      data: form_data_user_send_image,
       success: function(data){
-        append_image_sent_to_chat_frame(data)
-        
-        form_data_user_send_image_personal = null
-        let data_to_emit = {
-          receiver_id: data.receiver.id,
-          message_id: data._id,
-          images: data.images,
-        }
-
-        socket.emit('request-user-send-image-message', data_to_emit)
+        form_data_user_send_image = null
+        append_image_sent_to_chat_frame(data, "send")
       }, 
       error: function(msg){
         alertify.error(msg)
-        form_data_user_send_image_personal = null
+        form_data_user_send_image = null
         $('#chat-frame .preview-file-attachment').hide()
         $('#chat-frame .preview-file-attachment').children().remove()
       }
@@ -206,82 +157,12 @@ $(document).ready(function(){
 
     form_data.append('receiver_id', receiver_id)
     
-    form_data_user_send_image_personal = form_data
+    form_data_user_send_image = form_data
   })
 
 
-  socket.on('receiver-user-send-image-message', function(data){
+  socket.on('receiver-image-message', function(data){
     message_audio.play()
-    let time_stamp = get_current_time()
-
-    if(data.sender_id == $('#chat-frame').attr('data-uid')){
-      let sender_avatar = $('#chat-frame .chat-persional-user-avatar').attr('src')
-      let model_images_to_append = ""
-      
-      data.images.forEach(function(image_name){
-        model_images_to_append += `
-          <li data-uid="${data.message_id}" class="list-inline-item message-img-list">
-            <div>
-                <a class="popup-img d-inline-block m-1" href="/assets/images/users/${image_name}">
-                    <img src="/assets/images/users/${image_name}" alt="" class="rounded border">
-                </a>
-            </div>
-            <div class="message-img-link">
-                <ul class="list-inline mb-0">
-                    <li class="list-inline-item">
-                        <a href="/assets/images/users/${image_name}">
-                            <i class="ri-download-2-line"></i>
-                        </a>
-                    </li>
-                    <li class="list-inline-item dropdown">
-                        <a class="dropdown-toggle" href="javascript:void(0)" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="ri-more-fill"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a data-uid="${data.message_id}" class="dropdown-item btn-coppy-image-message" href="javascript:void(0)">Sao chép <i class="ri-file-copy-line float-right text-muted"></i></a>
-                            <a data-uid="${data.message_id}" class="dropdown-item btn-forward-image-message" href="javascript:void(0)">Chuyển tiếp <i class="ri-chat-forward-line float-right text-muted"></i></a>
-                            <a data-uid="${data.message_id}" class="dropdown-item btn-delete-image-message" href="javascript:void(0)">Xóa <i class="ri-delete-bin-line float-right text-muted"></i></a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-          </li>`
-      })
-    
-    
-      $('#list-messages-frame').append(`
-      <li data-uid="${data.message_id}" >
-        <div class="conversation-list">
-          <div class="chat-avatar">
-              <img class="chat-persional-user-avatar" src="${sender_avatar}" alt="">
-          </div>
-    
-          <div class="user-chat-content">
-              <div class="ctext-wrap">
-                  <div class="ctext-wrap-content">
-                      <ul class="list-inline message-img  mb-0">
-                        ${model_images_to_append}
-                      </ul>
-                      <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">${time_stamp}</span></p>
-                  </div>
-                      
-                  <div class="dropdown align-self-start">
-                      <a class="dropdown-toggle" href="javascript:void(0)" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="ri-more-2-fill"></i>
-                      </a>
-                      <div class="dropdown-menu">
-                          <a data-uid="${data.message_id}" class="dropdown-item btn-forward-message" href="javascript:void(0)">Chuyển tiếp <i class="ri-chat-forward-line float-right text-muted"></i></a>
-                          <a data-uid="${data.message_id}" class="dropdown-item btn-delete-message" href="javascript:void(0)">Xóa <i class="ri-delete-bin-line float-right text-muted"></i></a>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-      </li>`)
-    
-      view_message_image()
-      scroll_to_bottom_chat_frame()
-    }
-    
+    append_image_sent_to_chat_frame(data, "receive")
   })
 })

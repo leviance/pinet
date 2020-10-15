@@ -35,7 +35,31 @@ let message_file = multer({
   limits: {fileSize: app.file_attachment_limit_size}
 }).array('message_file',50);
 
+let render_file_data_to_save_in_database = (files) => {
+  return new Promise((resolve, reject) => {
+    let files_data = []
+    let re = /^([A-Za-z0-9]*-)([A-Za-z0-9]*-)/
+
+    for(let i = 0; i < files.length; i++) {
+      let file = files[i]
+
+      let filename = file.filename
+      filename = filename.replace(re, "")
+
+      let file_data = {
+        name: filename,
+        src: file.filename,
+        size: file.size
+      }
+      files_data.push(file_data)
+    }
+
+    return resolve(files_data)
+  })
+}
+
 module.exports = {
   message_image,
-  message_file
+  message_file,
+  render_file_data_to_save_in_database
 }

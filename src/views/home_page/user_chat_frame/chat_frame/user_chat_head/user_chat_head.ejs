@@ -6,10 +6,10 @@
                   <a href="javascript: void(0);" class="user-chat-remove text-muted font-size-16 p-2"><i class="ri-arrow-left-s-line"></i></a>
               </div>
               <div class="mr-3">
-                  <img src="assets/images/users/avatar-4.jpg" class="chat-persional-user-avatar rounded-circle avatar-xs" alt="">
+                  <img src="assets/images/users/<%= list_messages[0].partner_avatar %>" class="chat-persional-user-avatar rounded-circle avatar-xs" alt="">
               </div>
               <div class="media-body overflow-hidden">
-                  <h5 class="font-size-16 mb-0 text-truncate"><a href="#" class="chat-persional-username text-reset user-profile-show">Doris Brown</a> <i class="ri-record-circle-fill font-size-10 text-success d-inline-block ml-1"></i></h5>
+                  <h5 class="font-size-16 mb-0 text-truncate"><a href="#" class="chat-persional-username text-reset user-profile-show"><%= list_messages[0].partner_username %></a> <i class="ri-record-circle-fill font-size-10 text-success d-inline-block ml-1"></i></h5>
               </div>
           </div>
       </div>

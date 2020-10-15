@@ -92,6 +92,43 @@ function bytesToSize(bytes) {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
+function validation_files(files){
+  let limit = 1048576 * 1024;
+  let result = true
+
+  files.forEach(function(file){
+    if(file.size < 1024 || file.size > limit) {
+      alertify.error(message_validation_file.file_size_incorrect)
+      result = false
+      return false
+    };
+  })
+
+  return result
+}
+
+function validation_images(images){
+  const accept_type = ['image/jpg','image/png','image/gif', 'image/jpeg']
+  let limit = 1048576 * 10;
+  let result = true
+
+  images.forEach(function(image){
+    if(!accept_type.includes(image.type)) {
+      alertify.error(message_validation_file.image_type_incorrect)
+      result = false
+      return false
+    };
+
+    if(image.size < 1024 || image.size > limit) {
+      alertify.error(message_validation_file.image_size_incorrect)
+      result = false
+      return false
+    };
+  })
+
+  return result
+}
+
 function view_message_image(){
   $(".popup-img").magnificPopup({
     type: "image",
@@ -104,7 +141,7 @@ function view_message_image(){
 }
 
 function scroll_to_bottom_chat_frame(){
-  $('.simplebar-content-wrapper').scrollTop($("#list-messages-frame").height());
+  $('#chat-frame .simplebar-content-wrapper').scrollTop($("#list-messages-frame").height());
 }
 
 function show_and_hide_list_notify_list_req_contact(){
@@ -183,6 +220,4 @@ $(document).ready(function(){
   show_and_hide_list_notify_list_req_contact()
   show_user_profile()
   view_message_image()
-
-  
 })

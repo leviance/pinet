@@ -1,6 +1,6 @@
 function send_text_message_personal(message, receiver_id){
   $.ajax({
-    url: "/user-send-text-message-persional",
+    url: "/user-send-text-message-personal",
     type: "POST",
     data: { message, receiver_id},
     success: function(message){

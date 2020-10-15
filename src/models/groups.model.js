@@ -20,6 +20,10 @@ groupSchema.statics = {
     return this.create(model)
   },
 
+  find_group_by_id(group_id){
+    return this.findOne({"_id": group_id}).exec()
+  },
+
   get_list_group(user_id){
     return this.find({
       $or: [
