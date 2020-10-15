@@ -36,14 +36,14 @@ function user_send_messages(message, chat_type){
       $('.emojionearea-editor').html("")
     }
     
-    if(form_data_user_send_image_personal != null){
+    if(form_data_user_send_image != null){
       // chat_image_message_personal.js
-      user_send_file_image()
+      user_send_file_image("personal")
     }
     
-    if(form_data_user_send_file_personal != null){
-      // chat_file_message_personal.js
-      user_send_file_attachment()
+    if(form_data_for_user_send_file != null){
+      // chat_file_message.js
+      user_send_file_attachment("personal")
     }
   }
 
@@ -54,7 +54,16 @@ function user_send_messages(message, chat_type){
       send_text_message_group(message,receiver_id)
       $('.emojionearea-editor').html("")
     }
-    
+
+    if(form_data_for_user_send_file != null){
+      // chat_file_message.js
+      user_send_file_attachment("group")
+    }
+
+    if(form_data_user_send_image != null){
+      // chat_image_message_personal.js
+      user_send_file_image("group")
+    }
   }
   
 }
@@ -165,7 +174,63 @@ function append_message_to_list_chat(message){
   }
 }
 
+function remove_file_showing_in_preview(){
+  $('.btn-remove-file-attachment-in-preview').unbind('click').bind('click', function(){
+    let image_to_preview =  $('.preview-file-attachment .img-content')
+    let file_to_preview = $('.preview-file-attachment .file-attachment')
+
+    let name_of_file = $(this).attr('data-name')
+
+    if(image_to_preview.length == 1){
+      $('#chat-frame .preview-file-attachment').hide()
+      form_data_user_send_image = null
+    }
+
+    if(file_to_preview.length == 1){
+      $('#chat-frame .preview-file-attachment').hide()
+      form_data_for_user_send_file = null
+    }
+
+    if(form_data_user_send_image != null){
+      let data = form_data_user_send_image.getAll('message_images')
+
+      form_data_user_send_image.delete('message_images')
+
+      for(let i = 0; i < data.length; i++){
+        if(data[i].name != name_of_file){
+          form_data_user_send_image.append('message_images', data[i])
+        }
+      }
+    }
+
+    if(form_data_for_user_send_file != null){
+      let data = form_data_for_user_send_file.getAll('message_file')
+
+      form_data_for_user_send_file.delete('message_file')
+
+      for(let i = 0; i < data.length; i++){
+        if(data[i].name != name_of_file){
+          form_data_for_user_send_file.append('message_file', data[i])
+        }
+      }
+    }
+   
+    $(this).parent().remove()
+  })
+}
+
+function remove_all_file_in_preview_and_forms() {
+  form_data_user_send_image = null
+  form_data_for_user_send_file = null
+  $('#chat-frame .preview-file-attachment').hide()
+  $('#chat-frame .preview-file-attachment').children().remove()
+}
+
 $(document).ready(function(){
+  setTimeout(function(){
+    document.querySelector('#chat-message-list li').click()
+  },10)
+      
   config_emojione()
   convert_unicode_to_emoji()
   scroll_to_bottom_chat_frame()

@@ -4,9 +4,7 @@
   <div class="chat-message-list" data-simplebar>
 
       <ul id="chat-message-list" class="list-unstyled chat-list chat-user-list">
-          <% for(let i = list_messages.length - 1; i >= 0; i--) { %>
-            <% let message = list_messages[i]; %>
-            
+          <% list_messages.forEach(function(message){ %>
             <% 
             let message_class = "";
             if(message.type == "chat_group") message_class = "show-modal-chat-group"
@@ -30,8 +28,8 @@
                     </div>
                 </a>
             </li>
-          <% } %>
-          
+          <% }) %>
+        
 
           <li class="unread">
               <a href="#">

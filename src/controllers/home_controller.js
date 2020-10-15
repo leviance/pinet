@@ -18,7 +18,7 @@ let home_controller = async (req, res) =>{
   let list_groups = await group_services.get_list_groups(user_id)
 
   let list_messages = await message_services.get_list_messages(user_id)
-  
+
   return res.render('./home_page/index',{
     user,
     list_contact_sent,
@@ -29,7 +29,7 @@ let home_controller = async (req, res) =>{
     count_notifications,
     list_notifications,
     list_messages,
-    list_groups
+    list_groups,
   })
 }
 

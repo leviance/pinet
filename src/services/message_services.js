@@ -10,7 +10,7 @@ const {app} = require('../config/app')
 
 const convert_timestamp = require('../helper/convert_timestamp')
 
-let get_persional_messages = (user_id, friend_id) => {
+let get_personal_messages = (user_id, friend_id) => {
   return new Promise( async (resolve, reject) => {
     let check_has_contact = await contact_model.check_has_contact(user_id, friend_id)
     if(check_has_contact == null) return reject(send_message_error.not_friend)
@@ -36,7 +36,7 @@ let get_group_messages = (user_id,group_id) => {
   })
 }
 
-let user_send_file_image_persional = (sender_id,receiver_id,src_images) => {
+let user_send_file_image_personal = (sender_id,receiver_id,src_images) => {
   return new Promise( async (resolve, reject) => {
     let check_has_contact = await contact_model.check_has_contact(sender_id,receiver_id)
     if(check_has_contact == null) return reject(send_message_error.not_friend)
@@ -65,7 +65,7 @@ let user_send_file_image_persional = (sender_id,receiver_id,src_images) => {
   })
 }
 
-let user_send_text_message_persional = (sender, receiver_id, message) => {
+let user_send_text_message_personal = (sender, receiver_id, message) => {
   return new Promise( async (resolve, reject) => {
     let check_has_contact = await contact_model.check_has_contact(sender.id,receiver_id)
     if(check_has_contact == null) return reject()
@@ -113,7 +113,6 @@ let user_send_text_message_group = (sender, group_id, message) => {
   })
 }
 
-
 let user_send_file_attachment_persional = (sender_id,receiver_id,files_data) => {
   return new Promise( async (resolve, reject) => {
     let check_has_contact = await contact_model.check_has_contact(sender_id,receiver_id)
@@ -122,7 +121,7 @@ let user_send_file_attachment_persional = (sender_id,receiver_id,files_data) => 
     let sender_profile = await user_model.find_user_by_id(sender_id);
     let receiver_profile = await user_model.find_user_by_id(receiver_id)
 
-    let list_results = []
+    let list_file_messages = []
 
     for(let i = 0; i < files_data.length; i++){
       let file_data = files_data[i]
@@ -144,15 +143,82 @@ let user_send_file_attachment_persional = (sender_id,receiver_id,files_data) => 
         type: app.chat_personal,
       }
       
-      let result_send_images_message = await messages_model.create_new(model)
+      let file_message = await messages_model.create_new(model)
 
-      list_results.push(result_send_images_message)
+      list_file_messages.push(file_message)
     }
 
-    return resolve(list_results)
+    return resolve(list_file_messages)
   })
 }
 
+let user_send_file_attachment_group = (sender_id,group_id,files_data) => {
+  return new Promise( async (resolve, reject) => {
+    let check_user_in_group = await groups_model.check_user_in_group(sender_id, group_id)
+    if(check_user_in_group == null) return reject()
+    
+    let sender_profile = await user_model.find_user_by_id(sender_id);
+    let group_profile = await groups_model.find_group_by_id(group_id)
+
+    let list_file_messages = []
+
+    for(let i = 0; i < files_data.length; i++){
+      let file_data = files_data[i]
+      
+      let model = {
+        sender: {
+          id: sender_profile._id,
+          username: sender_profile.username,
+          avatar: sender_profile.avatar
+        },
+        receiver: {
+          id: group_profile._id,
+          username: group_profile.group_name,
+          avatar: group_profile.avatar
+        },
+        file: file_data.name,
+        file_size: file_data.size,
+        file_src: file_data.src,
+        type: app.chat_group,
+      }
+      
+      let file_message = await messages_model.create_new(model)
+
+      list_file_messages.push(file_message)
+    }
+
+    return resolve([list_file_messages, group_profile])
+  })
+}
+
+let user_send_file_image_group = (sender_id,group_id,src_images) => {
+  return new Promise( async (resolve, reject) => {
+    let check_user_in_group = await groups_model.check_user_in_group(sender_id, group_id)
+    if(check_user_in_group == null) return reject()
+    
+    let sender_profile = await user_model.find_user_by_id(sender_id);
+    let group_profile = await groups_model.find_group_by_id(group_id)
+
+    let model = {
+      sender: {
+        id: sender_profile._id,
+        username: sender_profile.username,
+        avatar: sender_profile.avatar
+      },
+      receiver: {
+        id: group_profile._id,
+        username: group_profile.group_name,
+        avatar: group_profile.avatar
+      },
+      images: src_images,
+      type: app.chat_group,
+    }
+    
+    let result_send_images_message = await messages_model.create_new(model)
+
+    return resolve([result_send_images_message, group_profile])
+  })
+}
 
 let get_list_messages = (user_id) => {
   return new Promise( async (resolve, reject) => {
@@ -241,18 +307,20 @@ let get_list_messages = (user_id) => {
       list_messages[i].human_time = convert_timestamp(list_messages[i].created_at)
     }
 
+    Array.prototype.reverse.call(list_messages)
+
     return resolve(list_messages)
   })
 }
 
-
-
 module.exports = {
-  get_persional_messages,
-  user_send_text_message_persional,
-  user_send_file_image_persional,
+  get_personal_messages,
+  user_send_text_message_personal,
+  user_send_file_image_personal,
   user_send_file_attachment_persional,
   get_list_messages,
   get_group_messages,
-  user_send_text_message_group
+  user_send_text_message_group,
+  user_send_file_attachment_group,
+  user_send_file_image_group
 }

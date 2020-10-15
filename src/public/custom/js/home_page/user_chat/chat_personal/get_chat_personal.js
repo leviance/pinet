@@ -1,5 +1,7 @@
 function show_personal_chat_frame(){
   $('.show-modal-chat-persional').unbind('click').bind('click', function(){
+    remove_all_file_in_preview_and_forms()
+    
     $(".user-chat").addClass("user-chat-show")
     $('#list-messages-frame li').remove()
     $('#list-messages-frame').append(lazy_loadings_message_frame)

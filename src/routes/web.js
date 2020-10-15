@@ -56,14 +56,16 @@ function init_routes(app, io) {
 
   router.get('/read-more-request-contact/:total_req/:type_contact',contact_controller.read_more_request_contact)
 
-  router.get('/get-persional-messages/:user_id',message_controller.get_persional_messages)
+  router.get('/get-persional-messages/:user_id',message_controller.get_personal_messages)
   router.get('/get-group-messages/:user_id',message_controller.get_group_messages)
 
-  router.post('/user-send-file-image-persional',message_controller.user_send_file_image_persional)
-  router.post('/user-send-text-message-persional',message_controller.user_send_text_message_persional)
-  router.post('/user-send-file-attachment-persional',message_controller.user_send_file_attachment_persional)
+  router.post('/user-send-file-image-personal',message_controller.user_send_file_image_personal)
+  router.post('/user-send-text-message-personal',message_controller.user_send_text_message_personal)
+  router.post('/user-send-file-attachment-personal',message_controller.user_send_file_attachment_personal)
 
   router.post('/user-send-text-message-group',message_controller.user_send_text_message_group)
+  router.post('/user-send-file-image-group',message_controller.user_send_file_image_group)
+  router.post('/user-send-file-attachment-group',message_controller.user_send_file_attachment_group)
 
   router.get('/user-get-list-friend-to-create-group',group_controller.get_list_friends_to_create_group)
   router.post('/create-new-group',group_controller.create_new_group)
