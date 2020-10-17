@@ -6,6 +6,7 @@ function send_text_message_personal(message, receiver_id){
     success: function(message){
       if(message.receiver.id == $('#chat-frame').attr('data-uid')){
         append_message_personal_to_chat_frame([message])
+        update_message_in_list_message_when_send_new_message(message)
       }
       // cập nhật tin nhắn trong mesage list bằng tin nhắn vừa gửi 
     },
@@ -18,10 +19,11 @@ function send_text_message_personal(message, receiver_id){
 
 $(document).ready(function() {  
   socket.on('receive-personal-text-message', function(message){
+    message_audio.play()
     if(message.sender.id == $('#chat-frame').attr('data-uid')){
       append_message_personal_to_chat_frame([message])
     }
     append_message_to_list_chat(message)
-    message_audio.play()
+    increase_total_message_not_read(message)
   })
 });

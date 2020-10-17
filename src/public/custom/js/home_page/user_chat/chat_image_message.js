@@ -124,9 +124,10 @@ function user_send_file_image(message_type){
       contentType: false,
       processData: false,
       data: form_data_user_send_image,
-      success: function(data){
+      success: function(message){
         form_data_user_send_image = null
-        append_image_sent_to_chat_frame(data, "send")
+        append_image_sent_to_chat_frame(message, "send")
+        update_message_in_list_message_when_send_new_message(message)
       }, 
       error: function(msg){
         alertify.error(msg)
@@ -161,8 +162,9 @@ $(document).ready(function(){
   })
 
 
-  socket.on('receiver-image-message', function(data){
+  socket.on('receiver-image-message', function(message){
     message_audio.play()
-    append_image_sent_to_chat_frame(data, "receive")
+    append_image_sent_to_chat_frame(message, "receive")
+    increase_total_message_not_read(message)
   })
 })

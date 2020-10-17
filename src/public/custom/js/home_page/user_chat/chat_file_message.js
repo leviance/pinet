@@ -115,9 +115,10 @@ function user_send_file_attachment(message_type){
       contentType: false,
       processData: false,
       data: form_data_for_user_send_file,
-      success: function(data){
+      success: function(messages){
         form_data_for_user_send_file = null
-        append_file_sent_to_chat_frame(data, "right")
+        append_file_sent_to_chat_frame(messages, "right")
+        update_message_in_list_message_when_send_new_message(messages[0])
       }, 
       error: function(msg){
         alertify.error(msg)
@@ -154,5 +155,6 @@ $(document).ready(function(){
   socket.on('receiver-user-send-attachment-message', function(messages){
     message_audio.play()
     append_file_sent_to_chat_frame(messages)
+    increase_total_message_not_read(messages[0])
   })
 })

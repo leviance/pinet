@@ -19,6 +19,7 @@ let get_personal_messages = (user_id, friend_id) => {
   
     list_messages = _.sortBy(list_messages, ['created_at'])
 
+    messages_model.marked_as_viewed_message_personal(user_id, friend_id)
     return resolve(list_messages)
   })
 }
@@ -31,7 +32,8 @@ let get_group_messages = (user_id,group_id) => {
     let list_messages = await messages_model.get_list_messages_group(group_id, 0)
 
     list_messages = _.sortBy(list_messages, ['created_at'])
-    
+
+    messages_model.marked_as_viewed_message_group(user_id,group_id)
     return resolve(list_messages)
   })
 }
@@ -313,6 +315,20 @@ let get_list_messages = (user_id) => {
   })
 }
 
+let count_message_not_read = (user_id, partner_id, message_type) => {
+  return new Promise( async (resolve, reject) => {
+    let numbers_message_not_read = 0
+    if(message_type == "chat_group") {
+      numbers_message_not_read = await messages_model.count_message_not_read_group(user_id, partner_id, message_type)
+    }
+    if(message_type == "chat_personal") {
+      numbers_message_not_read = await messages_model.count_message_not_read_personal(user_id, partner_id, message_type)
+    }
+
+    return resolve(numbers_message_not_read)
+  })
+}
+
 module.exports = {
   get_personal_messages,
   user_send_text_message_personal,
@@ -322,5 +338,6 @@ module.exports = {
   get_group_messages,
   user_send_text_message_group,
   user_send_file_attachment_group,
-  user_send_file_image_group
+  user_send_file_image_group,
+  count_message_not_read
 }
