@@ -206,6 +206,20 @@ let user_send_file_attachment_group = (req, res) => {
   })
 }
 
+let count_message_not_read = async (req, res) => {
+  try {
+    let partner_id = req.body.message_id
+    let message_type = req.body.message_type
+    let user_id = req.session.user_id
+
+    let numbers_message_not_read = await message_services.count_message_not_read(user_id, partner_id, message_type)
+
+    return res.status(200).send(`${numbers_message_not_read}`)
+  } catch (error) {
+    return res.status(500).send()
+  }
+}
+
 module.exports = {
   get_personal_messages,
   user_send_file_image_personal,
@@ -214,5 +228,6 @@ module.exports = {
   get_group_messages,
   user_send_text_message_group,
   user_send_file_attachment_group,
-  user_send_file_image_group
+  user_send_file_image_group,
+  count_message_not_read
 }

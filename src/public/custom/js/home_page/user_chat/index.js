@@ -37,7 +37,7 @@ function user_send_messages(message, chat_type){
     }
     
     if(form_data_user_send_image != null){
-      // chat_image_message_personal.js
+      // chat_image_message.js
       user_send_file_image("personal")
     }
     
@@ -61,7 +61,7 @@ function user_send_messages(message, chat_type){
     }
 
     if(form_data_user_send_image != null){
-      // chat_image_message_personal.js
+      // chat_image_message.js
       user_send_file_image("group")
     }
   }
@@ -124,10 +124,10 @@ function append_message_to_list_chat(message){
   // if message is chat group
   if(message.type == "chat_group"){
     let check_is_in_chat_list = $('#chat-message-list').find(`li[data-uid=${message.receiver.id}]`)
-
+    
     if(check_is_in_chat_list.length === 0){
       $('#chat-message-list').prepend(`
-        <li data-uid="${message._id}" class="show-modal-chat-persional typing" chat-type="chat_personal" > 
+        <li data-uid="${message.receiver.id}" class="show-modal-chat-persional typing" chat-type="chat_personal" > 
           <a href="javascript: void(0);">
               <div class="media">
                   <div class="chat-user-img online align-self-center mr-3">
@@ -140,6 +140,7 @@ function append_message_to_list_chat(message){
                       <p class="chat-user-message text-truncate mb-0">${message_show}</p>
                   </div>
                   <div class="font-size-11">${convert_timestamp(message.created_at)}</div>
+                  <div class="unread-message" id="unRead1"><span class="badge badge-soft-danger badge-pill">1</span></div>
               </div>
           </a>
       </li>`)
@@ -152,7 +153,7 @@ function append_message_to_list_chat(message){
 
     if(check_is_in_chat_list.length === 0){
       $('#chat-message-list').prepend(`
-        <li data-uid="${message._id}" class="show-modal-chat-persional typing" chat-type="chat_personal" > 
+        <li data-uid="${message.sender.id}" class="show-modal-chat-persional typing" chat-type="chat_personal" > 
           <a href="javascript: void(0);">
               <div class="media">
                   <div class="chat-user-img online align-self-center mr-3">
@@ -165,6 +166,7 @@ function append_message_to_list_chat(message){
                       <p class="chat-user-message text-truncate mb-0">${message_show}</p>
                   </div>
                   <div class="font-size-11">${convert_timestamp(message.created_at)}</div>
+                  <div class="unread-message" id="unRead1"><span class="badge badge-soft-danger badge-pill">1</span></div>
               </div>
           </a>
       </li>`)
@@ -226,6 +228,93 @@ function remove_all_file_in_preview_and_forms() {
   $('#chat-frame .preview-file-attachment').children().remove()
 }
 
+function remove_label_count_message_not_read(){
+  $('#chat-message-list li').find('a').unbind('click').bind('click', function(){
+    $(this).find('.unread-message').remove()
+  })
+}
+
+function get_numbers_message_not_read(){
+  let list_messages = $('#chat-message-list li')
+  list_messages.each(function(index, message){
+    let message_id = $(this).attr('data-uid')
+    let message_type = $(this).attr('chat-type')
+    let _this = $(this)
+
+    $.ajax({
+      url: '/count-message-not-read',
+      type: 'POST',
+      data: {message_id, message_type},
+      success: function(numbers_message_not_read){
+        if(numbers_message_not_read > 0)  _this.find('div.media').append(`<div class="unread-message" id="unRead1"><span class="badge badge-soft-danger badge-pill">${numbers_message_not_read}</span></div>`)
+      },
+      error: function(msg){
+        // send error to admin
+      }
+    })
+  })
+}
+
+function increase_total_message_not_read(message){
+  let message_tag = null;
+  let content_message = ""
+
+  if(message.type == "chat_group"){
+    message_tag = $('#chat-message-list').find(`li[data-uid="${message.receiver.id}"]`)
+  }
+  if(message.type == "chat_personal"){
+    message_tag = $('#chat-message-list').find(`li[data-uid="${message.sender.id}"]`)
+  }
+  
+  if(message.text != null) content_message = `${message.sender.username}: ${message.text}`
+  if(message.file != null) content_message = `${message.sender.username}: đã gửi 1 file đính kèm`
+  if(message.images.length > 0) content_message = `${message.sender.username}: đã gửi 1 hình ảnh`
+
+  // move message to the top of the list
+  message_tag.remove()
+  $('#chat-message-list').prepend(message_tag)
+  message_tag.find('.chat-user-message').text(content_message)
+
+  // get numbers message not read of message
+  let numbers_message_not_read = + message_tag.find('.unread-message >span').text()
+
+  // if numbers message not read has value then increase 1
+  if(numbers_message_not_read){
+    numbers_message_not_read += 1
+    message_tag.find('.unread-message >span').text(numbers_message_not_read)
+  }
+  // if not find numbers message not read of message append it to the message
+  else{
+    message_tag.find('.media').append(`<div class="unread-message" id="unRead1"><span class="badge badge-soft-danger badge-pill">1</span></div>`)
+  }
+  
+  // call it for click can get message and show in chat modal
+  show_group_chat_frame()
+  show_personal_chat_frame()
+  // call it for click can remove tag show message not read
+  remove_label_count_message_not_read()
+}
+
+function update_message_in_list_message_when_send_new_message(message){
+  let message_tag = null;
+  let content_message = ""
+
+  message_tag = $('#chat-message-list').find(`li[data-uid="${message.receiver.id}"]`)
+
+  if(message.text != null) content_message = `Bạn: ${message.text}`
+  if(message.file != null) content_message = `Bạn: đã gửi 1 file đính kèm`
+  if(message.images.length > 0) content_message = `Bạn: đã gửi 1 hình ảnh`
+
+  // move message to the top of the list
+  message_tag.remove()
+  $('#chat-message-list').prepend(message_tag)
+  message_tag.find('.chat-user-message').text(content_message)
+
+  // call it for click can get message and show in chat modal
+  show_group_chat_frame()
+  show_personal_chat_frame()
+}
+
 $(document).ready(function(){
   setTimeout(function(){
     document.querySelector('#chat-message-list li').click()
@@ -234,4 +323,6 @@ $(document).ready(function(){
   config_emojione()
   convert_unicode_to_emoji()
   scroll_to_bottom_chat_frame()
+  get_numbers_message_not_read()
+  remove_label_count_message_not_read()
 })

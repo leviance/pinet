@@ -70,6 +70,8 @@ function init_routes(app, io) {
   router.get('/user-get-list-friend-to-create-group',group_controller.get_list_friends_to_create_group)
   router.post('/create-new-group',group_controller.create_new_group)
 
+  router.post('/count-message-not-read',message_controller.count_message_not_read)
+
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {
     // respond with html page

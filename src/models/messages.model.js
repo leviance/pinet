@@ -13,6 +13,7 @@ let messages_schema = new Schema({
         avatar: String
     },
     type: String,
+    reader: [],
     is_read: {type: Boolean, default: false},
     text: {type: String, default: null},
     file: {type: String, default: null},
@@ -80,6 +81,40 @@ messages_schema.statics = {
         return this.find({
             "receiver.id": group_id
         }).sort({"created_at": -1}).limit(1).exec()
+    },
+
+    count_message_not_read_group(user_id, group_id, message_type){
+        return this.find({
+            "receiver.id": group_id,
+            "type": message_type,
+            "sender.id": {$nin: [user_id]},
+            "reader": {$nin: [user_id]}
+        }).count().exec()
+    },
+
+    count_message_not_read_personal(user_id, partner_id, message_type){
+        return this.find({
+            "sender.id": partner_id,
+            "receiver.id": user_id,
+            "type": message_type,
+            "is_read": false
+        }).count().exec()
+    },
+
+    marked_as_viewed_message_personal(user_id, friend_id){
+        this.updateMany({
+            "receiver.id": user_id,
+            "sender.id": friend_id,
+            "is_read": false
+        },{"is_read": true}).exec()
+    },
+
+    marked_as_viewed_message_group(user_id,group_id){
+        this.updateMany({
+            "receiver.id": group_id,
+            "sender.id": {$nin: [user_id]},
+            "reader": {$nin: [user_id]}
+        },{$push: {"reader": user_id}}).exec()
     }
 }
 
