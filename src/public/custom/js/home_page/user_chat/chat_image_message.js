@@ -112,6 +112,7 @@ function append_image_sent_to_chat_frame(message, type_of_message){
   view_message_image()
   scroll_to_bottom_chat_frame()
 
+  $('#list-messages-frame .typing').remove()
   $('#chat-frame .preview-file-attachment').hide()
   $('#chat-frame .preview-file-attachment').children().remove()
 }

@@ -1,4 +1,4 @@
-const {contact_services, message_services} = require('../../services/index')
+const {contact_services, message_services, group_services} = require('../../services/index')
 const emit_socket = require('../../helper/emit_socket')
 
 let message_socket = (io) => {
@@ -23,6 +23,64 @@ let message_socket = (io) => {
         emit_socket("receiver-user-send-text-message",data_to_emit, io)
       }
     })
+
+    socket.on('user-is-typing-personal', data => {
+      let data_to_emit = {
+        receiver_id: data.receiver_id,
+        chat_type: data.chat_type,
+        sender_id: socket.request.session.user_id,
+        sender_avatar: socket.request.session.avatar
+      }
+
+      emit_socket("receive-user-is-typing-personal",data_to_emit, io)
+    })
+
+    socket.on('user-is-typing-group', async (data) => {
+      try {
+        let data_to_emit = {
+          group_id: data.receiver_id,
+          chat_type: data.chat_type,
+          sender_id: socket.request.session.user_id,
+          sender_avatar: socket.request.session.avatar,
+          sender_username: socket.request.session.username,
+        }
+        
+        let list_id_members = await group_services.get_list_members(data_to_emit.group_id,data_to_emit.sender_id)
+
+        list_id_members.forEach(member_id => {
+          data_to_emit.receiver_id = member_id
+          emit_socket("receive-user-is-typing-group",data_to_emit, io)
+        })
+      } catch (error) {
+        console.log("Someone try hacking socket.on('user-is-typing-group')")
+      }
+    })
+
+    socket.on('user-is-stop_typing-personal', data => {
+      let data_to_emit = {
+        receiver_id: data.receiver_id,
+        chat_type: data.chat_type,
+        sender_id: socket.request.session.user_id,
+      }
+
+      emit_socket("receive-user-is-stop_typing-personal",data_to_emit, io)
+    })
+
+    socket.on('user-is-stop-typing-group', async data => {
+      let data_to_emit = {
+        group_id: data.receiver_id,
+        chat_type: data.chat_type,
+        sender_id: socket.request.session.user_id,
+      }
+
+      let list_id_members = await group_services.get_list_members(data_to_emit.group_id,data_to_emit.sender_id)
+
+      list_id_members.forEach(member_id => {
+        data_to_emit.receiver_id = member_id
+        emit_socket("receive-user-is-stop_typing-group",data_to_emit, io)
+      })
+    })
+
   })
 }
 

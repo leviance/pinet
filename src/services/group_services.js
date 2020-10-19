@@ -1,6 +1,7 @@
 const groups_model = require('../models/groups.model')
 const messages_model = require('../models/messages.model')
 const {app} = require('../config/app')
+const _ = require('lodash')
 
 let create_new_group = (user_id,list_id_members,group_name,invite_message) => {
   return new Promise( async (resolve, reject) => {
@@ -28,7 +29,25 @@ let get_list_groups = (user_id) => {
   })
 }
 
+let get_list_members = (group_id,user_id) => {
+  return new Promise( async (resolve, reject) => {
+    let group_data = await groups_model.get_list_members(group_id,user_id)
+
+    if(group_data == null) return reject()
+ 
+    let list_members_id = group_data.members
+    list_members_id.push(group_data.user_created_id)
+
+    _.remove(list_members_id, function(member_id) {
+      return member_id == user_id;
+    });
+
+    return resolve(list_members_id)
+  })
+}
+
 module.exports = {
   create_new_group,
-  get_list_groups
+  get_list_groups,
+  get_list_members
 }

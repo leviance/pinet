@@ -39,7 +39,6 @@ function check_user_view_notification(){
     })
 }
 
-
 function notification_new_request_contact(data){
   $('#list-notifications').prepend(`
     <li class="notification-item notification-not-read" data-uid="${data.sender_id}">
@@ -70,6 +69,7 @@ function notification_new_request_contact(data){
     increase_total_tag('btn-list-notice-received')
     check_user_view_notification()
     show_user_profile()
+    add_dot_red_color_show_new_notification()
 }
 
 function notification_user_accepted_contact(data) {
@@ -102,6 +102,7 @@ function notification_user_accepted_contact(data) {
     increase_total_tag('btn-list-notice-received')
     check_user_view_notification()
     show_user_profile()
+    add_dot_red_color_show_new_notification()
 }
 
 function notification_join_new_group(data) {
@@ -167,6 +168,7 @@ function append_notification_read_more(data){
     })
 
     show_user_profile()
+    add_dot_red_color_show_new_notification()
 }
 
 function view_more_notifications(){
@@ -209,6 +211,7 @@ function remove_all_notifications() {
             success: function(){
                 $('#list-notifications li').remove();
                 $('#btn-list-notice-received span').remove();
+                $('#pills-user-tab .new-notifications').remove()
             },
             error: function(){
                 alertify.error(error_undefine_mess)
@@ -217,7 +220,20 @@ function remove_all_notifications() {
     })
 }
 
+function add_dot_red_color_show_new_notification(){
+    $('#pills-user-tab .new-notifications').remove()
+    $('#pills-user-tab').append(`<div class="new-notifications"></div>`)
+  
+    $('#pills-user-tab').unbind('click').bind('click', function(){
+      $('#pills-user-tab .new-notifications').remove()
+    })
+}
+
 $(document).ready(function(){
+    if($('#btn-list-notice-received').find('span') || $('#btn-list-contacts-sent').find('span') || $('#btn-list-contacts-received').find('span')){
+        add_dot_red_color_show_new_notification()
+    }
+    
     check_user_view_notification()
     view_more_notifications()
     remove_all_notifications()

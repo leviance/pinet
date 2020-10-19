@@ -40,6 +40,16 @@ groupSchema.statics = {
         {"_id": group_id, "members": user_id}
       ]
     }).exec()
+  },
+
+  get_list_members(group_id,user_id){
+    return this.findOne({
+      "_id": group_id,
+      $or: [
+        {"user_created_id": user_id},
+        {"members": user_id}
+      ]
+    }).exec()
   }
 }
 
