@@ -85,16 +85,19 @@ function config_emojione(){
         if(event.keyCode === 13){
           let message = el[0].emojioneArea.getText().trim()
           let chat_type = $('#chat-frame').attr('chat-type')
-
           user_send_messages(message,chat_type)
         }
+        detected_user_stop_typing()
+      },
+      keypress: function(){
+        show_user_is_typing()
       },
       click: function(){
         if(!$('.emojionearea-picker').hasClass('hidden')) {
           $('.emojionearea-picker').addClass('hidden')
           $('.emojionearea-button').removeClass('active')
         }
-      }
+      },
     }
   });
 
@@ -231,11 +234,13 @@ function remove_all_file_in_preview_and_forms() {
 function remove_label_count_message_not_read(){
   $('#chat-message-list li').find('a').unbind('click').bind('click', function(){
     $(this).find('.unread-message').remove()
+    $('#pills-chat-tab .new-notifications').remove()
   })
 }
 
 function get_numbers_message_not_read(){
   let list_messages = $('#chat-message-list li')
+
   list_messages.each(function(index, message){
     let message_id = $(this).attr('data-uid')
     let message_type = $(this).attr('chat-type')
@@ -246,7 +251,11 @@ function get_numbers_message_not_read(){
       type: 'POST',
       data: {message_id, message_type},
       success: function(numbers_message_not_read){
-        if(numbers_message_not_read > 0)  _this.find('div.media').append(`<div class="unread-message" id="unRead1"><span class="badge badge-soft-danger badge-pill">${numbers_message_not_read}</span></div>`)
+        if(numbers_message_not_read > 0){
+          _this.find('div.media').append(`<div class="unread-message" id="unRead1"><span class="badge badge-soft-danger badge-pill">${numbers_message_not_read}</span></div>`)
+          // show dot red color in message icon left menu
+          add_dot_red_color_show_new_message()
+        }
       },
       error: function(msg){
         // send error to admin
@@ -288,6 +297,10 @@ function increase_total_message_not_read(message){
     message_tag.find('.media').append(`<div class="unread-message" id="unRead1"><span class="badge badge-soft-danger badge-pill">1</span></div>`)
   }
   
+
+  // show dot red color in message icon left menu
+  add_dot_red_color_show_new_message()
+
   // call it for click can get message and show in chat modal
   show_group_chat_frame()
   show_personal_chat_frame()
@@ -315,6 +328,15 @@ function update_message_in_list_message_when_send_new_message(message){
   show_personal_chat_frame()
 }
 
+function add_dot_red_color_show_new_message(){
+  $('#pills-chat-tab .new-notifications').remove()
+  $('#pills-chat-tab').append(`<div class="new-notifications"></div>`)
+
+  $('#pills-chat-tab').unbind('click').bind('click', function(){
+    $('#pills-chat-tab .new-notifications').remove()
+  })
+}
+
 $(document).ready(function(){
   setTimeout(function(){
     document.querySelector('#chat-message-list li').click()
@@ -325,4 +347,5 @@ $(document).ready(function(){
   scroll_to_bottom_chat_frame()
   get_numbers_message_not_read()
   remove_label_count_message_not_read()
+  
 })

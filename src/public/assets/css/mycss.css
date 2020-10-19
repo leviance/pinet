@@ -40,7 +40,17 @@
   color: #7269ef;
 }
 
-#icon-view-messages {
-  color: red;
+#list-icon-menu-left li > a {
+  position: relative;
+}
+
+#list-icon-menu-left li > a .new-notifications {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--red);
+  right: 15px;
+  bottom: 12px;
 }
 /*# sourceMappingURL=mycss.css.map */

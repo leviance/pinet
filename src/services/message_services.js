@@ -19,6 +19,7 @@ let get_personal_messages = (user_id, friend_id) => {
   
     list_messages = _.sortBy(list_messages, ['created_at'])
 
+    // mark all mesasge friend_id sent as read
     messages_model.marked_as_viewed_message_personal(user_id, friend_id)
     return resolve(list_messages)
   })
@@ -62,7 +63,9 @@ let user_send_file_image_personal = (sender_id,receiver_id,src_images) => {
     }
     
     let result_send_images_message = await messages_model.create_new(model)
-    
+
+    // mark all mesasge receiver_id sent as read
+    messages_model.marked_as_viewed_message_personal(sender_id, receiver_id)
     return resolve(result_send_images_message)
   })
 }
@@ -87,6 +90,8 @@ let user_send_text_message_personal = (sender, receiver_id, message) => {
 
     let result_send = await messages_model.create_new(model)
 
+    // mark all mesasge receiver_id sent as read
+    messages_model.marked_as_viewed_message_personal(sender.id, receiver_id)
     return resolve(result_send)
   })
 }
@@ -111,6 +116,7 @@ let user_send_text_message_group = (sender, group_id, message) => {
 
     let result_send = await messages_model.create_new(model)
 
+    messages_model.marked_as_viewed_message_group(sender.id,group_id)
     return resolve([result_send,group_data])
   })
 }
@@ -150,6 +156,8 @@ let user_send_file_attachment_persional = (sender_id,receiver_id,files_data) => 
       list_file_messages.push(file_message)
     }
 
+    // mark all mesasge receiver_id sent as read
+    messages_model.marked_as_viewed_message_personal(sender_id, receiver_id)
     return resolve(list_file_messages)
   })
 }
@@ -189,6 +197,7 @@ let user_send_file_attachment_group = (sender_id,group_id,files_data) => {
       list_file_messages.push(file_message)
     }
 
+    messages_model.marked_as_viewed_message_group(sender_id,group_id)
     return resolve([list_file_messages, group_profile])
   })
 }
@@ -218,6 +227,7 @@ let user_send_file_image_group = (sender_id,group_id,src_images) => {
     
     let result_send_images_message = await messages_model.create_new(model)
 
+    messages_model.marked_as_viewed_message_group(sender_id,group_id)
     return resolve([result_send_images_message, group_profile])
   })
 }

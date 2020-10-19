@@ -33,7 +33,20 @@
     
 }
 
-// style for icon in menu left when have new status
-#icon-view-messages{
-    color: red;
+#list-icon-menu-left{
+    li{
+        >a{
+            position: relative;
+            .new-notifications{
+                position: absolute;
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background-color: var(--red);
+                right: 15px;
+                bottom: 12px;
+            }
+        }
+    }
+    
 }

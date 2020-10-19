@@ -103,6 +103,7 @@ function append_file_sent_to_chat_frame(messages, type = ""){
   })
 
   scroll_to_bottom_chat_frame()
+  $('#list-messages-frame .typing').remove()
   $('#chat-frame .preview-file-attachment').hide()
   $('#chat-frame .preview-file-attachment').children().remove()
 }
