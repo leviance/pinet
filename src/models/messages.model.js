@@ -115,6 +115,40 @@ messages_schema.statics = {
             "sender.id": {$nin: [user_id]},
             "reader": {$nin: [user_id]}
         },{$push: {"reader": user_id}}).exec()
+    },
+
+    get_files_message_sent_personal(user_id, friend_id, skip = 0){
+        return this.find({
+            $or: [
+                {"sender.id": user_id, "receiver.id": friend_id},
+                {"sender.id": friend_id, "receiver.id": user_id}
+            ],
+            "text": null,
+            "images": []
+        }).limit(15).sort({"created_at": -1}).skip(skip).exec()
+    },
+
+    get_images_message_sent_personal(user_id, friend_id, skip = 0){
+        return this.find({
+            $or: [
+                {"sender.id": user_id, "receiver.id": friend_id},
+                {"sender.id": friend_id, "receiver.id": user_id}
+            ],
+            "text": null,
+            "file": null
+        }).limit(15).sort({"created_at": -1}).skip(skip).exec()
+    },
+
+    get_files_message_sent_group(group_id, skip = 0){
+        return this.find({
+            "receiver.id": group_id, "text": null, "images": []
+        }).limit(15).sort({"created_at": -1}).skip(skip).exec()
+    },
+
+    get_images_message_sent_group(group_id, skip = 0){
+        return this.find({
+            "receiver.id": group_id, "text": null, "file": null
+        }).limit(15).sort({"created_at": -1}).skip(skip).exec()
     }
 }
 

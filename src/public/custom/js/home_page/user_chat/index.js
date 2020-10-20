@@ -342,6 +342,7 @@ $(document).ready(function(){
     document.querySelector('#chat-message-list li').click()
   },10)
       
+  view_message_image()
   config_emojione()
   convert_unicode_to_emoji()
   scroll_to_bottom_chat_frame()

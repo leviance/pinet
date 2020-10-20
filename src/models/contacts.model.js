@@ -54,8 +54,11 @@ contacts_schema.statics = {
 
     find_contact(sender_req_id, receiver_req_id){
         return this.findOne({
-            "sender_id": sender_req_id,
-            "receiver_id": receiver_req_id
+            $or: [
+                {"sender_id": sender_req_id, "receiver_id": receiver_req_id},
+                {"sender_id": receiver_req_id, "receiver_id": sender_req_id}
+            ],
+            "status": true
         }).exec()
     },
 

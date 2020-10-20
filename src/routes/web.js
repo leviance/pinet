@@ -72,6 +72,9 @@ function init_routes(app, io) {
 
   router.post('/count-message-not-read',message_controller.count_message_not_read)
 
+  router.get('/view-user-profile-:friend_id',user_controller.view_user_profile)
+  router.get('/view-group-profile-:group_id',group_controller.view_group_profile)
+
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {
     // respond with html page

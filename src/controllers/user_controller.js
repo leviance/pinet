@@ -1,4 +1,4 @@
-const {user_services} = require('../services/index')
+const {user_services, message_services} = require('../services/index')
 const {app} = require('../config/app')
 const {user_settings} = require('../../lang/vi')
 const uid = require('uid')
@@ -87,9 +87,23 @@ let user_change_email = async (req, res) => {
   res.redirect('/login')
 }
 
+let view_user_profile = async (req, res) => {
+  try {
+    let friend_id = req.params.friend_id;
+    let user_id = req.session.user_id
+
+    let friend_profile = await user_services.get_friend_profile(user_id, friend_id)
+    let [messages_file, messages_image] = await message_services.get_files_message_sent_personal(user_id, friend_id)
+    
+    return res.status(200).send([friend_profile,messages_file, messages_image,"chat_personal"])
+  } catch (error) {
+    return res.status(500).send()
+  }
+}
 
 module.exports = {
   user_upload_avatar,
   user_edit_information,
-  user_change_email
+  user_change_email,
+  view_user_profile
 }

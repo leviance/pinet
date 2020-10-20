@@ -3,11 +3,12 @@ const messages_model = require('../models/messages.model')
 const {app} = require('../config/app')
 const _ = require('lodash')
 
-let create_new_group = (user_id,list_id_members,group_name,invite_message) => {
+let create_new_group = (user_id,user_created_name,list_id_members,group_name,invite_message) => {
   return new Promise( async (resolve, reject) => {
     let model = {
       group_name: group_name,
       user_created_id : user_id,
+      user_created_name: user_created_name,
       user_amount : list_id_members.length + 1,
       members: list_id_members,
       invite_message: invite_message,
@@ -46,8 +47,19 @@ let get_list_members = (group_id,user_id) => {
   })
 }
 
+let get_group_profile = (user_id, group_id) => {
+  return new Promise( async (resolve, reject) => {
+    let check_user_is_in_group = await groups_model.check_user_in_group(user_id, group_id)
+    if(!check_user_is_in_group) return reject()
+
+    let group_profile = check_user_is_in_group
+    return resolve(group_profile)
+  })
+}
+
 module.exports = {
   create_new_group,
   get_list_groups,
-  get_list_members
+  get_list_members,
+  get_group_profile
 }
