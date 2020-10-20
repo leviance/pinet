@@ -100,7 +100,7 @@ function render_text_message_group_to_chat_frame(message, type){
                         <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">${convert_timestamp(message.created_at)}</span></p>
                     </div>
                     <div class="dropdown align-self-start">
-                        <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="dropdown-toggle" href="JavaScript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="ri-more-2-fill"></i>
                         </a>
                         <div class="dropdown-menu">
@@ -117,6 +117,7 @@ function render_text_message_group_to_chat_frame(message, type){
 
     scroll_to_bottom_chat_frame()
     convert_unicode_to_emoji()
+    view_message_image()
 }
 
 function render_image_message_group_to_chat_frame(message, type){
@@ -151,7 +152,7 @@ function render_image_message_group_to_chat_frame(message, type){
                       </div>
                           
                       <div class="dropdown align-self-start">
-                          <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <a class="dropdown-toggle" href="JavaScript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               <i class="ri-more-2-fill"></i>
                           </a>
                           <div class="dropdown-menu">
@@ -169,6 +170,7 @@ function render_image_message_group_to_chat_frame(message, type){
       </li>`)
 
     scroll_to_bottom_chat_frame()
+    view_message_image()
 }
 
 function render_file_message_group_to_chat_frame(message, type){
@@ -221,7 +223,7 @@ function render_file_message_group_to_chat_frame(message, type){
                   </div>
                       
                   <div class="dropdown align-self-start">
-                      <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <a class="dropdown-toggle" href="JavaScript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="ri-more-2-fill"></i>
                       </a>
                       <div class="dropdown-menu">
@@ -236,6 +238,7 @@ function render_file_message_group_to_chat_frame(message, type){
     </li>`)
     
     scroll_to_bottom_chat_frame()
+    view_message_image()
 }
 
 $(document).ready(function(){

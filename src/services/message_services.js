@@ -339,6 +339,24 @@ let count_message_not_read = (user_id, partner_id, message_type) => {
   })
 }
 
+let get_files_message_sent_personal = (user_id, friend_id) => {
+  return new Promise( async (resolve, reject) => {
+    let messages_file = await messages_model.get_files_message_sent_personal(user_id, friend_id)
+    let messages_image = await messages_model.get_images_message_sent_personal(user_id, friend_id)
+
+    return resolve([messages_file, messages_image])
+  })
+}
+
+let get_files_message_sent_group = (user_id, group_id) => {
+  return new Promise( async (resolve, reject) => {
+    let messages_file = await messages_model.get_files_message_sent_group(group_id)
+    let messages_image = await messages_model.get_images_message_sent_group(group_id)
+
+    return resolve([messages_file, messages_image])
+  })
+}
+
 module.exports = {
   get_personal_messages,
   user_send_text_message_personal,
@@ -349,5 +367,7 @@ module.exports = {
   user_send_text_message_group,
   user_send_file_attachment_group,
   user_send_file_image_group,
-  count_message_not_read
+  count_message_not_read,
+  get_files_message_sent_personal,
+  get_files_message_sent_group
 }

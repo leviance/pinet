@@ -1,4 +1,5 @@
 const user_model = require('../models/users.model')
+const contact_model = require('../models/contacts.model')
 const {user_settings} = require('../../lang/vi')
 const send_mail = require('../config/send_mail')
 const uid = require('uid')
@@ -95,11 +96,22 @@ let user_change_email = (verify_code, new_email, old_email) => {
   })
 }
 
-
+let get_friend_profile = (user_id, friend_id) => {
+  return new Promise( async (resolve, reject) => {
+    // check has contact
+    let check_has_contact = await contact_model.find_contact(user_id, friend_id)
+    if(!check_has_contact) return reject()
+    
+    let friend_profile = await user_model.find_user_by_id(friend_id)
+    
+    return resolve(friend_profile)
+  })
+}
 
 module.exports = {
   get_data_user,
   user_upload_avatar,
   user_edit_information,
-  user_change_email
+  user_change_email,
+  get_friend_profile
 }

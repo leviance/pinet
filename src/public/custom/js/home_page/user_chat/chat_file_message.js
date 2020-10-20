@@ -86,7 +86,7 @@ function append_file_sent_to_chat_frame(messages, type = ""){
                     </div>
                         
                     <div class="dropdown align-self-start">
-                        <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="dropdown-toggle" href="JavaScript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="ri-more-2-fill"></i>
                         </a>
                         <div class="dropdown-menu">
@@ -102,6 +102,8 @@ function append_file_sent_to_chat_frame(messages, type = ""){
       </li>`)
   })
 
+  view_message_image()
+  view_message_image()
   scroll_to_bottom_chat_frame()
   $('#list-messages-frame .typing').remove()
   $('#chat-frame .preview-file-attachment').hide()

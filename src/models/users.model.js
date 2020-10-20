@@ -52,16 +52,16 @@ user_schema.statics = {
     },
 
     find_user_by_email(email){
-        return this.find({"local.email": email}).exec();
+        return this.find({"local.email": email, "local.is_active": true}).exec();
     },
 
     find_user_by_account(name_account){
-        return this.findOne({"local.name_account": name_account}).exec();
+        return this.findOne({"local.name_account": name_account, "local.is_active": true}).exec();
     },
 
     find_user_by_id(user_id){
         return this.findOne(
-            {"_id": user_id},
+            {"_id": user_id, "local.is_active": true},
             {"local.password": 0, "local.verify_token": 0}
             ).exec();
     },

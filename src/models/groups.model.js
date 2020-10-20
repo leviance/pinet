@@ -5,6 +5,7 @@ let Schema = mongoose.Schema;
 let groupSchema = new Schema({
   group_name: String,
   user_created_id : String,
+  user_created_name: String,
   user_amount : Number,
   message_amount : { type: Number, default: 0}, 
   avatar: {type: String, default: "group_avatar.png"},
@@ -50,7 +51,8 @@ groupSchema.statics = {
         {"members": user_id}
       ]
     }).exec()
-  }
+  },
+
 }
 
 module.exports = mongoose.model("Groups",groupSchema);

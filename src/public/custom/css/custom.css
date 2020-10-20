@@ -406,4 +406,13 @@ img.emojione {
   position: absolute;
   top: 7px;
 }
+
+#collapseThree .popup-img {
+  width: 100%;
+  height: 100%;
+}
+
+#collapseThree .popup-img > img {
+  width: 100%;
+}
 /*# sourceMappingURL=custom.css.map */

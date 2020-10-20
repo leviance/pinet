@@ -11,13 +11,13 @@ function prepend_to_list_friends(data){
               <h5 class="text-truncate font-size-14 mb-0">${data.username}</h5>
           </div>
           <div class="dropdown">
-              <a href="#" class="text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a href="JavaScript:void(0);" class="text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="ri-more-2-fill"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
-                  <a data-uid="${data.user_id}" class="dropdown-item btn-view-user-profile" href="#">Xem hồ sơ <i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
-                  <a data-uid="${data.user_id}" class="dropdown-item btn-block-friend " href="#">Chặn <i class="ri-forbid-line float-right text-muted"></i></a>
-                  <a data-uid="${data.user_id}" class="dropdown-item btn-unfriend" href="#">Hủy kết bạn <i class="ri-delete-bin-line float-right text-muted"></i></a>
+                  <a data-uid="${data.user_id}" class="dropdown-item btn-view-user-profile" href="JavaScript:void(0);">Xem hồ sơ <i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
+                  <a data-uid="${data.user_id}" class="dropdown-item btn-block-friend " href="JavaScript:void(0);">Chặn <i class="ri-forbid-line float-right text-muted"></i></a>
+                  <a data-uid="${data.user_id}" class="dropdown-item btn-unfriend" href="JavaScript:void(0);">Hủy kết bạn <i class="ri-delete-bin-line float-right text-muted"></i></a>
               </div>
           </div>
       </div>

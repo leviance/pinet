@@ -53,14 +53,14 @@ function notification_new_request_contact(data){
               <div class="font-size-11">Vừa xong</div>
           </div>
           <div class="dropdown">
-              <a href="#" class="text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a href="JavaScript:void(0);" class="text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="ri-more-2-fill"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
-                <a data-uid="${data.sender_id}" class="dropdown-item btn-view-user-profile user-profile-show" href="#">Xem hồ sơ<i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
-                <a data-uid="${data.sender_id}" class="dropdown-item btn-block-user-notification" href="#">Tắt thông báo<i class="fa fa-minus float-right text-muted" aria-hidden="true"></i></a>
-                <a data-uid="${data.sender_id}" class="dropdown-item btn-block-friend " href="#">Chặn<i class="ri-forbid-line float-right text-muted"></i></a>
-                <a data-uid="${data.sender_id}" class="dropdown-item btn-unfriend" href="#">Xóa thông báo<i class="ri-delete-bin-line float-right text-muted"></i></a>
+                <a data-uid="${data.sender_id}" class="dropdown-item btn-view-user-profile user-profile-show" href="JavaScript:void(0);">Xem hồ sơ<i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
+                <a data-uid="${data.sender_id}" class="dropdown-item btn-block-user-notification" href="JavaScript:void(0);">Tắt thông báo<i class="fa fa-minus float-right text-muted" aria-hidden="true"></i></a>
+                <a data-uid="${data.sender_id}" class="dropdown-item btn-block-friend " href="JavaScript:void(0);">Chặn<i class="ri-forbid-line float-right text-muted"></i></a>
+                <a data-uid="${data.sender_id}" class="dropdown-item btn-unfriend" href="JavaScript:void(0);">Xóa thông báo<i class="ri-delete-bin-line float-right text-muted"></i></a>
               </div>
           </div>
       </div>
@@ -86,14 +86,14 @@ function notification_user_accepted_contact(data) {
               <div class="font-size-11">Vừa xong</div>
           </div>
           <div class="dropdown">
-              <a href="#" class="text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a href="JavaScript:void(0);" class="text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="ri-more-2-fill"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
-                <a data-uid="${data.sender_id}" class="dropdown-item btn-view-user-profile user-profile-show" href="#">Xem hồ sơ<i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
-                <a data-uid="${data.sender_id}" class="dropdown-item btn-block-user-notification" href="#">Tắt thông báo<i class="fa fa-minus float-right text-muted" aria-hidden="true"></i></a>
-                <a data-uid="${data.sender_id}" class="dropdown-item btn-block-friend " href="#">Chặn<i class="ri-forbid-line float-right text-muted"></i></a>
-                <a data-uid="${data.sender_id}" class="dropdown-item btn-unfriend" href="#">Xóa thông báo<i class="ri-delete-bin-line float-right text-muted"></i></a>
+                <a data-uid="${data.sender_id}" class="dropdown-item btn-view-user-profile user-profile-show" href="JavaScript:void(0);">Xem hồ sơ<i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
+                <a data-uid="${data.sender_id}" class="dropdown-item btn-block-user-notification" href="JavaScript:void(0);">Tắt thông báo<i class="fa fa-minus float-right text-muted" aria-hidden="true"></i></a>
+                <a data-uid="${data.sender_id}" class="dropdown-item btn-block-friend " href="JavaScript:void(0);">Chặn<i class="ri-forbid-line float-right text-muted"></i></a>
+                <a data-uid="${data.sender_id}" class="dropdown-item btn-unfriend" href="JavaScript:void(0);">Xóa thông báo<i class="ri-delete-bin-line float-right text-muted"></i></a>
               </div>
           </div>
       </div>
@@ -119,14 +119,14 @@ function notification_join_new_group(data) {
                 <div class="font-size-11">Vừa xong</div>
             </div>
             <div class="dropdown">
-                <a href="#" class="text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a href="JavaScript:void(0);" class="text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="ri-more-2-fill"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                  <a data-uid="${data.sender.id}" class="dropdown-item btn-view-user-profile user-profile-show" href="#">Xem hồ sơ<i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
-                  <a data-uid="${data.sender.id}" class="dropdown-item btn-block-user-notification" href="#">Tắt thông báo<i class="fa fa-minus float-right text-muted" aria-hidden="true"></i></a>
-                  <a data-uid="${data.sender.id}" class="dropdown-item btn-block-friend " href="#">Chặn<i class="ri-forbid-line float-right text-muted"></i></a>
-                  <a data-uid="${data.sender.id}" class="dropdown-item btn-unfriend" href="#">Xóa thông báo<i class="ri-delete-bin-line float-right text-muted"></i></a>
+                  <a data-uid="${data.sender.id}" class="dropdown-item btn-view-user-profile user-profile-show" href="JavaScript:void(0);">Xem hồ sơ<i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
+                  <a data-uid="${data.sender.id}" class="dropdown-item btn-block-user-notification" href="JavaScript:void(0);">Tắt thông báo<i class="fa fa-minus float-right text-muted" aria-hidden="true"></i></a>
+                  <a data-uid="${data.sender.id}" class="dropdown-item btn-block-friend " href="JavaScript:void(0);">Chặn<i class="ri-forbid-line float-right text-muted"></i></a>
+                  <a data-uid="${data.sender.id}" class="dropdown-item btn-unfriend" href="JavaScript:void(0);">Xóa thông báo<i class="ri-delete-bin-line float-right text-muted"></i></a>
                 </div>
             </div>
         </div>
@@ -153,14 +153,14 @@ function append_notification_read_more(data){
                         <div class="font-size-11">${notification.human_time}</div>
                     </div>
                     <div class="dropdown">
-                        <a href="#" class="text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a href="JavaScript:void(0);" class="text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="ri-more-2-fill"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a data-uid="${notification.sender_id}" class="dropdown-item btn-view-user-profile user-profile-show" href="#">Xem hồ sơ<i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
-                            <a data-uid="${notification.sender_id}" class="dropdown-item btn-block-user-notification" href="#">Tắt thông báo<i class="fa fa-minus float-right text-muted" aria-hidden="true"></i></a>
-                            <a data-uid="${notification.sender_id}" class="dropdown-item btn-block-friend " href="#">Chặn<i class="ri-forbid-line float-right text-muted"></i></a>
-                            <a data-uid="${notification.sender_id}" class="dropdown-item btn-unfriend" href="#">Xóa thông báo<i class="ri-delete-bin-line float-right text-muted"></i></a>
+                            <a data-uid="${notification.sender_id}" class="dropdown-item btn-view-user-profile user-profile-show" href="JavaScript:void(0);">Xem hồ sơ<i class="fa fa-user float-right text-muted" aria-hidden="true"></i></a>
+                            <a data-uid="${notification.sender_id}" class="dropdown-item btn-block-user-notification" href="JavaScript:void(0);">Tắt thông báo<i class="fa fa-minus float-right text-muted" aria-hidden="true"></i></a>
+                            <a data-uid="${notification.sender_id}" class="dropdown-item btn-block-friend " href="JavaScript:void(0);">Chặn<i class="ri-forbid-line float-right text-muted"></i></a>
+                            <a data-uid="${notification.sender_id}" class="dropdown-item btn-unfriend" href="JavaScript:void(0);">Xóa thông báo<i class="ri-delete-bin-line float-right text-muted"></i></a>
                         </div>
                     </div>
                 </div>
