@@ -22,3 +22,5 @@ export FACEBOOK_APP_CALLBACK=
 
 export GOOGLE_APP_ID=
 export GOOGLE_APP_SECRET=
+
+export ADMIN_ID=

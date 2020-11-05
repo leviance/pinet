@@ -18,7 +18,6 @@ let render_recover_account_page = (req, res) => {
   return res.render('./recover_page/auth-recoverpw')
 }
 
-
 let create_new_account = async (req, res) => {
   let result_valid = validationResult(req).errors;
   if(result_valid.length > 0) return res.status(500).send(result_valid[0].msg)

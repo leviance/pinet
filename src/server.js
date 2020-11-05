@@ -30,7 +30,7 @@ app.use(bodyParser.json())
 app.use(passport.initialize());
 app.use(passport.session()); 
 
-// config for socket.io
+// config for socket.io 
 config_socket_io(io,app, session)
 init_socket_io(io)
 

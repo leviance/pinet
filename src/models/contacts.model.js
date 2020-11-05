@@ -11,6 +11,14 @@ let contacts_schema = new Schema({
 });
 
 contacts_schema.statics = {
+    add_friend_with_admin(user_id, admin_id) {
+        return this.create({
+            "sender_id": admin_id,
+            "receiver_id": user_id,
+            "status": true
+        })
+    },
+
     create_new(sender_req_id,receiver_req_id){
         return this.create({
             "sender_id": sender_req_id,

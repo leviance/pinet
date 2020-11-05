@@ -230,7 +230,7 @@ function add_dot_red_color_show_new_notification(){
 }
 
 $(document).ready(function(){
-    if($('#btn-list-notice-received').find('span') || $('#btn-list-contacts-sent').find('span') || $('#btn-list-contacts-received').find('span')){
+    if($('#btn-list-notice-received').find('span').length > 0 || $('#btn-list-contacts-sent').find('span').length > 0 || $('#btn-list-contacts-received').find('span').length > 0){
         add_dot_red_color_show_new_notification()
     }
     

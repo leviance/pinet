@@ -1,0 +1,27 @@
+{
+    "_id": {
+        "$oid": "111111111111111111111111"
+    },
+    "local": {
+        "email": "admin@gmail.com",
+        "is_active": true,
+        "name_account": "admin",
+        "password": "$2b$04$Wb.vc/IgrJPfPZaG5b9Qcef7Bv/p2emxhwX/gYseUiQ0jIDQxjzo6",
+        "verify_token": "c333228a-de78-4775-852e-1e20c68eb30c1604538389950"
+    },
+    "student": {
+        "student_code": null
+    },
+    "username": "Admin",
+    "gender": "male",
+    "phone_number": "0964969849",
+    "address": null,
+    "avatar": "avatar-defult.jpg",
+    "role": "admin",
+    "class": null,
+    "age": 21,
+    "updated_at": null,
+    "deleted_at": null,
+    "created_at": 1604538393735,
+    "__v": 0
+}

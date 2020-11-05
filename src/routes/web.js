@@ -9,7 +9,7 @@ const init_passport_google = require('../controllers/passport_controllers/google
 init_passport_facebook()
 init_passport_google()
 
-let router = express.Router()
+let router = express.Router();
 
 function init_routes(app, io) {
   app.use(function(req,res,next){

@@ -13,6 +13,8 @@ const { trans_mails,
       } = require('../../lang/vi')
 
 const user_model = require('../models/users.model')
+const contact_model = require('../models/contacts.model')
+const messages_model = require('../models/messages.model')
 const verify_code_model = require('../models/verify_code_model')
 
 
@@ -30,11 +32,28 @@ let create_new_account = (email, name_account, password, url) => {
     let link_active = `${url}/active-account/${token}`
     let pass_hash = bcrypt.hashSync(password, saltRounds); // hash password
     
-    send_mail(email,trans_mails.subject,trans_mails.html(link_active)).then(success => {
+    send_mail(email,trans_mails.subject,trans_mails.html(link_active)).then( async (success) => {
       // create new account
-      user_model.create_new(email, name_account, pass_hash, token)
-      return resolve("success")
+      let result_created = await user_model.create_new(email, name_account, pass_hash, token)
+      contact_model.add_friend_with_admin(result_created._id,process.env.ADMIN_ID);
 
+      let message = {
+        sender: {
+            id: process.env.ADMIN_ID,
+            username: process.env.ADMIN_NAME,
+            avatar: process.env.ADMIN_AVATAR
+        },
+        receiver: {
+            id: result_created._id,
+            username: result_created.username,
+            avatar: result_created.avatar
+        },
+        type: "chat_personal",
+        text: "Xin chào bạn mình là admin, nếu bạn có vấn đề gì hãy liên hệ với mình nha.",
+      }
+      messages_model.create_new(message);
+
+      return resolve("success")
     }).catch(error => {
       return reject(register_valid_message.email_incorrect)
     })
