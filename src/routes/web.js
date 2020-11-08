@@ -1,5 +1,5 @@
 const express = require('express')
-const {home_controller, auth_controller, user_controller, contact_controller, notification_controller, message_controller, group_controller} = require('../controllers/index')
+const {home_controller, auth_controller, user_controller, contact_controller, notification_controller, message_controller, group_controller,setting_controllers} = require('../controllers/index')
 const {auth_valid} = require('../validation/index')
 
 const passport = require('passport')
@@ -74,6 +74,8 @@ function init_routes(app, io) {
 
   router.get('/view-user-profile-:friend_id',user_controller.view_user_profile)
   router.get('/view-group-profile-:group_id',group_controller.view_group_profile)
+
+  router.put('/user-change-view-mode',setting_controllers.user_change_view_mode)
 
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {

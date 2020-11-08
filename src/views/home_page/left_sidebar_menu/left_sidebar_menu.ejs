@@ -45,12 +45,9 @@
           </li>
           <li class="nav-item dropdown profile-user-dropdown d-inline-block d-lg-none">
               <a class="nav-link dropdown-toggle" href="javascript: void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img src="/assets/images/users/avatar-1.jpg" alt="" class="profile-user rounded-circle">
+                <img src=<%= `/assets/images/users/${user.avatar}` %>  alt="" class="profile-user rounded-circle">
               </a>
               <div class="dropdown-menu">
-                  <a class="dropdown-item" href="JavaScript:void(0);">Hồ sơ <i class="ri-profile-line float-right text-muted"></i></a>
-                  <a class="dropdown-item" href="JavaScript:void(0);">Cài đặt <i class="ri-settings-3-line float-right text-muted"></i></a>
-                  <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="JavaScript:void(0);">Đăng xuất <i class="ri-logout-circle-r-line float-right text-muted"></i></a>
               </div>
           </li>
@@ -71,9 +68,6 @@
                   <img src=<%= `/assets/images/users/${user.avatar}` %>  alt="" class="profile-user rounded-circle">
               </a>
               <div class="dropdown-menu">
-                  <a class="dropdown-item" href="JavaScript:void(0);">Hồ sơ <i class="ri-profile-line float-right text-muted"></i></a>
-                  <a class="dropdown-item" href="JavaScript:void(0);">Cài đặt<i class="ri-settings-3-line float-right text-muted"></i></a>
-                  <div class="dropdown-divider"></div>
                   <a id="btn-user-logout" class="dropdown-item" href="/logout">Đăng xuất <i class="ri-logout-circle-r-line float-right text-muted"></i></a>
               </div>
           </li>
