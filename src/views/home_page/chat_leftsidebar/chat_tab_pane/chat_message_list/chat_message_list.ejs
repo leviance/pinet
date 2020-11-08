@@ -7,7 +7,11 @@
           <% list_messages.forEach(function(message){ %>
             <% 
             let message_class = "";
-            if(message.type == "chat_group") message_class = "show-modal-chat-group"
+            let dot_status = "offline";
+            if(message.type == "chat_group") {
+                message_class = "show-modal-chat-group";
+                dot_status = "online";
+            }
             if(message.type == "chat_personal") message_class = "show-modal-chat-persional"
             %>
 
@@ -15,7 +19,7 @@
                 <a href="javascript: void(0);">
                     <div class="media">
   
-                        <div class="chat-user-img offline align-self-center mr-3">
+                        <div class="chat-user-img <%= dot_status %> align-self-center mr-3">
                             <img src="/assets/images/users/<%= message.partner_avatar %>" class="rounded-circle avatar-xs" alt="">
                             <span class="user-status"></span>
                         </div>

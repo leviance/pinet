@@ -23,6 +23,12 @@ function get_friends_status_when_get_message(user_id){
     })
 }
 
+function get_group_status_when_get_message(){
+    $("#dot-status-user-inchat-frame").removeClass("text-success")
+    $("#dot-status-user-inchat-frame").removeClass("text-secondary")
+    $("#dot-status-user-inchat-frame").addClass("text-success")
+}
+
 $(document).ready(function(){
     socket.emit("get-list-status-friends");
 

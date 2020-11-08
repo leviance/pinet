@@ -26,8 +26,9 @@ function show_group_chat_frame(){
       type: 'GET',
       url: `/get-group-messages/${group_id}`,
       success: function(messages){
-        append_message_group_to_chat_frame(messages)
-        $('.loading-message-chat-frame').remove()
+        append_message_group_to_chat_frame(messages);
+        $('.loading-message-chat-frame').remove();
+        get_group_status_when_get_message()
       },
       error: function(msg){
         $('.loading-message-chat-frame').remove()
