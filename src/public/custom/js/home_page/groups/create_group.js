@@ -49,7 +49,7 @@ function prepend_group_to_chat_list(data){
     <li data-uid="${data._id}" class="show-modal-chat-group typing" chat-type="chat_group" >
         <a href="javascript:void(0)">
             <div class="media">
-                <div class="chat-user-img align-self-center online mr-3">
+                <div class="chat-user-img align-self-center offline mr-3">
                     <div class="avatar-xs">
                       <img src="/assets/images/users/group_avatar.png" class="rounded-circle avatar-xs" alt="">
                     </div>

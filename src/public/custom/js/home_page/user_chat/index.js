@@ -133,7 +133,7 @@ function append_message_to_list_chat(message){
         <li data-uid="${message.receiver.id}" class="show-modal-chat-persional typing" chat-type="chat_personal" > 
           <a href="javascript: void(0);">
               <div class="media">
-                  <div class="chat-user-img online align-self-center mr-3">
+                  <div class="chat-user-img offline align-self-center mr-3">
                           <img src="/assets/images/users/${message.receiver.avatar}" class="rounded-circle avatar-xs" alt="">
                       <span class="user-status"></span>
                   </div>
@@ -159,7 +159,7 @@ function append_message_to_list_chat(message){
         <li data-uid="${message.sender.id}" class="show-modal-chat-persional typing" chat-type="chat_personal" > 
           <a href="javascript: void(0);">
               <div class="media">
-                  <div class="chat-user-img online align-self-center mr-3">
+                  <div class="chat-user-img offline align-self-center mr-3">
                           <img src="/assets/images/users/${message.sender.avatar}" class="rounded-circle avatar-xs" alt="">
                       <span class="user-status"></span>
                   </div>
