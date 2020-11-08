@@ -16,7 +16,7 @@ const user_model = require('../models/users.model')
 const contact_model = require('../models/contacts.model')
 const messages_model = require('../models/messages.model')
 const verify_code_model = require('../models/verify_code_model')
-
+const settings_model = require('../models/settings.model')
 
 const saltRounds = 1;
 
@@ -52,6 +52,7 @@ let create_new_account = (email, name_account, password, url) => {
         text: "Xin chào bạn mình là admin, nếu bạn có vấn đề gì hãy liên hệ với mình nha.",
       }
       messages_model.create_new(message);
+      settings_model.create_new(result_created._id)
 
       return resolve("success")
     }).catch(error => {

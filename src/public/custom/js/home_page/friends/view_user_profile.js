@@ -171,9 +171,6 @@ function view_user_profile(target_id, type){
     url: url, 
     type: 'GET',
     success: function([profile,messages_file, messages_image, type]){
-      console.log(messages_file)
-      console.log("---------------------------------")
-      console.log(messages_image)
       if(type == "chat_personal"){
         render_personal_data_to_user_profile_slidebar(profile,messages_file, messages_image)
       } 

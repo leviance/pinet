@@ -100,6 +100,7 @@
         
         <script src="/custom/js/home_page/user_setting/user_upload_avatar.js"></script>
         <script src="/custom/js/home_page/user_setting/user_update_profile.js"></script>
+        <script src="/custom/js/home_page/user_setting/view_settings.js"></script>
 
         <script src="/custom/js/home_page/friends/search_friends.js"></script>
         <script src="/custom/js/home_page/friends/add_friend.js"></script>
@@ -120,6 +121,15 @@
 
         <script src="/custom/js/home_page/groups/create_group.js"></script>
         <script src="/custom/js/home_page/show_user_status.js"></script>
-   
+        
+        <!-- on/off dark theme-->
+        <% if(list_settings.app_mode == "dark"){ %>
+            <script>
+                $("#bootstrap-dark-style").attr("disabled", !1)
+                $("#bootstrap-style").attr("disabled", !0)
+                $("#app-dark-style").attr("disabled", !1)
+                $("#app-style").attr("disabled", !0)
+            </script>
+        <% } %>
     </body>
 </html>
