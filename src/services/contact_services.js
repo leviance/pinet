@@ -169,11 +169,13 @@ let get_list_friends = (user_id) => {
       let contact_id = list_id[i]
       let contact_info = await user_model.find_user_by_id(contact_id)
 
-      list_friends.push({
-        user_id: contact_id,
-        avatar: contact_info.avatar,
-        username: contact_info.username,
-      })
+      if(contact_info){
+        list_friends.push({
+          user_id: contact_id,
+          avatar: contact_info.avatar,
+          username: contact_info.username,
+        })
+      }
     }
 
     return resolve(list_friends)

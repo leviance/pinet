@@ -1,7 +1,10 @@
-const user_model = require('../models/users.model')
-const {notifications_content} = require('../../lang/vi')
-const notifications_model = require('../models/notifications.model')
-const convert_timestamp = require('../helper/convert_timestamp')
+const user_model = require('../models/users.model');
+const {notifications_content} = require('../../lang/vi');
+const notifications_model = require('../models/notifications.model');
+const contact_model = require('../models/contacts.model');
+const convert_timestamp = require('../helper/convert_timestamp');
+
+const _ = require('lodash');
 
 let notif_recieved_request_contact = async (sender_req_id, receiver_req_id) => {
   let sender_data = await user_model.find_user_by_id(sender_req_id)
@@ -151,6 +154,24 @@ let notification_new_group = (sender_id,list_id_members,group_name) => {
   })
 }
 
+let stt_user_is_offline = (user_id) => {
+  return new Promise( async (resolve, reject) => {
+    let list_contacts = await contact_model.find_contact_by_id(user_id);
+    let list_contacts_id = [];
+
+    list_contacts.forEach(contact => {
+      list_contacts_id.push(contact.sender_id);
+      list_contacts_id.push(contact.receiver_id);
+    });
+
+    _.remove(list_contacts_id, function(n){
+      return n == user_id
+    });
+
+    return resolve(list_contacts_id);
+  })
+}
+
 module.exports = {
   notif_recieved_request_contact,
   count_notifications,
@@ -159,5 +180,6 @@ module.exports = {
   mark_notifications_as_read,
   read_more_notifications,
   remove_all_notifications,
-  notification_new_group
+  notification_new_group,
+  stt_user_is_offline
 }

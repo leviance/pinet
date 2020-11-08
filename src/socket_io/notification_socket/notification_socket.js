@@ -10,5 +10,5 @@ let notification_new_group = (notifications,io) => {
 }
 
 module.exports = {
-  notification_new_group
+  notification_new_group,
 }

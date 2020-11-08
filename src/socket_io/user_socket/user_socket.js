@@ -15,13 +15,14 @@ let user_socket = (io) => {
       list_socket[user_id] = [socket.id];
     }
 
-    // lọc những socket id đã disconnected ra khỏi mảng 
+    // handle when user disconnect
     socket.on('disconnect', () =>{
-        _.remove(list_socket[user_id], function(socketId) {
-          return socketId === socket.id;
-        });
-
-        if(list_socket[user_id] === []) delete list_socket[user_id];
+      _.remove(list_socket[user_id], function(socketId) {
+        return socketId === socket.id;
+      });
+    
+      // lọc những socket id đã disconnected ra khỏi mảng 
+      if(list_socket[user_id] === []) delete list_socket[user_id];
     });
  
   });
