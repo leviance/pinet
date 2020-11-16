@@ -113,6 +113,7 @@ function convert_unicode_to_emoji(){
   $("p").each(function() {
     let original = $(this).html();
     let converted = emojione.toImage(original);
+
     $(this).html(converted);
   });
 }

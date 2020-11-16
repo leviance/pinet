@@ -95,8 +95,8 @@ function render_text_message_group_to_chat_frame(message, type){
             <div class="user-chat-content">
                 <div class="ctext-wrap">
                     <div class="ctext-wrap-content">
-                        <p class="mb-0">
-                            ${message.text}
+                        <p class="mb-0 message-text-content">
+
                         </p>
                         <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">${convert_timestamp(message.created_at)}</span></p>
                     </div>
@@ -116,6 +116,8 @@ function render_text_message_group_to_chat_frame(message, type){
           </div>
       </li>`)
 
+    $('#list-messages-frame li').last().find('p.message-text-content').text(message.text);
+    
     scroll_to_bottom_chat_frame()
     convert_unicode_to_emoji()
     view_message_image()
