@@ -25,3 +25,5 @@
     "created_at": 1604538393735,
     "__v": 0
 }
+
+fix lỗi hiển thị tin nhắn mới trong group ( hiển thị 1 tin nhắn mới cho cả người gửi)
