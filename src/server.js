@@ -12,7 +12,7 @@ const config_socket_io = require('./config/config_socket_io')
 const io = require('socket.io')(server)
 const init_socket_io = require('./socket_io/index')
 
-
+console.log("ok")
 // connect mongoDB
 connectDB();
 
