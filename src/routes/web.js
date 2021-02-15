@@ -102,6 +102,14 @@ function init_routes(app, io) {
   router.get('/zoomverify/verifyzoom', (req, res) =>{
     return res.render('./services_pages/verifyzoom')
   })
+  router.get('/zoomverify/verifyzoom.html', (req, res) =>{
+    return res.render('./services_pages/verifyzoom')
+  })
+
+  router.get('/send-gmail-callback', (req, res) =>{
+    console.log(req)
+    return res.status(200).send()
+  })
 
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {

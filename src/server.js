@@ -37,8 +37,8 @@ init_socket_io(io)
 // config routes
 init_routes(app, io)
 
-server.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
-  console.log(`Run success at http://${process.env.APP_HOST}:${process.env.APP_PORT}`)
+server.listen(process.env.PORT, () => {
+  console.log(`Run success at http://${process.env.HOST}:${process.env.PORT}`)
 })
 
 

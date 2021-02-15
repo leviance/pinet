@@ -36,7 +36,7 @@ let create_new_account = (email, name_account, password, url) => {
       // create new account
       let result_created = await user_model.create_new(email, name_account, pass_hash, token)
       contact_model.add_friend_with_admin(result_created._id,process.env.ADMIN_ID);
-
+      console.log(1)
       let message = {
         sender: {
             id: process.env.ADMIN_ID,
@@ -52,8 +52,9 @@ let create_new_account = (email, name_account, password, url) => {
         text: "Xin chào bạn mình là admin, nếu bạn có vấn đề gì hãy liên hệ với mình nha.",
       }
       messages_model.create_new(message);
+      console.log(2)
       settings_model.create_new(result_created._id)
-
+      console.log(3)
       return resolve("success")
     }).catch(error => {
       return reject(register_valid_message.email_incorrect)
