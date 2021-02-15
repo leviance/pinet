@@ -77,6 +77,32 @@ function init_routes(app, io) {
 
   router.put('/user-change-view-mode',setting_controllers.user_change_view_mode)
 
+
+  // terms and policies pages
+  router.get('/terms-of-service', (req, res) =>{
+    return res.render('./services_pages/terms_of_service')
+  })
+  
+  router.get('/privacy', (req, res) =>{
+    return res.render('./services_pages/privacy')
+  })
+
+  router.get('/support', (req, res) =>{
+    return res.redirect("https://www.facebook.com/profile1.account.tab.id100009")
+  })
+
+  router.get('/zoom-user-uninstall', (req, res) =>{
+    console.log("zoom-user-uninstall");
+    console.log("-----------------------------------------------")
+    console.log(req)
+    console.log("-----------------------------------------------")
+    return res.send(req)
+  })
+
+  router.get('/zoomverify/verifyzoom', (req, res) =>{
+    return res.render('./services_pages/verifyzoom')
+  })
+
   // catch 404 and forward to error handler
   router.use(function(req, res, next) {
     // respond with html page
