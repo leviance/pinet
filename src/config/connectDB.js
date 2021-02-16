@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 function connectDB(){
-    mongoose.connect(`mongodb://drdung1999:onichan123@cluster0.lbxxt.mongodb.net/pinet2?retryWrites=true&w=majority`,{useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
+    mongoose.connect(`mongodb+srv://drdung1999:onichan123@cluster0.lbxxt.mongodb.net/pinet2?retryWrites=true&w=majority&ssl=false`,{useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
     // try connect mongodb
     const db = mongoose.connection;
 
