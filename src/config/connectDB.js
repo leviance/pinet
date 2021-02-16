@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 function connectDB(){
-    console.log("????????????????????")
     mongoose.connect("mongodb+srv://drdung1999:onichan123@cluster0.lbxxt.mongodb.net/pinet2?retryWrites=true&w=majority");
     // try connect mongodb
     const db = mongoose.connection;
