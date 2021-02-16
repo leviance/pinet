@@ -12,7 +12,6 @@ const config_socket_io = require('./config/config_socket_io')
 const io = require('socket.io')(server)
 const init_socket_io = require('./socket_io/index')
 
-console.log("ok")
 // connect mongoDB
 connectDB();
 
@@ -37,8 +36,8 @@ init_socket_io(io)
 // config routes
 init_routes(app, io)
 
-server.listen(process.env.PORT, () => {
-  console.log(`Run success at http://${process.env.HOST}:${process.env.PORT}`)
+server.listen(process.env.PORT || 3001, () => {
+  console.log(`Run success at http://${process.env.HOST}:${process.env.PORT || 3001}`)
 })
 
 
