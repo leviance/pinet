@@ -3,7 +3,7 @@ const MongoStore = require('connect-mongo')(session);
 
 let session_store = new MongoStore({ 
   //url: `${process.env.DB_CONNECTION}://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
-  url: `mongodb+srv://drdung1999:onichan123@cluster0.lbxxt.mongodb.net/pinet2?retryWrites=true&w=majority`,
+  url: `mongodb+srv://pinet_db:WO5kuxeU6zGmp6kb@cluster0.ix9fz.mongodb.net/Pinet?retryWrites=true&w=majority`,
   autoRemove: 'native'
 })
 
