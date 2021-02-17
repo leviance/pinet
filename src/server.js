@@ -37,7 +37,7 @@ init_socket_io(io)
 init_routes(app, io)
 
 server.listen(process.env.PORT || 3001, () => {
-  console.log(`Run success at http://${process.env.HOST}:${process.env.PORT || 3001}`)
+  console.log(`Run success at http://${process.env.HOST || "localhost"}:${process.env.PORT || 3001}`)
 })
 
 
