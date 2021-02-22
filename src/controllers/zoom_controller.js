@@ -42,7 +42,7 @@ const User_Click_Btn_Call_Video = async (req, res) => {
     let chat_id = req.body.chat_id
 
     // handle call video personal latter
-    if(chat_type == app.chat_personal) return res.status(500).send()
+    if(chat_type == app.chat_personal) return res.status(500).send("Bạn chỉ có thể gọi video trong chat nhóm")
 
     if(chat_type == app.chat_group){
       let result = await zoom_services.Check_Have_Been_Any_Meeting_In_Group(user_id,chat_id)

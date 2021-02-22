@@ -37,13 +37,7 @@ function handle_when_user_click_btn_call_video(){
       },
       error: function(error){
         $(".loading").hide();
-        if(confirm("Cho phép ứng dụng truy cập vào Zoom để sử dụng tính năng này")){
-          window.open(window.location.replace(LINK_AUTHENTICATE_ZOOM), '_blank');
-        }
-        else{
           alertify.error(error.responseText)
-        }
-        
       }
     })
   })
