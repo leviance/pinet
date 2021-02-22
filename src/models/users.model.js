@@ -34,7 +34,7 @@ let user_schema = new Schema({
     created_at: {type: Number, default: Date.now},
     updated_at: {type: Number, default: null},
     deleted_at: {type: Number, default: null}
-  });
+});
 
 // create index for search
 user_schema.index( { username: "text" } );

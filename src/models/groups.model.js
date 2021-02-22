@@ -10,6 +10,7 @@ let groupSchema = new Schema({
   message_amount : { type: Number, default: 0}, 
   avatar: {type: String, default: "group_avatar.png"},
   members: [],
+  link_join_meeting: {type: String, default: null},
   invite_message: String,
   created_at : { type: Number, default: Date.now},
   removed_at: { type: Number, default: null},
@@ -53,6 +54,12 @@ groupSchema.statics = {
     }).exec()
   },
 
+  store_join_meeting_url(group_id, join_meeting_url){
+    return this.updateOne(
+      {"_id": group_id},
+      {"link_join_meeting": join_meeting_url}
+    ).exec()
+  }
 }
 
 module.exports = mongoose.model("Groups",groupSchema);

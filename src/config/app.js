@@ -6,3 +6,8 @@ module.exports.app  = {
   chat_personal: "chat_personal",
   chat_group: "chat_group"
 }
+
+module.exports.log_type = {
+  data_create_meeting: 'data_create_meeting',
+  zoom_user_data: 'zoom_user_data'
+}

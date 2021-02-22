@@ -5,6 +5,7 @@ const notification_services = require('./notification_services')
 const message_services = require('./message_services')
 const group_services = require('./group_services')
 const setting_services = require('./setting_services')
+const zoom_services = require('./zoom_services')
 
 module.exports.auth_services = auth_services
 module.exports.user_services = user_services
@@ -13,3 +14,4 @@ module.exports.notification_services = notification_services
 module.exports.message_services = message_services
 module.exports.group_services = group_services
 module.exports.setting_services = setting_services
+module.exports.zoom_services = zoom_services
