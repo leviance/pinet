@@ -1,4 +1,4 @@
-const LINK_AUTHENTICATE_ZOOM = "https://zoom.us/oauth/authorize?response_type=code&client_id=cupaaFOhTIKz4m_Q9wICcQ&redirect_uri=https://65474866f406.ngrok.io/zoom-auth-callback"
+const LINK_AUTHENTICATE_ZOOM = "https://zoom.us/oauth/authorize?response_type=code&client_id=cupaaFOhTIKz4m_Q9wICcQ&redirect_uri=https://pinet-unitech.herokuapp.com/zoom-auth-callback"
 
 function handle_when_user_click_btn_call_video(){
   $("#btn-video-call").bind("click", function(){
