@@ -90,3 +90,11 @@ module.exports.send_message_error = {
 module.exports.group_messages = {
   
 }
+
+module.exports.zoom_messages = {
+  "not_enough_authority_to_create_meeting": "Bạn cần phải là người tạo nhóm để thực hiện cuộc gọi này",
+  "unspecified_error": "Đã xảy ra lỗi bất ngờ vui lòng liên hệ bộ phận hỗ trợ của chúng tôi",
+  "could_not_get_zoom_token": "Không thể lấy được mã truy cập zoom",
+  "error_when_getting_zoom_token": (error) => `Error when getting Zoom token: ${error}`,
+  "error_when_refeshing_zoom_token": "Đã có lỗi xảy ra khi cố gắng làm mới Zoom token. Vui lòng liên hệ bộ phận hỗ trợ của chúng tôi!"
+}

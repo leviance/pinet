@@ -27,3 +27,5 @@
 }
 
 fix lỗi hiển thị tin nhắn mới trong group ( hiển thị 1 tin nhắn mới cho cả người gửi)
+check lại xem tính năng làm mới token zoom đã hoạt động đúng chưa 
+khi kết thúc zoom meeting thì cần xóa link meeting trong group và socket cho toàn bộ thành viên

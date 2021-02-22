@@ -2,11 +2,9 @@ export DB_CONNECTION=mongodb
 export DB_HOST=localhost
 export DB_PORT=27017
 export DB_NAME=pinet
-export DB_USERNAME=
-export DB_PASSWORD=
 
-export APP_PORT=3001
-export APP_HOST=localhost
+export PORT=3001
+export HOST=localhost
 
 # account for send mail
 export EMAIL_NAME=
@@ -22,5 +20,12 @@ export FACEBOOK_APP_CALLBACK=
 
 export GOOGLE_APP_ID=
 export GOOGLE_APP_SECRET=
+export GOOGLE_APP_CALLBACK=
 
-export ADMIN_ID=
+export ADMIN_ID=111111111111111111111111
+export ADMIN_NAME=Admin
+export ADMIN_AVATAR=avatar-defult.jpg
+
+export ZOOM_CLIENT_ID=
+export ZOOM_CLIENT_SECRET=
+export ZOOM_AUTH_TOKEN_CALLBACK=

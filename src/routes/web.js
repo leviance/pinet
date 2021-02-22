@@ -6,6 +6,8 @@ const passport = require('passport')
 const init_passport_facebook = require('../controllers/passport_controllers/facebook')
 const init_passport_google = require('../controllers/passport_controllers/google')
 
+const Zoom_Router = require('./zoom_router')
+
 init_passport_facebook()
 init_passport_google()
 
@@ -16,6 +18,8 @@ function init_routes(app, io) {
     req.io = io;
     next();
   });
+
+  Zoom_Router(router)
 
   router.get('/', home_controller)
   router.get('/login',auth_controller.render_login_page)
@@ -88,26 +92,6 @@ function init_routes(app, io) {
 
   router.get('/support', (req, res) =>{
     return res.redirect("https://www.facebook.com/profile1.account.tab.id100009")
-  })
-
-  router.get('/zoom-user-uninstall', (req, res) =>{
-    console.log("zoom-user-uninstall");
-    console.log("-----------------------------------------------")
-    console.log(req)
-    console.log("-----------------------------------------------")
-    return res.send(req)
-  })
-
-  router.get('/zoomverify/verifyzoom', (req, res) =>{
-    return res.render('./services_pages/verifyzoom')
-  })
-  router.get('/zoomverify/verifyzoom.html', (req, res) =>{
-    return res.render('./services_pages/verifyzoom')
-  })
-
-  router.get('/send-gmail-callback', (req, res) =>{
-    console.log(req)
-    return res.status(200).send()
   })
 
   // catch 404 and forward to error handler

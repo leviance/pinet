@@ -24,7 +24,7 @@ let settings_schema = new Schema({
 
 settings_schema.statics = {
     create_new(user_id){
-        return this.create_new({user_id: user_id})
+        return this.create({user_id: user_id})
     },
 
     get_list_settings(user_id){
