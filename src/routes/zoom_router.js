@@ -11,6 +11,8 @@ const Zoom_Router = (router) => {
 
   // For zoom authenticate Domain
   router.get('/zoomverify/verifyzoom', zoom_controller.Zoom_Auth_Domain)
+
+  router.get('/zoom-notification', zoom_controller.Zoom_Notification)
 }
 
 module.exports = Zoom_Router

@@ -30,11 +30,15 @@ const Store_Zoom_Token_And_User_Data = (zoom_data,user_id) => {
   })
 }
 
-const Check_Have_Been_Any_Meeting_In_Group = (user_id,group_id) => {
+const Create_Group_Meeting = (user_id,group_id) => {
   return new Promise( async (resolve, reject) => {
     let group_data = await group_model.check_user_in_group(user_id, group_id)
     
     if(group_data == null) return reject(zoom_messages.unspecified_error)
+
+    // id of all members in the group
+    let group_members = group_data.members
+    group_members.push(group_data.user_created_id)
 
     // nếu trong nhóm chưa có zoom meeting
     if(group_data.link_join_meeting == null){
@@ -59,7 +63,10 @@ const Check_Have_Been_Any_Meeting_In_Group = (user_id,group_id) => {
 
           await group_model.store_join_meeting_url(group_id, meeting_data.join_url)
           
-          return resolve({"link_join_meeting": meeting_data.join_url})
+          return resolve({
+            "link_join_meeting": meeting_data.join_url, 
+            "group_members": group_members
+          })
         } catch (error) {
           // this error can appear when token expried 
           try {
@@ -79,7 +86,10 @@ const Check_Have_Been_Any_Meeting_In_Group = (user_id,group_id) => {
 
             await group_model.store_join_meeting_url(group_id, meeting_data.join_url)
           
-            return resolve({"link_join_meeting": meeting_data.join_url})
+            return resolve({
+              "link_join_meeting": meeting_data.join_url, 
+              "group_members": group_members
+            })
           } catch (error) {
             // if can not refeshing zoom token
             return reject(zoom_messages.error_when_refeshing_zoom_token)
@@ -91,7 +101,11 @@ const Check_Have_Been_Any_Meeting_In_Group = (user_id,group_id) => {
     }
 
     // nếu trong nhóm đã có zoom meeting đang diễn ra
-    if(group_data.link_join_meeting != null) return resolve({"link_join_meeting": group_data.link_join_meeting})
+    if(group_data.link_join_meeting != null) //return resolve({"link_join_meeting": group_data.link_join_meeting})
+    return resolve({
+      "link_join_meeting": group_data.link_join_meeting, 
+      "group_members": group_members
+    })
   })
 }
 
@@ -99,5 +113,5 @@ const Check_Have_Been_Any_Meeting_In_Group = (user_id,group_id) => {
 
 module.exports = {
   Store_Zoom_Token_And_User_Data,
-  Check_Have_Been_Any_Meeting_In_Group
+  Create_Group_Meeting
 }

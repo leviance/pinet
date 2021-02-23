@@ -45,8 +45,9 @@ function show_personal_chat_frame(){
       url: `/get-persional-messages/${user_id}`,
       success: function(messages){
         append_message_personal_to_chat_frame(messages)
-        $('.loading-message-chat-frame').remove()
         get_friends_status_when_get_message(user_id);
+        display_red_dot_notifying_meeting(null)
+        $('.loading-message-chat-frame').remove()
       },
       error: function(msg){
         $('.loading-message-chat-frame').remove()

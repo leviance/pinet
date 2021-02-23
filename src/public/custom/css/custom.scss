@@ -343,3 +343,15 @@ img.emojione {
     >img{width: 100%; }
   }
 }
+
+#btn-video-call{
+  position: relative;
+
+  i.fa.fa-circle.have-a-zoom-meeting {
+    position: absolute;
+    bottom: 3px;
+    right: 8px;
+    font-size: 10px;
+    color: #ef476f;
+}
+}
