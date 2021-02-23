@@ -29,3 +29,7 @@
 fix lỗi hiển thị tin nhắn mới trong group ( hiển thị 1 tin nhắn mới cho cả người gửi)
 check lại xem tính năng làm mới token zoom đã hoạt động đúng chưa 
 khi kết thúc zoom meeting thì cần xóa link meeting trong group và socket cho toàn bộ thành viên
+fix lỗi khi hiển thị trên đt không hiện ra nút call video
+
+task cho ngày mai:
+fix lỗi khi thông báo có tin nhắn mới (hiển thị số tin nhắn chưa chưa đọc nếu không nhấn vào đấy mà chỉ load lại trang thì vẫn còn nguyên)

@@ -25,10 +25,13 @@ function show_group_chat_frame(){
     $.ajax({
       type: 'GET',
       url: `/get-group-messages/${group_id}`,
-      success: function(messages){
-        append_message_group_to_chat_frame(messages);
-        $('.loading-message-chat-frame').remove();
+      success: function(response){
+        append_message_group_to_chat_frame(response.messages);
+        
         get_group_status_when_get_message()
+
+        display_red_dot_notifying_meeting(response.link_join_meeting)
+        $('.loading-message-chat-frame').remove();
       },
       error: function(msg){
         $('.loading-message-chat-frame').remove()

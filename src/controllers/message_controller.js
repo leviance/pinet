@@ -1,11 +1,11 @@
-const {message_services} = require('../services/index')
+const {message_services, group_services} = require('../services/index')
 const {send_message_error} = require('../../lang/vi')
 const upload_file = require('../helper/upload_file')
 
 const message_socket = require('../socket_io/message_socket')
 const emit_socket = require('../helper/emit_socket')
 
-let user_send_file_image_personal = (req, res) => {
+const user_send_file_image_personal = (req, res) => {
   upload_file.message_image(req, res, async (error) => {
     if(error) {
       if(error.message){
@@ -36,7 +36,7 @@ let user_send_file_image_personal = (req, res) => {
   })
 }
 
-let user_send_file_image_group = (req, res) => {
+const user_send_file_image_group = (req, res) => {
   upload_file.message_image(req, res, async (error) => {
     if(error) {
       if(error.message){
@@ -80,20 +80,24 @@ let get_personal_messages = async (req, res) => {
   }
 }
 
-let get_group_messages = async (req, res) => {
+const get_group_messages = async (req, res) => {
   try {
     let user_id = req.session.user_id;
     let group_id = req.params.user_id;
 
-    let list_messages = await message_services.get_group_messages(user_id,group_id)
+    let messages = await message_services.get_group_messages(user_id,group_id)
 
-    return res.status(200).send(list_messages)
+    let action_in_group = await group_services.get_group_profile(user_id, group_id)
+
+    return res.status(200).send({
+      messages: messages, 
+      link_join_meeting: action_in_group.link_join_meeting})
   } catch (error) {
     return res.status(500).send()
   }
 }
 
-let user_send_text_message_personal = async (req, res) => {
+const user_send_text_message_personal = async (req, res) => {
   try {
     let sender = {
       id: req.session.user_id,
@@ -113,7 +117,7 @@ let user_send_text_message_personal = async (req, res) => {
   }
 }
 
-let user_send_text_message_group = async (req, res) => {
+const user_send_text_message_group = async (req, res) => {
   try {
     let sender = {
       id: req.session.user_id,
@@ -133,7 +137,25 @@ let user_send_text_message_group = async (req, res) => {
   }
 }
 
-let user_send_file_attachment_personal = (req, res) => {
+const module_send_text_message_group = async (sender,group_id,message, io) => {
+  return new Promise( async (resolve, reject) => {
+    // let sender = {
+    //   id: req.session.user_id,
+    //   username: req.session.username,
+    //   avatar: req.session.avatar
+    // }
+    // let group_id = req.body.group_id;
+    // let message = req.body.message;
+
+    let [result_send, group_data] = await message_services.user_send_text_message_group(sender, group_id, message)
+    
+    message_socket.user_send_text_message_group(result_send, group_data,io)
+
+    return resolve(result_send)
+  })
+}
+
+const user_send_file_attachment_personal = (req, res) => {
   upload_file.message_file(req, res, async (error) => {
 
     if(error) {
@@ -178,7 +200,7 @@ let user_send_file_attachment_personal = (req, res) => {
   })
 }
 
-let user_send_file_attachment_group = (req, res) => {
+const user_send_file_attachment_group = (req, res) => {
   upload_file.message_file(req, res, async (error) => {
 
     if(error) {
@@ -206,7 +228,7 @@ let user_send_file_attachment_group = (req, res) => {
   })
 }
 
-let count_message_not_read = async (req, res) => {
+const count_message_not_read = async (req, res) => {
   try {
     let partner_id = req.body.message_id
     let message_type = req.body.message_type
@@ -229,5 +251,6 @@ module.exports = {
   user_send_text_message_group,
   user_send_file_attachment_group,
   user_send_file_image_group,
-  count_message_not_read
+  count_message_not_read,
+  module_send_text_message_group
 }

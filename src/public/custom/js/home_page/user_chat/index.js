@@ -338,6 +338,17 @@ function add_dot_red_color_show_new_message(){
   })
 }
 
+function display_red_dot_notifying_meeting(link_join_meeting){
+  if(link_join_meeting){
+    $("#btn-video-call").append(`<i class="fa fa-circle have-a-zoom-meeting" aria-hidden="true"></i>`)
+  }
+  else{
+    if($("#btn-video-call .have-a-zoom-meeting")){
+      $("#btn-video-call .have-a-zoom-meeting").remove()
+    }
+  }
+}
+
 $(document).ready(function(){
   setTimeout(function(){
     document.querySelector('#chat-message-list li').click()

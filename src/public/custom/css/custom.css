@@ -415,4 +415,16 @@ img.emojione {
 #collapseThree .popup-img > img {
   width: 100%;
 }
+
+#btn-video-call {
+  position: relative;
+}
+
+#btn-video-call i.fa.fa-circle.have-a-zoom-meeting {
+  position: absolute;
+  bottom: 3px;
+  right: 8px;
+  font-size: 10px;
+  color: #ef476f;
+}
 /*# sourceMappingURL=custom.css.map */
